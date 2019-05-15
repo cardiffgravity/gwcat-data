@@ -318,7 +318,7 @@ class GWCat(object):
                             verbose=verbose,
                             pngOut=pngCart,thumbOut=thumbCart)
                         self.addLink(ev,{'url':self.rel2abs(pngCart),'text':'Skymap (Cartesian fullsky)','type':'skymap-plot'})
-                        self.addLink(ev,{'url':self.rel2abs(pngCart),'text':'Skymap (Cartesian fullsky)','type':'skymap-thumbnail'})
+                        self.addLink(ev,{'url':self.rel2abs(thumbCart),'text':'Skymap (Cartesian fullsky)','type':'skymap-thumbnail'})
                     if not exMoll or overwrite:
                         if verbose:print('plotting Mollweide (fullsky) map to {}'.format(pngMoll))
                         plotloc.makePlot(ev=ev,mapIn=map,dirData=dataDir,
