@@ -296,10 +296,16 @@ class GWCat(object):
             thumbCartzoom=pngCartzoom.replace('.png','.thumb.png')
             pngCart=os.path.join(pngDir,'{}_cart.png'.format(ev))
             thumbCart=pngCart.replace('.png','.thumb.png')
+            pngMollrot=os.path.join(pngDir,'{}_moll_rot.png'.format(ev))
+            thumbMollrot=pngMollrot.replace('.png','.thumb.png')
+            pngCartrot=os.path.join(pngDir,'{}_cart_rot.png'.format(ev))
+            thumbCartrot=pngCartrot.replace('.png','.thumb.png')
             exCart=os.path.isfile(pngCart)
             exCartzoom=os.path.isfile(pngCartzoom)
             exMoll=os.path.isfile(pngMoll)
-            if exCart and exMoll and exCartzoom and not overwrite:
+            exMollrot=os.path.isfile(pngMollrot)
+            exCartrot=os.path.isfile(pngCartrot)
+            if exCart and exMoll and exCartzoom and exMollrot and exCartrot and not overwrite:
                 if verbose:print('all plots exist for {}'.format(ev))
             else:
                 if not 'mapurllocal' in self.status[ev]:
@@ -324,7 +330,7 @@ class GWCat(object):
                     if not exCart or overwrite:
                         if verbose:print('plotting Cartesian (fullsky) map to {}'.format(pngCart))
                         plotloc.makePlot(ev=ev,mapIn=map,dirData=dataDir,
-                            proj='cart',plotcont=False,smooth=0,zoomlim=None,
+                            proj='cart',plotcont=False,smooth=0,zoomlim=None,rotmap=False,
                             verbose=verbose,
                             pngOut=pngCart,thumbOut=thumbCart)
                         self.addLink(ev,{'url':self.rel2abs(pngCart),'text':'Skymap (Cartesian fullsky)','type':'skymap-plot'})
@@ -332,11 +338,27 @@ class GWCat(object):
                     if not exMoll or overwrite:
                         if verbose:print('plotting Mollweide (fullsky) map to {}'.format(pngMoll))
                         plotloc.makePlot(ev=ev,mapIn=map,dirData=dataDir,
-                            proj='moll',plotcont=False,smooth=0,zoomlim=None,
+                            proj='moll',plotcont=False,smooth=0,zoomlim=None,rotmap=False,
                             verbose=verbose,
                             pngOut=pngMoll,thumbOut=thumbMoll)
                         self.addLink(ev,{'url':self.rel2abs(pngMoll),'text':'Skymap (Mollweide fullsky)','type':'skymap-plot'})
                         self.addLink(ev,{'url':self.rel2abs(thumbMoll),'text':'Skymap (Mollweide fullsky)','type':'skymap-thumbnail'})
+                    if not exCartrot or overwrite:
+                        if verbose:print('plotting Cartesian (fullsky rotated) map to {}'.format(pngCartrot))
+                        plotloc.makePlot(ev=ev,mapIn=map,dirData=dataDir,
+                            proj='cart',plotcont=False,smooth=0,zoomlim=None,rotmap=True,
+                            verbose=verbose,
+                            pngOut=pngCartrot,thumbOut=thumbCartrot)
+                        self.addLink(ev,{'url':self.rel2abs(pngCartrot),'text':'Skymap (Cartesian fullsky, rotated)','type':'skymap-plot'})
+                        self.addLink(ev,{'url':self.rel2abs(thumbCartrot),'text':'Skymap (Cartesian fullsky, rotated)','type':'skymap-thumbnail'})
+                    if not exMollrot or overwrite:
+                        if verbose:print('plotting Mollweide (fullsky rotated) map to {}'.format(pngMollrot))
+                        plotloc.makePlot(ev=ev,mapIn=map,dirData=dataDir,
+                            proj='moll',plotcont=False,smooth=0,zoomlim=None,rotmap=True,
+                            verbose=verbose,
+                            pngOut=pngMollrot,thumbOut=thumbMollrot)
+                        self.addLink(ev,{'url':self.rel2abs(pngMollrot),'text':'Skymap (Mollweide fullsky, rotated)','type':'skymap-plot'})
+                        self.addLink(ev,{'url':self.rel2abs(thumbMollrot),'text':'Skymap (Mollweide fullsky, rotated)','type':'skymap-thumbnail'})
 
         return
 
