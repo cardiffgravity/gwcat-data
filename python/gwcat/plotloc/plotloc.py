@@ -247,6 +247,13 @@ def getProbMap(map,prob=0.9,verbose=False):
 
     return(mapP,areaP)
 
+def getArea(maptot,prob=0.9,verbose=False):
+    npix=len(np.where(maptot<=prob)[0])
+    pixarea=hp.nside2pixarea(hp.get_nside(maptot),degrees=True)
+    areaP=npix*pixarea
+    if verbose: print('{:d}% area={:d} deg^2'.format(int(prob*100),int(areaP)))
+    return(areaP)
+
 def getRaDecRange(map,lim=0.5,ltype='max',border=0,verbose=False):
     # get RA/Dec limits of all pixels which satisfy criteria
     # returns min(RA), max(RA), min(Dec), max(Dec)
