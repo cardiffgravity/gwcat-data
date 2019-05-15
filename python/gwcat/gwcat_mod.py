@@ -98,11 +98,14 @@ def dataframe2jsonEvent(evIn,params,verbose=False):
     return(evOut)
 
 class GWCat(object):
-    def __init__(self,fileIn='../data/events.json',statusFile='status.json',dataDir='data/',verbose=False):
+    def __init__(self,fileIn='../data/events.json',statusFile='status.json',
+        dataDir='data/',baseurl='https://data.cardiffgravity.org/gwcat-data/',verbose=False):
         """Initialise catalogue from input file
         Input: fileIn [string, OPTIONAL]: filename to read data from
         """
         self.dataDir=dataDir
+        if baseurl[-1]!='/':baseurl=baseurl+'/'
+        self.baseurl=baseurl
         self.statusFile=os.path.join(dataDir,statusFile)
         self.getStatus()
         eventsIn=json.load(open(fileIn))
@@ -162,7 +165,7 @@ class GWCat(object):
         return
 
     def updateMapSrc(self,ev,verbose=False):
-        lmap=self.getLink(ev,'skymap',verbose=verbose)
+        lmap=self.getLink(ev,'skymap-fits',verbose=verbose)
         if len(lmap)>1 and verbose:
             print('Warning: more than one skymap link for {}'.format(ev))
         if len(lmap)==0 and verbose:
@@ -233,7 +236,7 @@ class GWCat(object):
             # create directory
             os.mkdir(fitsDir)
             print('Created directory: {}'.format(fitsDir))
-        lmap=self.getLink(ev,'skymap')
+        lmap=self.getLink(ev,'skymap-fits')
         if len(lmap)==0:
             if verbose: print('ERROR: no skymap link for {}',format(ev))
             return
@@ -268,6 +271,9 @@ class GWCat(object):
             return mapreq.status_code
         return
 
+    def rel2abs(self,rel):
+        return(self.baseurl + rel)
+
     def plotMapPngs(self,overwrite=False,verbose=False):
         pngDir=os.path.join(self.dataDir,'png')
         dataDir=os.path.join(self.dataDir,'fits')
@@ -275,8 +281,11 @@ class GWCat(object):
             os.mkdir(pngDir)
         for ev in self.data:
             pngMoll=os.path.join(pngDir,'{}_moll.png'.format(ev))
+            thumbMoll=pngMoll.replace('.png','.thumb.png')
             pngCartzoom=os.path.join(pngDir,'{}_cartzoom.png'.format(ev))
+            thumbCartzoom=pngCartzoom.replace('.png','.thumb.png')
             pngCart=os.path.join(pngDir,'{}_cart.png'.format(ev))
+            thumbCart=pngCart.replace('.png','.thumb.png')
             exCart=os.path.isfile(pngCart)
             exCartzoom=os.path.isfile(pngCartzoom)
             exMoll=os.path.isfile(pngMoll)
@@ -299,22 +308,25 @@ class GWCat(object):
                         plotloc.makePlot(ev=ev,mapIn=map,dirData=dataDir,
                             proj='cart',plotcont=False,smooth=0,zoomlim=0.8,rotmap=True,minzoom=20,
                             verbose=verbose,
-                            pngOut=pngCartzoom)
-                        self.addLink(ev,{'url':pngCartzoom,'text':'Skymap (Cartesian zoomed)','type':'skymap-plot'})
+                            pngOut=pngCartzoom,thumbOut=thumbCartzoom)
+                        self.addLink(ev,{'url':self.rel2abs(pngCartzoom),'text':'Skymap (Cartesian zoomed)','type':'skymap-plot'})
+                        self.addLink(ev,{'url':self.rel2abs(thumbCartzoom),'text':'Skymap (Cartesian zoomed)','type':'skymap-thumbnail'})
                     if not exCart or overwrite:
                         if verbose:print('plotting Cartesian (fullsky) map to {}'.format(pngCart))
                         plotloc.makePlot(ev=ev,mapIn=map,dirData=dataDir,
                             proj='cart',plotcont=False,smooth=0,zoomlim=None,
                             verbose=verbose,
-                            pngOut=pngCart)
-                        self.addLink(ev,{'url':pngCart,'text':'Skymap (Cartesian fullsky)','type':'skymap-plot'})
+                            pngOut=pngCart,thumbOut=thumbCart)
+                        self.addLink(ev,{'url':self.rel2abs(pngCart),'text':'Skymap (Cartesian fullsky)','type':'skymap-plot'})
+                        self.addLink(ev,{'url':self.rel2abs(pngCart),'text':'Skymap (Cartesian fullsky)','type':'skymap-thumbnail'})
                     if not exMoll or overwrite:
                         if verbose:print('plotting Mollweide (fullsky) map to {}'.format(pngMoll))
                         plotloc.makePlot(ev=ev,mapIn=map,dirData=dataDir,
                             proj='moll',plotcont=False,smooth=0,zoomlim=None,
                             verbose=verbose,
-                            pngOut=pngMoll)
-                        self.addLink(ev,{'url':pngMoll,'text':'Skymap (Mollweide fullsky)','type':'skymap-plot'})
+                            pngOut=pngMoll,thumbOut=thumbMoll)
+                        self.addLink(ev,{'url':self.rel2abs(pngMoll),'text':'Skymap (Mollweide fullsky)','type':'skymap-plot'})
+                        self.addLink(ev,{'url':self.rel2abs(thumbMoll),'text':'Skymap (Mollweide fullsky)','type':'skymap-thumbnail'})
 
         return
 

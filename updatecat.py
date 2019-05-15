@@ -1,3 +1,4 @@
+#!/Applications/anaconda3/anaconda3/bin/python3.6
 import gwcat
 import json
 import os
@@ -5,13 +6,17 @@ import argparse
 
 parser=argparse.ArgumentParser(prog="updatecat.py", description="Updates the gwcat-data database")
 parser.add_argument('-u','--update', dest='update', action='store_true', default=False, help='Update from GWOSC and GraceDB source')
+parser.add_argument('-o','--overwrite', dest='overwrite', action='store_true', default=False, help='Overwrite image files')
 parser.add_argument('-d','--datadir', dest='datadir', type=str, default='data/', help='directory in which data is stored')
+parser.add_argument('-b','--baseurl', dest='baseurl', type=str, default='https://data.cardiffgravity.org/gwcat-data/', help='Base URL to prepend to relative links [Default=https://data.cardiffgravity.org/gwcat-data/]')
 args=parser.parse_args()
 dataDir=args.datadir
 update=args.update
+overwrite=args.overwrite
+baseurl=args.baseurl
 
 if update==True:
-    gc=gwcat.GWCat(fileIn=os.path.join(dataDir,'events.json'),dataDir=dataDir)
+    gc=gwcat.GWCat(fileIn=os.path.join(dataDir,'events.json'),dataDir=dataDir,baseurl=baseurl)
     # gdb=json.load(open(os.path.join(dataDir,'gracedb.json')))
     # gwoscdata=json.load(open(os.path.join(dataDir,'gwosc.json')))
     gwoscdata=gwcat.gwosc.getGwosc(verbose=True,export=True,dirOut=dataDir)
@@ -26,7 +31,7 @@ else:
     print('importing from local file')
     gc=gwcat.GWCat(fileIn=os.path.join(dataDir,'gwosc_gracedb.json'),dataDir=dataDir)
 gc.updateMaps(verbose=False)
-gc.plotMapPngs(verbose=True,overwrite=False)
+gc.plotMapPngs(verbose=True,overwrite=overwrite)
 
 # export library
 gc.exportJson(os.path.join(dataDir,'gwosc_gracedb.json'))

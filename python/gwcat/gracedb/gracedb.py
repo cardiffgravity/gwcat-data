@@ -70,7 +70,7 @@ def gracedb2cat(gdb,verbose=False):
         if 'mapfile' in gdbIn[g]:
             skymap={'url':gdbIn[g]['mapfile'][1],
                 'text':'Sky Map',
-                'type':'skymap'}
+                'type':'skymap-fits'}
             linksOut[g].append(skymap)
 
     return {'data':catOut,'links':linksOut}
