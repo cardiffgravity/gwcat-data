@@ -7,7 +7,7 @@ import os
 from matplotlib import pyplot as plot
 from matplotlib import cm
 from astropy.io import fits
-print ('plotloc file',__file__,os.path.dirname(__file__))
+# print ('plotloc file',__file__,os.path.dirname(__file__))
 # plot.ion()
 
 def getSuperevents(verbose=False):
@@ -441,7 +441,7 @@ def plotContours(map,level=0.9,color='w',alpha=0.5,linestyle='-',linewidth=2,ver
     return(cont)
 
 
-def makePlot(ev='S190412m',mapIn=None,proj='moll',plotcont=False,smooth=0.5,zoomlim=0.92,rotmap=True,half_sky=False,pngOut=None,verbose=False,cbg=None,dirData='data/',minzoom=10):
+def makePlot(ev='S190412m',mapIn=None,proj='moll',plotcont=False,smooth=0.5,zoomlim=0.92,rotmap=True,half_sky=False,pngOut=None,verbose=False,cbg=None,dirData='data/',minzoom=10,pngSize=3000,thumbOut=None,thumbSize=300):
     # ev: superevent ID [default='S190412m']
     # proj: projection (moll=Mollweide [Default], cart=Cartesian)
     # plotcont: set to plot contours (default=True)
@@ -450,6 +450,9 @@ def makePlot(ev='S190412m',mapIn=None,proj='moll',plotcont=False,smooth=0.5,zoom
     # rotmap: rotate map to centre on peak value [Default=False]
     # half_sky: only show half the sky (orthographic only)
     # pngOut: filename to export to PNG [Default=None -> no export]
+    # pngSize: width of output image [default=3000px]
+    # thumbOut: filename to export to thumbnail PNG [Default=None -> no export]
+    # thumbSize: width of output image [default=100px]
     # verbose: plot more text [Default=False]
     # cbg: background colour [Default=black]
     # dirData: directory to load files from [Default= 'data/']
@@ -503,7 +506,9 @@ def makePlot(ev='S190412m',mapIn=None,proj='moll',plotcont=False,smooth=0.5,zoom
     plotConstLines(color=(0,0.7,0.7),verbose=verbose,alpha=0.5)
 
     if pngOut:
-        plot.savefig(pngOut,dpi=300)
+        plot.savefig(pngOut,dpi=pngSize/10)
+    if thumbOut:
+        plot.savefig(thumbOut,dpi=thumbSize/10)
 
     return map
 
