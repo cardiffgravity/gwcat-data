@@ -255,6 +255,7 @@ class GWCat(object):
                 fOut=open(fitsFile,'wb')
                 fOut.write(mapreq.content)
                 fOut.close()
+                if verbose:print('Map downloaded')
             except:
                 print('ERROR: Problem loading/saving map:',mapreq.status_code)
                 return mapreq
@@ -263,13 +264,22 @@ class GWCat(object):
                 stat={'mapurllocal':fitsFile,
                     'mapdatelocal':hdr['DATE']}
                 self.updateStatus(ev,stat,verbose=verbose)
-                return(hdr)
             except:
                 print('ERROR: Problem opening fits file for {}:'.format(ev),fitsFile)
+                return
+            try:
+                map=hp.read_map(fitsFile)
+                totmap,a90=plotloc.getProbMap(map,prob=0.9,verbose=verbose)
+                a50=plotloc.getArea(totmap,0.5,verbose=verbose)
+                self.data[ev]['deltaOmega']={'best':round(a90)}
+                self.data[ev]['skyarea(50)']={'best':round(a50)}
+                if verbose:print('90% area',round(a90),'50% area',round(a50))
+            except:
+                print('WARNING: Problem calculating area for {}'.format(ev))
         else:
             print('ERROR: Problem loading map:',mapreq.status_code)
             return mapreq.status_code
-        return
+        return hdr
 
     def rel2abs(self,rel):
         return(self.baseurl + rel)

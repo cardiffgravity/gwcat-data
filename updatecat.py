@@ -34,8 +34,9 @@ if update==True:
 else:
     print('importing from local file')
     gc=gwcat.GWCat(fileIn=os.path.join(dataDir,'gwosc_gracedb.json'),dataDir=dataDir)
-gc.updateMaps(verbose=True,forceUpdate=forcemap)
-gc.plotMapPngs(verbose=True,overwrite=overwrite)
+
+gc.updateMaps(verbose=verbose,forceUpdate=forcemap)
+gc.plotMapPngs(verbose=verbose,overwrite=overwrite)
 
 # export library
 gc.exportJson(os.path.join(dataDir,'gwosc_gracedb.json'))
