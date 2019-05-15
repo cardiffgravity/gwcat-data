@@ -60,10 +60,10 @@ def gwosc2cat(gwosc,verbose=False):
                 catOut[e]['name']=paramConv(gwoscIn[e]['files']['eventName'])
                 if catOut[e]['name'][0]=='G':
                     catOut[e]['detType']={'best':'GW'}
-                    catOut[e]['conf']='GW'
+                    catOut[e]['conf']={'best':'GW'}
                 else:
                     catOut[e]['detType']={'best':'LVT'}
-                    catOut[e]['conf']='LVT'
+                    catOut[e]['conf']={'best':'LVT'}
             # convert UTC
             if 'PeakAmpGPS' in gwoscIn[e]['files']:
                 dtIn=Time(gwoscIn[e]['files']['PeakAmpGPS'],format='gps')
