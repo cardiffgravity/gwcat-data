@@ -190,7 +190,7 @@ class GWCat(object):
                     self.addLink(g,l,verbose=verbose)
             self.updateStatus(g,verbose=verbose)
         for ev in self.links:
-            self.updateMapSrc(ev)
+            self.updateMapSrc(ev,verbose=True)
             self.updateStatus(ev,verbose=verbose)
         self.json2dataframe(verbose=verbose)
         self.meta['gwosc']=gwoscIn['meta']
