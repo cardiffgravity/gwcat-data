@@ -114,7 +114,11 @@ class GWCat(object):
         self.cols=list(self.datadict.keys())
         self.links=eventsIn['links']
         self.json2dataframe(verbose=verbose)
-        self.meta={'created':Time.now().isot}
+        if 'meta' in eventsIn:
+            self.meta=eventsIn['meta']
+            self.meta['created']=Time.now().isot
+        else:
+            self.meta={'created':Time.now().isot}
         return
 
     def getEvent(self,ev):
@@ -152,6 +156,8 @@ class GWCat(object):
                 status=statusIn['meta']
             else:
                 status=statusIn
+        if not ev in self.status:
+            self.status[ev]={}
         for m in status:
             self.status[ev][m]=status[m]
         # if (event):
@@ -184,7 +190,16 @@ class GWCat(object):
     def importGwosc(self,gwoscIn,verbose=False):
         catData=gwosc.gwosc2cat(gwoscIn)
         for g in catData['data']:
+            # get old metadata
+            dmeta={}
+            if g in self.data:
+                if 'meta' in self.data[g]:
+                    dmeta=self.data[g]['meta']
             self.data[g]=catData['data'][g]
+            # update metadata
+            for m in catData['data'][g]['meta']:
+                dmeta[m]=catData['data'][g]['meta'][m]
+            self.data[g]['meta']=dmeta
             if g in catData['links']:
                 for l in catData['links'][g]:
                     self.addLink(g,l,verbose=verbose)
@@ -193,13 +208,25 @@ class GWCat(object):
             self.updateMapSrc(ev,verbose=True)
             self.updateStatus(ev,verbose=verbose)
         self.json2dataframe(verbose=verbose)
-        self.meta['gwosc']=gwoscIn['meta']
+        if not 'gwosc' in self.meta:
+            self.meta['gwosc']={}
+        for m in gwoscIn['meta']:
+            self.meta['gwosc'][m]=gwoscIn['meta'][m]
         return
 
     def importGraceDB(self,gracedbIn,verbose=False):
         gdb=gracedb.gracedb2cat(gracedbIn['data'])
         for g in gdb['data']:
+            # get old metadata
+            dmeta={}
+            if g in self.data:
+                if 'meta' in self.data[g]:
+                    dmeta=self.data[g]['meta']
             self.data[g]=gdb['data'][g]
+            # update metadata
+            for m in gdb['data'][g]['meta']:
+                dmeta[m]=gdb['data'][g]['meta'][m]
+            self.data[g]['meta']=dmeta
             for l in gdb['links'][g]:
                 self.addLink(g,l,verbose=verbose)
             self.updateStatus(g)
@@ -207,7 +234,10 @@ class GWCat(object):
             self.updateMapSrc(ev)
             self.updateStatus(ev,verbose=verbose)
         self.json2dataframe(verbose=verbose)
-        self.meta['graceDB']=gracedbIn['meta']
+        if not 'graceDB' in self.meta:
+            self.meta['graceDB']={}
+        for m in gracedbIn['meta']:
+            self.meta['graceDB'][m]=gracedbIn['meta'][m]
         return
 
     def updateMaps(self,verbose=False,forceUpdate=False):
@@ -225,9 +255,10 @@ class GWCat(object):
             if updateMap or forceUpdate:
                 self.getMap(ev,verbose=verbose)
                 if verbose:print('Updating map for {}'.format(ev))
+                self.calcAreas(ev,verbose=verbose)
             else:
                 if verbose:print('No update required for {}'.format(ev))
-
+            # fitsFile=self.status[ev]['mapdatelocal']
         return
 
     def getMap(self,ev,verbose=False):
@@ -263,23 +294,30 @@ class GWCat(object):
                 hdr=fits.getheader(fitsFile,ext=1)
                 stat={'mapurllocal':fitsFile,
                     'mapdatelocal':hdr['DATE']}
+                self.data[ev]['meta']['mapurllocal']=fitsFile
+                self.data[ev]['meta']['mapdatelocal']=hdr['DATE']
                 self.updateStatus(ev,stat,verbose=verbose)
             except:
                 print('ERROR: Problem opening fits file for {}:'.format(ev),fitsFile)
                 return
-            try:
-                map=hp.read_map(fitsFile)
-                totmap,a90=plotloc.getProbMap(map,prob=0.9,verbose=verbose)
-                a50=plotloc.getArea(totmap,0.5,verbose=verbose)
-                self.data[ev]['deltaOmega']={'best':round(a90)}
-                self.data[ev]['skyarea(50)']={'best':round(a50)}
-                if verbose:print('90% area',round(a90),'50% area',round(a50))
-            except:
-                print('WARNING: Problem calculating area for {}'.format(ev))
+            self.calcAreas(ev,verbose=verbose)
         else:
             print('ERROR: Problem loading map:',mapreq.status_code)
             return mapreq.status_code
         return hdr
+
+    def calcAreas(self,ev,verbose=False):
+        fitsFile=self.status[ev]['mapurllocal']
+        map=hp.read_map(fitsFile)
+        totmap,a90=plotloc.getProbMap(map,prob=0.9,verbose=verbose)
+        a50=plotloc.getArea(totmap,0.5,verbose=verbose)
+        self.data[ev]['deltaOmega']={'best':round(a90)}
+        self.data[ev]['skyarea(50)']={'best':round(a50)}
+        if verbose:print('90% area',round(a90),'50% area',round(a50))
+        return(a90)
+        # except:
+        #     print('WARNING: Problem calculating area for {}'.format(ev))
+            # return
 
     def rel2abs(self,rel):
         return(self.baseurl + rel)
