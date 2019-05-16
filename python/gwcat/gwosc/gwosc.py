@@ -90,23 +90,19 @@ def gwosc2cat(gwosc,verbose=False):
                 else: catOut[e]['objType']={'best':'BBH'}
 
         # convert FAR and SNR (priority pycbc - gstlal - cwb)
-        try:
-            if gwoscIn[e]['far_pycbc']['best']!='NA':
-                catOut[e]['FAR']={'best':gwoscIn[e]['far_pycbc']['best'],'fartype':'pycbc'}
-        except:
-            try:
-                if gwoscIn[e]['far_gstlal']['best']!='NA':
-                    catOut[e]['FAR']={'best':gwoscIn[e]['far_gstlal']['best'],'fartype':'gstlal'}
-            except:
-                 if 'far_cwb' in gwoscIn[e]:
-                    if gwoscIn[e]['far_cwb']['best']!='NA':
-                        catOut[e]['FAR']={'best':gwoscIn[e]['far_cwb']['best'],'fartype':'cwb'}
+        if gwoscIn[e]['far_pycbc']['best']!='NA':
+            catOut[e]['FAR']={'best':gwoscIn[e]['far_pycbc']['best'],'fartype':'pycbc'}
+        elif gwoscIn[e]['far_gstlal']['best']!='NA':
+            catOut[e]['FAR']={'best':gwoscIn[e]['far_gstlal']['best'],'fartype':'gstlal'}
+        elif gwoscIn[e]['far_cwb']['best']!='NA':
+            catOut[e]['FAR']={'best':gwoscIn[e]['far_cwb']['best'],'fartype':'cwb'}
+
         if gwoscIn[e]['snr_pycbc']['best']!='NA':
-            catOut[e]['rho']={'best':gwoscIn[e]['snr_pycbc']['best'],'fartype':'pycbc'}
+            catOut[e]['rho']={'best':gwoscIn[e]['snr_pycbc']['best'],'snrtype':'pycbc'}
         elif gwoscIn[e]['snr_gstlal']['best']!='NA':
-            catOut[e]['rho']={'best':gwoscIn[e]['snr_gstlal']['best'],'fartype':'gstlal'}
+            catOut[e]['rho']={'best':gwoscIn[e]['snr_gstlal']['best'],'snrtype':'gstlal'}
         elif gwoscIn[e]['snr_cwb']['best']!='NA':
-            catOut[e]['rho']={'best':gwoscIn[e]['snr_cwb']['best'],'fartype':'cwb'}
+            catOut[e]['rho']={'best':gwoscIn[e]['snr_cwb']['best'],'snrtype':'cwb'}
         catOut[e]['meta']={'retrieved':Time.now().isot,'src':url}
     return({'data':catOut,'links':linksOut})
 
