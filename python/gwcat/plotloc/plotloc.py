@@ -448,7 +448,7 @@ def plotContours(map,level=0.9,color='w',alpha=0.5,linestyle='-',linewidth=2,ver
     return(cont)
 
 
-def makePlot(ev='S190412m',mapIn=None,proj='moll',plotcont=False,smooth=0.5,zoomlim=0.92,rotmap=True,half_sky=False,pngOut=None,verbose=False,cbg=None,dirData='data/',minzoom=10,pngSize=3000,thumbOut=None,thumbSize=300):
+def makePlot(ev='S190412m',mapIn=None,proj='moll',plotcont=False,smooth=0.5,zoomlim=0.92,rotmap=True,half_sky=False,pngOut=None,verbose=False,cbg=None,dirData='data/',minzoom=10,pngSize=3000,thumbOut=None,thumbSize=300,title=None):
     # ev: superevent ID [default='S190412m']
     # proj: projection (moll=Mollweide [Default], cart=Cartesian)
     # plotcont: set to plot contours (default=True)
@@ -464,6 +464,7 @@ def makePlot(ev='S190412m',mapIn=None,proj='moll',plotcont=False,smooth=0.5,zoom
     # cbg: background colour [Default=black]
     # dirData: directory to load files from [Default= 'data/']
     # minzoom: minimum map radius, in degrees (proj=cart & zoomlim!=None only) [Default=10]
+    # title: Title to plot on image (optional string) [Default = <ev>]
     if type(mapIn)==type(None):
         event=getSuperevent(ev,verbose=verbose)
         event['mapfile_local']=fileOut='{}_{}'.format(ev,event['mapfile'][0])
@@ -475,6 +476,8 @@ def makePlot(ev='S190412m',mapIn=None,proj='moll',plotcont=False,smooth=0.5,zoom
         map=mapIn
     maptot,area95=getProbMap(map,0.95,verbose=verbose)
 
+    if title==None:
+        title=ev
 
     blankmap=np.zeros_like(maptot)
     if rotmap:
@@ -482,6 +485,8 @@ def makePlot(ev='S190412m',mapIn=None,proj='moll',plotcont=False,smooth=0.5,zoom
         rot=[raPeak,decPeak]
     else:
         rot=None
+    if minzoom==None:
+        minzoom=180
     if proj=='cart' and zoomlim!=None:
         radeczoom=getRaDecRange(maptot,lim=zoomlim,ltype='max',verbose=verbose)
         # apply min zoom
@@ -499,7 +504,7 @@ def makePlot(ev='S190412m',mapIn=None,proj='moll',plotcont=False,smooth=0.5,zoom
         ralim=[-180,180]
         declim=[-90,90]
     # print (radec95)
-    fig=plotMap(map,cmap=cm.hot,proj=proj,rot=rot,verbose=verbose,zoomrng=radeczoom,title=ev,half_sky=half_sky,cbg=cbg)
+    fig=plotMap(map,cmap=cm.hot,proj=proj,rot=rot,verbose=verbose,zoomrng=radeczoom,title=title,half_sky=half_sky,cbg=cbg)
 
     if plotcont:
         cont90=plotContours(maptot,level=0.9,color='w',alpha=0.5,linestyle='-',linewidth=2,verbose=verbose)
