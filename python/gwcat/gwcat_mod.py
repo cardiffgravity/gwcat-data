@@ -188,6 +188,7 @@ class GWCat(object):
                 print('WARNING: Error loading skymap for {}:'.format(ev),l)
 
     def importGwosc(self,gwoscIn,verbose=False):
+        print('*** Importing GWOSC...')
         catData=gwosc.gwosc2cat(gwoscIn)
         for g in catData['data']:
             # get old metadata
@@ -215,6 +216,7 @@ class GWCat(object):
         return
 
     def importGraceDB(self,gracedbIn,verbose=False):
+        print('*** Importing GraceDB...')
         gdb=gracedb.gracedb2cat(gracedbIn['data'])
         for g in gdb['data']:
             # get old metadata
@@ -241,7 +243,8 @@ class GWCat(object):
         return
 
     def updateMaps(self,verbose=False,forceUpdate=False):
-        for ev in self.events:
+        print('*** Updating maps...')
+        for ev in self.data:
             # compare map creation dates
             try:
                 mapdatelocal=Time(self.status[ev]['mapdatelocal'])
@@ -257,7 +260,9 @@ class GWCat(object):
                 if verbose:print('Updating map for {}'.format(ev))
                 self.calcAreas(ev,verbose=verbose)
             else:
-                if verbose:print('No update required for {}'.format(ev))
+                if verbose:print('No map update required for {}'.format(ev))
+                if not 'deltaOmega' in self.data[ev]:
+                    self.calcAreas(ev,verbose=verbose)
             # fitsFile=self.status[ev]['mapdatelocal']
         return
 
@@ -327,7 +332,7 @@ class GWCat(object):
         return(self.baseurl + rel)
 
     def plotMapPngs(self,overwrite=False,verbose=False):
-        print('Updating maps...')
+        print('*** Updating plots...')
         pngDir=os.path.join(self.dataDir,'png')
         dataDir=os.path.join(self.dataDir,'fits')
         if not os.path.exists(pngDir):
@@ -336,7 +341,7 @@ class GWCat(object):
             if not 'mapurllocal' in self.status[ev]:
                 self.getMap(ev,verbose=verbose)
             filename=self.status[ev]['mapurllocal']
-            if verbose:print('plotting maps at {}'.format(filename))
+            # if verbose:print('plotting maps at {}'.format(filename))
             fitsCreated=Time(self.status[ev]['mapdatelocal'])
             srcfile=os.path.split(self.status[ev]['mapurlsrc'])[-1]
             ptitle='{} [{}]'.format(ev,srcfile)
