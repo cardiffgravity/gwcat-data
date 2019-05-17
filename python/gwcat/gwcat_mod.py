@@ -275,14 +275,18 @@ class GWCat(object):
             if verbose: print('WARNING: more than one skymap link for {}',format(ev))
         url=lmap[0]['url']
         if verbose: print('Downloading skymap for {} from {}'.format(ev,url))
+        srcfile=os.path.split(url)[-1]
         mapreq=requests.get(url)
         if mapreq.ok:
             try:
-                if url.find('.fits.gz')>=0:
-                    fileext='fits.gz'
+                # if url.find('.fits.gz')>=0:
+                #     fileext='fits.gz'
+                # else:
+                #     fileext='fits'
+                if srcfile.find(ev)<0:
+                    fitsFile=os.path.join(fitsDir,'{}_{}'.format(ev,srcfile))
                 else:
-                    fileext='fits'
-                fitsFile=os.path.join(fitsDir,'{}_skymap.{}'.format(ev,fileext))
+                    fitsFile=os.path.join(fitsDir,srcfile)
                 fOut=open(fitsFile,'wb')
                 fOut.write(mapreq.content)
                 fOut.close()
@@ -323,80 +327,92 @@ class GWCat(object):
         return(self.baseurl + rel)
 
     def plotMapPngs(self,overwrite=False,verbose=False):
+        print('Updating maps...')
         pngDir=os.path.join(self.dataDir,'png')
         dataDir=os.path.join(self.dataDir,'fits')
         if not os.path.exists(pngDir):
             os.mkdir(pngDir)
-        for ev in self.data:
-            pngMoll=os.path.join(pngDir,'{}_moll.png'.format(ev))
-            thumbMoll=pngMoll.replace('.png','.thumb.png')
-            pngCartzoom=os.path.join(pngDir,'{}_cartzoom.png'.format(ev))
-            thumbCartzoom=pngCartzoom.replace('.png','.thumb.png')
-            pngCart=os.path.join(pngDir,'{}_cart.png'.format(ev))
-            thumbCart=pngCart.replace('.png','.thumb.png')
-            pngMollrot=os.path.join(pngDir,'{}_moll_rot.png'.format(ev))
-            thumbMollrot=pngMollrot.replace('.png','.thumb.png')
-            pngCartrot=os.path.join(pngDir,'{}_cart_rot.png'.format(ev))
-            thumbCartrot=pngCartrot.replace('.png','.thumb.png')
-            exCart=os.path.isfile(pngCart)
-            exCartzoom=os.path.isfile(pngCartzoom)
-            exMoll=os.path.isfile(pngMoll)
-            exMollrot=os.path.isfile(pngMollrot)
-            exCartrot=os.path.isfile(pngCartrot)
-            if exCart and exMoll and exCartzoom and exMollrot and exCartrot and not overwrite:
+        for ev in self.events:
+            if not 'mapurllocal' in self.status[ev]:
+                self.getMap(ev,verbose=verbose)
+            filename=self.status[ev]['mapurllocal']
+            if verbose:print('plotting maps at {}'.format(filename))
+            fitsCreated=Time(self.status[ev]['mapdatelocal'])
+            srcfile=os.path.split(self.status[ev]['mapurlsrc'])[-1]
+            ptitle='{} [{}]'.format(ev,srcfile)
+            plots={'moll':{'linktxt':'Skymap (Mollweide fullsky)'},
+                'cartzoom':{'linktxt':'Skymap (Cartesian zoomed)'},
+                'cart':{'linktxt':'Skymap (Cartesian fullsky)'},
+                'moll_rot':{'linktxt':'Skymap (Mollweide fullsky, rotated)'},
+                'cart_rot':{'linktxt':'Skymap (Cartesian fullsky, rotated)'}
+            }
+            nUpdate=0
+            for p in plots:
+                plots[p]['pngFile']=os.path.join(pngDir,'{}_{}.png'.format(ev,p))
+                plots[p]['thumbFile']=os.path.join(pngDir,'{}_{}.thumb.png'.format(ev,p))
+                plots[p]['exists']=os.path.isfile(plots[p]['pngFile'])
+                if not plots[p]['exists'] or overwrite:
+                    plots[p]['update']=True
+                else:
+                    plots[p]['update']=False
+                link=self.getLink(ev,plots[p]['linktxt'],srchtype='text')
+                if len(link)>0:
+                    if 'created' in link[0]:
+                        if link[0]['created']<fitsCreated:
+                            plots[p]['update']=True
+                if plots[p]['update']: nUpdate+=1
+
+            if nUpdate==0:
                 if verbose:print('all plots exist for {}'.format(ev))
             else:
-                if not 'mapurllocal' in self.status[ev]:
-                    self.getMap(ev,verbose=verbose)
-                filename=self.status[ev]['mapurllocal']
-                if verbose:print('plotting maps at {}'.format(filename))
                 try:
                     map=hp.read_map(filename)
                     mapread=True
                 except:
                     print('ERROR: problem reading map at {}'.format(filename))
-                    mapread=False
-                if mapread:
-                    if not exCartzoom or overwrite:
-                        if verbose:print('plotting Cartesian (zoomed) map to {}'.format(pngCartzoom))
+                    return
+                for p in plots:
+                    pp=plots[p]
+                    if p=='cartzoom':
+                        zoomlim=0.8
+                        rotmap=True
+                        minzoom=20
+                        proj='cart'
+                    elif p=='cart':
+                        zoomlim=None
+                        rotmap=False
+                        minzoom=None
+                        proj='cart'
+                    elif p=='moll':
+                        zoomlim=None
+                        rotmap=False
+                        minzoom=None
+                        proj='moll'
+                    elif p=='moll_rot':
+                        zoomlim=None
+                        rotmap=True
+                        minzoom=None
+                        proj='moll'
+                    elif p=='cart_rot':
+                        zoomlim=None
+                        rotmap=True
+                        minzoom=None
+                        proj='cart'
+                    # plot map
+                    if not pp['update']:
+                        if verbose: print('skipping plotting {} map'.format(pp['linktxt']))
+                    else:
+                        if verbose:print('plotting {} map to {}'.format(pp['linktxt'],pp['pngFile']))
                         plotloc.makePlot(ev=ev,mapIn=map,dirData=dataDir,
-                            proj='cart',plotcont=False,smooth=0,zoomlim=0.8,rotmap=True,minzoom=20,
-                            verbose=verbose,
-                            pngOut=pngCartzoom,thumbOut=thumbCartzoom)
-                        self.addLink(ev,{'url':self.rel2abs(pngCartzoom),'text':'Skymap (Cartesian zoomed)','type':'skymap-plot'})
-                        self.addLink(ev,{'url':self.rel2abs(thumbCartzoom),'text':'Skymap (Cartesian zoomed)','type':'skymap-thumbnail'})
-                    if not exCart or overwrite:
-                        if verbose:print('plotting Cartesian (fullsky) map to {}'.format(pngCart))
-                        plotloc.makePlot(ev=ev,mapIn=map,dirData=dataDir,
-                            proj='cart',plotcont=False,smooth=0,zoomlim=None,rotmap=False,
-                            verbose=verbose,
-                            pngOut=pngCart,thumbOut=thumbCart)
-                        self.addLink(ev,{'url':self.rel2abs(pngCart),'text':'Skymap (Cartesian fullsky)','type':'skymap-plot'})
-                        self.addLink(ev,{'url':self.rel2abs(thumbCart),'text':'Skymap (Cartesian fullsky)','type':'skymap-thumbnail'})
-                    if not exMoll or overwrite:
-                        if verbose:print('plotting Mollweide (fullsky) map to {}'.format(pngMoll))
-                        plotloc.makePlot(ev=ev,mapIn=map,dirData=dataDir,
-                            proj='moll',plotcont=False,smooth=0,zoomlim=None,rotmap=False,
-                            verbose=verbose,
-                            pngOut=pngMoll,thumbOut=thumbMoll)
-                        self.addLink(ev,{'url':self.rel2abs(pngMoll),'text':'Skymap (Mollweide fullsky)','type':'skymap-plot'})
-                        self.addLink(ev,{'url':self.rel2abs(thumbMoll),'text':'Skymap (Mollweide fullsky)','type':'skymap-thumbnail'})
-                    if not exCartrot or overwrite:
-                        if verbose:print('plotting Cartesian (fullsky rotated) map to {}'.format(pngCartrot))
-                        plotloc.makePlot(ev=ev,mapIn=map,dirData=dataDir,
-                            proj='cart',plotcont=False,smooth=0,zoomlim=None,rotmap=True,
-                            verbose=verbose,
-                            pngOut=pngCartrot,thumbOut=thumbCartrot)
-                        self.addLink(ev,{'url':self.rel2abs(pngCartrot),'text':'Skymap (Cartesian fullsky, rotated)','type':'skymap-plot'})
-                        self.addLink(ev,{'url':self.rel2abs(thumbCartrot),'text':'Skymap (Cartesian fullsky, rotated)','type':'skymap-thumbnail'})
-                    if not exMollrot or overwrite:
-                        if verbose:print('plotting Mollweide (fullsky rotated) map to {}'.format(pngMollrot))
-                        plotloc.makePlot(ev=ev,mapIn=map,dirData=dataDir,
-                            proj='moll',plotcont=False,smooth=0,zoomlim=None,rotmap=True,
-                            verbose=verbose,
-                            pngOut=pngMollrot,thumbOut=thumbMollrot)
-                        self.addLink(ev,{'url':self.rel2abs(pngMollrot),'text':'Skymap (Mollweide fullsky, rotated)','type':'skymap-plot'})
-                        self.addLink(ev,{'url':self.rel2abs(thumbMollrot),'text':'Skymap (Mollweide fullsky, rotated)','type':'skymap-thumbnail'})
+                            proj=proj,plotcont=False,smooth=0,zoomlim=zoomlim,
+                            rotmap=rotmap,minzoom=minzoom,
+                            verbose=verbose,title=ptitle,
+                            pngOut=pp['pngFile'],thumbOut=pp['thumbFile'])
+                        # add links
+                        self.addLink(ev,{'url':self.rel2abs(pp['pngFile']),'text':pp['linktxt'],
+                            'type':'skymap-plot','created':Time.now().isot})
+                        self.addLink(ev,{'url':self.rel2abs(pp['thumbFile']),'text':pp['linktxt'],
+                            'type':'skymap-thumbnail','created':Time.now().isot})
 
         return
 
