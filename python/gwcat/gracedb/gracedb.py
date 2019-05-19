@@ -16,6 +16,14 @@ def gracedb2cat(gdb,verbose=False):
         gdbIn=gdb
     for g in gdbIn:
         if verbose: print('importing GraceDB event {}'.format(g))
+        # check for Retraction
+        if 'xml' in gdbIn[g]:
+            xml=gdbIn[g]['xml']
+            if 'AlertType' in xml:
+                if xml['AlertType']=='Retraction':
+                    if verbose: print('skipping Retraction {}'.format(g))
+                    continue
+
         catOut[g]={}
         linksOut[g]=[]
         if 'superevent_id' in gdbIn[g]: catOut[g]['name']=gdbIn[g]['superevent_id']
