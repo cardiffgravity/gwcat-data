@@ -135,7 +135,7 @@ class GWCat(object):
         json.dump(self.status,open(self.statusFile,'w'),indent=4)
         return
 
-    def updateStatus(self,ev,statusIn=None,verbose=False):
+    def updateStatus(self,ev,desc='',statusIn=None,verbose=False):
         # check if it's in status
         if type(ev)!=str:
             print('ERROR: ev must be string object:',type(ev))
@@ -166,7 +166,8 @@ class GWCat(object):
         #     if 'meta' in status:
         #         for m in event['meta']:
         #             self.status[ev][m]=event['meta'][m]
-        if verbose:print('update status: {}'.format(ev))
+        if desc!='':desctxt='[{}]'.format(desc)
+        if verbose:print('update status: {} {}'.format(ev,desctxt))
         self.saveStatus()
         return
 
@@ -189,7 +190,7 @@ class GWCat(object):
 
     def importGwosc(self,gwoscIn,verbose=False):
         print('*** Importing GWOSC...')
-        catData=gwosc.gwosc2cat(gwoscIn)
+        catData=gwosc.gwosc2cat(gwoscIn,verbose=verbose)
         for g in catData['data']:
             # get old metadata
             dmeta={}
@@ -204,10 +205,10 @@ class GWCat(object):
             if g in catData['links']:
                 for l in catData['links'][g]:
                     self.addLink(g,l,verbose=verbose)
-            self.updateStatus(g,verbose=verbose)
+            self.updateStatus(g,verbose=verbose,desc='Gwosc import')
         for ev in self.links:
             self.updateMapSrc(ev,verbose=True)
-            self.updateStatus(ev,verbose=verbose)
+            self.updateStatus(ev,verbose=verbose,desc='Map src')
         self.json2dataframe(verbose=verbose)
         if not 'gwosc' in self.meta:
             self.meta['gwosc']={}
@@ -217,7 +218,7 @@ class GWCat(object):
 
     def importGraceDB(self,gracedbIn,verbose=False):
         print('*** Importing GraceDB...')
-        gdb=gracedb.gracedb2cat(gracedbIn['data'])
+        gdb=gracedb.gracedb2cat(gracedbIn['data'],verbose=verbose)
         for g in gdb['data']:
             # get old metadata
             dmeta={}
@@ -231,10 +232,10 @@ class GWCat(object):
             self.data[g]['meta']=dmeta
             for l in gdb['links'][g]:
                 self.addLink(g,l,verbose=verbose)
-            self.updateStatus(g)
+            self.updateStatus(g,verbose=verbose,desc='GraceDB import')
         for ev in self.links:
             self.updateMapSrc(ev)
-            self.updateStatus(ev,verbose=verbose)
+            self.updateStatus(ev,verbose=verbose,desc='Map src')
         self.json2dataframe(verbose=verbose)
         if not 'graceDB' in self.meta:
             self.meta['graceDB']={}
@@ -305,7 +306,7 @@ class GWCat(object):
                     'mapdatelocal':hdr['DATE']}
                 self.data[ev]['meta']['mapurllocal']=fitsFile
                 self.data[ev]['meta']['mapdatelocal']=hdr['DATE']
-                self.updateStatus(ev,stat,verbose=verbose)
+                self.updateStatus(ev,statusIn=stat,verbose=verbose,desc='maplocal')
             except:
                 print('ERROR: Problem opening fits file for {}:'.format(ev),fitsFile)
                 return
@@ -485,7 +486,7 @@ class GWCat(object):
         dataOut={}
         series={}
         for d in self.cols:
-            if verbose:print('col:',d)
+            # if verbose:print('col:',d)
             dataOut[d]={}
             dataOut[d+'_valtype']={}
             dataOut[d+'_errp']={}
