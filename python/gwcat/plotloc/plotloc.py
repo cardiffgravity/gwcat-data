@@ -147,6 +147,30 @@ def plotConstLines(color='y',colorstars='y',alpha=1,plotstars=True,verbose=False
                 hp.projplot(const['ra'][i],const['dec'][i],'o',lonlat=True,color=colorstars,markersize=2,alpha=alpha)
     return
 
+def plotGrid(dRA=45,dDec=30,color='w',alpha=0.5,ls=':'):
+    print('plotting grid')
+    for ra in range(-180,180,dRA):
+        print(ra)
+        decl=np.arange(-90,90,1)
+        ral=[ra]*len(decl)
+        line=hp.projplot(ral,decl,lonlat=True,color=color,alpha=alpha,ls=ls)
+        if len(line)>1:
+            xy0=line[1].get_xydata()[0]
+            xy1=line[2].get_xydata()[0]
+            if np.sign(xy0[0])==np.sign(xy1[0]):
+                plot.plot([xy0[0],xy1[0]],[xy0[1],xy1[1]],color=color,linewidth=1,alpha=alpha,ls=ls)
+    for dec in range(-90,90,dDec):
+        print(dec)
+        ral=np.arange(-180,180,1)
+        decl=[dec]*len(ral)
+        line=hp.projplot(ral,decl,lonlat=True,color=color,alpha=alpha,ls=ls)
+        if len(line)>1:
+            xy0=line[1].get_xydata()[0]
+            xy1=line[2].get_xydata()[0]
+            if np.sign(xy0[0])==np.sign(xy1[0]):
+                plot.plot([xy0[0],xy1[0]],[xy0[1],xy1[1]],color=color,linewidth=1,alpha=alpha,ls=ls)
+    return
+
 def getConstLabs(fIn=None,verbose=False):
     # get constellation labels from input file
     if not fIn:
@@ -448,10 +472,11 @@ def plotContours(map,level=0.9,color='w',alpha=0.5,linestyle='-',linewidth=2,ver
     return(cont)
 
 
-def makePlot(ev='S190412m',mapIn=None,proj='moll',plotcont=False,smooth=0.5,zoomlim=0.92,rotmap=True,half_sky=False,pngOut=None,verbose=False,cbg=None,dirData='data/',minzoom=10,pngSize=3000,thumbOut=None,thumbSize=300,title=None):
+def makePlot(ev='S190412m',mapIn=None,proj='moll',plotcont=False,smooth=0.5,zoomlim=0.92,rotmap=True,half_sky=False,pngOut=None,verbose=False,cbg=None,dirData='data/',minzoom=10,pngSize=3000,thumbOut=None,thumbSize=300,title=None,RAcen=0,grid=False):
     # ev: superevent ID [default='S190412m']
+    # mapIn: map to read in (filename [string] or HEALPix map). [Default=None]. If not provided, tries to get event with superevent ID provided in <ev> from GraceDB
     # proj: projection (moll=Mollweide [Default], cart=Cartesian)
-    # plotcont: set to plot contours (default=True)
+    # plotcont: set to plot contours (default=False)
     # smooth: degrees to smooth probability densith map to get contours. 0=no smoothing. [Default=0.5deg]
     # zoomlim: probability to zoom map in to (cartview only). Default=0.92
     # rotmap: rotate map to centre on peak value [Default=False]
@@ -465,6 +490,8 @@ def makePlot(ev='S190412m',mapIn=None,proj='moll',plotcont=False,smooth=0.5,zoom
     # dirData: directory to load files from [Default= 'data/']
     # minzoom: minimum map radius, in degrees (proj=cart & zoomlim!=None only) [Default=10]
     # title: Title to plot on image (optional string) [Default = <ev>]
+    # RAcen: Centre RA (Default=0; applies only if rotmap not set)
+    # grid: set to plot grid (Default=False)
     if type(mapIn)==type(None):
         event=getSuperevent(ev,verbose=verbose)
         event['mapfile_local']=fileOut='{}_{}'.format(ev,event['mapfile'][0])
@@ -483,6 +510,9 @@ def makePlot(ev='S190412m',mapIn=None,proj='moll',plotcont=False,smooth=0.5,zoom
     if rotmap:
         raPeak,decPeak=getPeak(map,verbose=verbose)
         rot=[raPeak,decPeak]
+    elif RAcen!=0:
+        print('centering on {}'.format(RAcen))
+        rot=[RAcen,0]
     else:
         rot=None
     if minzoom==None:
@@ -513,6 +543,9 @@ def makePlot(ev='S190412m',mapIn=None,proj='moll',plotcont=False,smooth=0.5,zoom
         alphaLab=1
     else:
         alphaLab=0.5
+
+    if grid:
+        plotGrid(dRA=45, dDec=30)
     plotConstBounds(color=(0.5,0.5,0.5),verbose=verbose,alpha=0.5)
     plotConstLabs(color=(0,0.7,0.7),verbose=verbose,alpha=alphaLab,maxdist=maxdist,plotcentre=rot)
     plotConstLines(color=(0,0.7,0.7),verbose=verbose,alpha=0.5)
