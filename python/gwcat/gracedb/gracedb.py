@@ -141,50 +141,52 @@ def getSuperevents(export=False,dirOut=None,fileOut=None,indent=2,verbose=False,
             if tNew <= tOld:
                 if forceUpdate:
                     if verbose:print('forcing update for {}: [{}<={}]'.format(sid,tNew.isot,tOld.isot))
+                    update=True
                 else:
                     if verbose:print('no update needed for {}: [{}<={}]'.format(sid, tNew.isot,tOld.isot))
-                    continue
+                    update=False
             else:
                 if verbose:print('getting files for {}: [{}>{}]'.format(sid,tNew.isot,tOld.isot))
+                update=True
 
         latest_voe_url = latest_vo['links']['file']
         vonum=latest_vo['N']
 
         evOut['xmlfile']=[os.path.split(latest_voe_url)[-1],latest_voe_url]
+        if update:
+            # parse XML
+            xml={}
+            if verbose: print('  parsing {}'.format(evOut['xmlfile'][0]))
+            xmlurl=evOut['xmlfile'][1]
+            xmlreq=requests.get(xmlurl)
+            soup=BeautifulSoup(xmlreq.text,'lxml')
+            try:
+                params=soup.what.find_all('param',recursive=False)
+                validXML=True
+            except:
+                print('problem with {}: {}'.format(sid,evOut['xmlfile'][1]))
+                print(soup)
+                validXML=False
+            if validXML:
+                for p in params:
+                    xml[p.attrs['name']]=p.attrs['value']
+                groups=soup.what.find_all('group',recursive=False)
+                for g in groups:
+                    gt=g.attrs['type']
+                    xml[gt]={}
+                    gparams=g.find_all('param',recursice=False)
+                    for gp in gparams:
+                        xml[gt][gp.attrs['name']]=gp.attrs['value']
+                if 'GW_SKYMAP' in xml:
+                    if 'skymap_fits' in xml['GW_SKYMAP']:
+                        mapfile=xml['GW_SKYMAP']['skymap_fits']
+                        evOut['mapfile']=[os.path.split(mapfile)[-1],mapfile]
+                evOut['xml']=xml
+                # create meta data
+        evOut['meta']={'retrieved':Time.now().isot,'src':service_url}
+        evOut['meta']['created_date']=cdate.isot
 
-        # parse XML
-        xml={}
-        if verbose: print('  parsing {}'.format(evOut['xmlfile'][0]))
-        xmlurl=evOut['xmlfile'][1]
-        xmlreq=requests.get(xmlurl)
-        soup=BeautifulSoup(xmlreq.text,'lxml')
-        try:
-            params=soup.what.find_all('param',recursive=False)
-            validXML=True
-        except:
-            print('problem with {}: {}'.format(sid,evOut['xmlfile'][1]))
-            print(soup)
-            validXML=False
-        if validXML:
-            for p in params:
-                xml[p.attrs['name']]=p.attrs['value']
-            groups=soup.what.find_all('group',recursive=False)
-            for g in groups:
-                gt=g.attrs['type']
-                xml[gt]={}
-                gparams=g.find_all('param',recursice=False)
-                for gp in gparams:
-                    xml[gt][gp.attrs['name']]=gp.attrs['value']
-            if 'GW_SKYMAP' in xml:
-                if 'skymap_fits' in xml['GW_SKYMAP']:
-                    mapfile=xml['GW_SKYMAP']['skymap_fits']
-                    evOut['mapfile']=[os.path.split(mapfile)[-1],mapfile]
-            evOut['xml']=xml
-            # create meta data
-            evOut['meta']={'retrieved':Time.now().isot,'src':service_url}
-            evOut['meta']['created_date']=cdate.isot
-
-            results[sid]=evOut
+        results[sid]=evOut
 
 
     if verbose: print('Retrieved data for {} events'.format(len(results)))
