@@ -90,27 +90,37 @@ def gwosc2cat(gwosc,verbose=False):
                 else: catOut[e]['objType']={'best':'BBH'}
 
         # convert FAR and SNR (priority pycbc - gstlal - cwb)
-        if gwoscIn[e]['far_pycbc']['best']!='NA':
-            catOut[e]['FAR']={'best':gwoscIn[e]['far_pycbc']['best'],'fartype':'pycbc'}
-        elif gwoscIn[e]['far_gstlal']['best']!='NA':
-            catOut[e]['FAR']={'best':gwoscIn[e]['far_gstlal']['best'],'fartype':'gstlal'}
-        elif gwoscIn[e]['far_cwb']['best']!='NA':
-            catOut[e]['FAR']={'best':gwoscIn[e]['far_cwb']['best'],'fartype':'cwb'}
+        if 'far_pycbc' in gwoscIn[e]:
+            if gwoscIn[e]['far_pycbc']['best']!='NA':
+                catOut[e]['FAR']={'best':gwoscIn[e]['far_pycbc']['best'],'fartype':'pycbc'}
+            elif gwoscIn[e]['far_gstlal']['best']!='NA':
+                catOut[e]['FAR']={'best':gwoscIn[e]['far_gstlal']['best'],'fartype':'gstlal'}
+            elif gwoscIn[e]['far_cwb']['best']!='NA':
+                catOut[e]['FAR']={'best':gwoscIn[e]['far_cwb']['best'],'fartype':'cwb'}
 
-        if gwoscIn[e]['snr_pycbc']['best']!='NA':
-            catOut[e]['rho']={'best':gwoscIn[e]['snr_pycbc']['best'],'snrtype':'pycbc'}
-        elif gwoscIn[e]['snr_gstlal']['best']!='NA':
-            catOut[e]['rho']={'best':gwoscIn[e]['snr_gstlal']['best'],'snrtype':'gstlal'}
-        elif gwoscIn[e]['snr_cwb']['best']!='NA':
-            catOut[e]['rho']={'best':gwoscIn[e]['snr_cwb']['best'],'snrtype':'cwb'}
+        if 'snr_pycbc' in gwoscIn[e]:
+            if gwoscIn[e]['snr_pycbc']['best']!='NA':
+                catOut[e]['rho']={'best':gwoscIn[e]['snr_pycbc']['best'],'snrtype':'pycbc'}
+            elif gwoscIn[e]['snr_gstlal']['best']!='NA':
+                catOut[e]['rho']={'best':gwoscIn[e]['snr_gstlal']['best'],'snrtype':'gstlal'}
+            elif gwoscIn[e]['snr_cwb']['best']!='NA':
+                catOut[e]['rho']={'best':gwoscIn[e]['snr_cwb']['best'],'snrtype':'cwb'}
+        elif 'snr' in gwoscIn[e]:
+            catOut[e]['rho']={'best':gwoscIn[e]['snr']['best']}
+            if 'pipeline' in gwoscIn[e]:
+                catOut[e]['rho']['snrtype']=gwoscIn[e]['pipeline']['best']
+
         catOut[e]['meta']={'retrieved':Time.now().isot,'src':url}
     return({'data':catOut,'links':linksOut})
 
-def getGwosc(url='',verbose=True,export=False,dirOut=None,fileOut=None,indent=2):
+def getGwosc(url='',verbose=True,export=False,dirOut=None,fileOut=None,indent=2,triggers=False):
     import requests
     import json
     if url=='':
-        url='https://www.gw-openscience.org/catalog/GWTC-1-confident/filelist/'
+        if triggers:
+            url='https://www.gw-openscience.org/catalog/GWTC-1-marginal/filelist/'
+        else:
+            url='https://www.gw-openscience.org/catalog/GWTC-1-confident/filelist/'
     if verbose: print('Retrieving GWOSC data from {}'.format(url))
     gwoscresp = requests.get(url)
     gwoscread=json.loads(gwoscresp.text)
@@ -124,7 +134,10 @@ def getGwosc(url='',verbose=True,export=False,dirOut=None,fileOut=None,indent=2)
         if dirOut==None:
             dirOut='../../data/'
         if fileOut==None:
-            fileOut='gwosc.json'
+            if triggers:
+                fileOut='gwosc-marginal.json'
+            else:
+                fileOut='gwosc.json'
         if verbose: print('Exporting to {}'.format(os.path.join(dirOut,fileOut)))
         fOut=open(os.path.join(dirOut,fileOut),'w')
         json.dump(gwoscdata,fOut,indent=indent)

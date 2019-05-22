@@ -15,6 +15,10 @@ def gracedb2cat(gdb,force=True,verbose=False,knownEvents={},forceUpdate=False):
     else:
         gdbIn=gdb
     for g in gdbIn:
+        if 'validXML' in gdbIn[g]['meta']:
+            if not gdbIn[g]['meta']['validXML']:
+                if verbose:print('skipping {} due to invalid XML'.format(g))
+                continue
         if g in knownEvents:
             tOld=Time(knownEvents[g])
             try:
@@ -52,7 +56,7 @@ def gracedb2cat(gdb,force=True,verbose=False,knownEvents={},forceUpdate=False):
             catOut[g]['UTC']={'best':dtOut}
         if 'far' in gdbIn[g]:
             catOut[g]['FAR']={'best':gdbIn[g]['far']*un.year.to('s')}
-        
+
         # if 'hdr' in gdbIn[g]:
         #     hdr=gdbIn[g]['hdr']
         #     if 'DISTMEAN' in hdr and 'DISTSTD' in hdr:
@@ -128,6 +132,7 @@ def getSuperevents(export=False,dirOut=None,fileOut=None,indent=2,verbose=False,
         #     else:
         #         if verbose:print('importing for {}: [{}>{}]'.format(sid,tNew.isot,tOld.isot))
         evOut=event
+        evOut['meta']={'retrieved':Time.now().isot,'src':service_url}
 
         voreq=client.voevents(sid)
         voevents=json.loads(voreq.read())
@@ -185,8 +190,9 @@ def getSuperevents(export=False,dirOut=None,fileOut=None,indent=2,verbose=False,
                         mapfile=xml['GW_SKYMAP']['skymap_fits']
                         evOut['mapfile']=[os.path.split(mapfile)[-1],mapfile]
                 evOut['xml']=xml
+            evOut['meta']['validXML']=validXML
                 # create meta data
-        evOut['meta']={'retrieved':Time.now().isot,'src':service_url}
+
         evOut['meta']['created_date']=cdate.isot
 
         results[sid]=evOut
