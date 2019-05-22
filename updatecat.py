@@ -24,10 +24,15 @@ if update==True:
     gc=gwcat.GWCat(fileIn=os.path.join(dataDir,'gwosc_gracedb.json'),dataDir=dataDir,baseurl=baseurl,verbose=verbose)
     # gdb=json.load(open(os.path.join(dataDir,'gracedb.json')))
     # gwoscdata=json.load(open(os.path.join(dataDir,'gwosc.json')))
+    # print(knownEvents)
+    knownEvents=gc.getTimestamps()
+
     gwoscdata=gwcat.gwosc.getGwosc(export=True,dirOut=dataDir,verbose=verbose)
-    gdb=gwcat.gracedb.getSuperevents(export=True,dirOut=dataDir,verbose=verbose)
+    gdb=gwcat.gracedb.getSuperevents(export=True,dirOut=dataDir,verbose=verbose,knownEvents=knownEvents)
     json.dump(gwoscdata,open(os.path.join(dataDir,'gwosc.min.json'),'w'))
     json.dump(gdb,open(os.path.join(dataDir,'gracedb.min.json'),'w'))
+
+
     print('importing GWOSC...')
     gc.importGwosc(gwoscdata,verbose=verbose)
     print('importing GraceDB...')
