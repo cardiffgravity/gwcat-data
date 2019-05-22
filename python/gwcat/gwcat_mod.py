@@ -233,10 +233,11 @@ class GWCat(object):
             self.meta['gwosc'][m]=gwoscIn['meta'][m]
         return
 
-    def importGraceDB(self,gracedbIn,verbose=False):
+    def importGraceDB(self,gracedbIn,verbose=False,forceUpdate=False):
         print('*** Importing GraceDB...')
         evTimes=self.getTimestamps()
-        gdb=gracedb.gracedb2cat(gracedbIn['data'],verbose=verbose,knownEvents=evTimes)
+        gdb=gracedb.gracedb2cat(gracedbIn['data'],verbose=verbose,
+            knownEvents=evTimes,forceUpdate=forceUpdate)
         for g in gdb['data']:
             # get old metadata
             dmeta={}

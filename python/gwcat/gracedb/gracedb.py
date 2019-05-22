@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 from astropy.time import Time
 from astropy import units as un
 
-def gracedb2cat(gdb,knownEvents={},verbose=False):
+def gracedb2cat(gdb,force=True,verbose=False,knownEvents={},forceUpdate=False):
     catOut={}
     linksOut={}
     if 'data' in gdb:
@@ -22,8 +22,11 @@ def gracedb2cat(gdb,knownEvents={},verbose=False):
             except:
                 tNew=Time.now()
             if tNew <= tOld:
-                if verbose:print('no update needed for {}: [{}<={}]'.format(g,tNew.isot,tOld.isot))
-                continue
+                if forceUpdate:
+                    if verbose:print('forcing update for {}: [{}<={}]'.format(g,tNew.isot,tOld.isot))
+                else:
+                    if verbose:print('no update needed for {}: [{}<={}]'.format(g,tNew.isot,tOld.isot))
+                    continue
             else:
                 if verbose:print('updating {}: [{}>{}]'.format(g,tNew.isot,tOld.isot))
         if verbose: print('importing GraceDB event {}'.format(g))
@@ -95,7 +98,7 @@ def gracedb2cat(gdb,knownEvents={},verbose=False):
 
     return {'data':catOut,'links':linksOut}
 
-def getSuperevents(export=False,dirOut=None,fileOut=None,indent=2,verbose=False,knownEvents={}):
+def getSuperevents(export=False,dirOut=None,fileOut=None,indent=2,verbose=False,knownEvents={},forceUpdate=False):
 
     service_url = 'https://gracedb.ligo.org/api/'
     if verbose: print('Retrieving GraceDB data from {}'.format(service_url))
@@ -136,8 +139,11 @@ def getSuperevents(export=False,dirOut=None,fileOut=None,indent=2,verbose=False,
             tOld=Time(knownEvents[sid])
             tNew=cdate
             if tNew <= tOld:
-                if verbose:print('no update needed for {}: [{}<={}]'.format(sid,tNew.isot,tOld.isot))
-                continue
+                if forceUpdate:
+                    if verbose:print('forcing update for {}: [{}<={}]'.format(sid,tNew.isot,tOld.isot))
+                else:
+                    if verbose:print('no update needed for {}: [{}<={}]'.format(sid, tNew.isot,tOld.isot))
+                    continue
             else:
                 if verbose:print('getting files for {}: [{}>{}]'.format(sid,tNew.isot,tOld.isot))
 
