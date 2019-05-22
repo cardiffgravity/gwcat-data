@@ -113,6 +113,7 @@ class GWCat(object):
         self.datadict=eventsIn['datadict']
         self.cols=list(self.datadict.keys())
         self.links=eventsIn['links']
+        self.evTimes = self.getTimestamps()
         self.json2dataframe(verbose=verbose)
         if 'meta' in eventsIn:
             self.meta=eventsIn['meta']
@@ -126,6 +127,15 @@ class GWCat(object):
             return(self.data[ev])
         else:
             return
+    def getTimestamps(self):
+        evTimes={}
+        for ev in self.data:
+            try:
+                evTimes[ev]=Time(self.data[ev]['meta']['created_date'])
+            except:
+                # print('no created_date for {}'.format(ev))
+                pass
+        return(evTimes)
 
     def getStatus(self):
         self.status=json.load(open(self.statusFile))
@@ -185,6 +195,13 @@ class GWCat(object):
                 self.data[ev]['meta']['mapdatesrc']=hdr['DATE']
                 self.data[ev]['meta']['mapurlsrc']=l['url']
                 if verbose:print('Skymap loaded for {}:'.format(ev),l['url'])
+                try:
+                    distmu=hdr['DISTMEAN']
+                    distsd=hdr['DISTSTD']
+                    self.data[ev]['DL']={'best':distmu,'err':[-distsd,distsd]}
+                    if verbose:print('obtained distance information for {} [{:.2f},{:.2f}]'.format(ev,distmu,distsd))
+                except:
+                    if verbose:print('no distance information for {}'.format(ev))
             except:
                 print('WARNING: Error loading skymap for {}:'.format(ev),l)
 
@@ -206,7 +223,7 @@ class GWCat(object):
                 for l in catData['links'][g]:
                     self.addLink(g,l,verbose=verbose)
             self.updateStatus(g,verbose=verbose,desc='Gwosc import')
-        for ev in self.links:
+        for ev in catData['links']:
             self.updateMapSrc(ev,verbose=True)
             self.updateStatus(ev,verbose=verbose,desc='Map src')
         self.json2dataframe(verbose=verbose)
@@ -218,7 +235,8 @@ class GWCat(object):
 
     def importGraceDB(self,gracedbIn,verbose=False):
         print('*** Importing GraceDB...')
-        gdb=gracedb.gracedb2cat(gracedbIn['data'],verbose=verbose)
+        evTimes=self.getTimestamps()
+        gdb=gracedb.gracedb2cat(gracedbIn['data'],verbose=verbose,knownEvents=evTimes)
         for g in gdb['data']:
             # get old metadata
             dmeta={}
@@ -233,7 +251,7 @@ class GWCat(object):
             for l in gdb['links'][g]:
                 self.addLink(g,l,verbose=verbose)
             self.updateStatus(g,verbose=verbose,desc='GraceDB import')
-        for ev in self.links:
+        for ev in gdb['links']:
             self.updateMapSrc(ev)
             self.updateStatus(ev,verbose=verbose,desc='Map src')
         self.json2dataframe(verbose=verbose)
