@@ -250,7 +250,11 @@ class GWCat(object):
             try:
                 mapdatelocal=Time(self.status[ev]['mapdatelocal'])
                 mapdatesrc=Time(self.status[ev]['mapdatesrc'])
-                if mapdatesrc>mapdatelocal:
+                mapfile=self.status[ev]['mapurllocal']
+                if not os.path.isfile(mapfile):
+                    if verbose:print('Need to re-download map for {}'.format(ev))
+                    updateMap=True
+                elif mapdatesrc>mapdatelocal:
                     updateMap=True
                 else:
                     updateMap=False
