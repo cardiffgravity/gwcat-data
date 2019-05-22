@@ -52,6 +52,7 @@ def gracedb2cat(gdb,force=True,verbose=False,knownEvents={},forceUpdate=False):
             catOut[g]['UTC']={'best':dtOut}
         if 'far' in gdbIn[g]:
             catOut[g]['FAR']={'best':gdbIn[g]['far']*un.year.to('s')}
+        
         # if 'hdr' in gdbIn[g]:
         #     hdr=gdbIn[g]['hdr']
         #     if 'DISTMEAN' in hdr and 'DISTSTD' in hdr:
@@ -63,6 +64,8 @@ def gracedb2cat(gdb,force=True,verbose=False,knownEvents={},forceUpdate=False):
 
         if 'xml' in gdbIn[g]:
             xml=gdbIn[g]['xml']
+            if 'Pipeline' in xml:
+                catOut[g]['FAR']['fartype']=xml['Pipeline']
             if 'Instruments' in xml:
                 instOut=''
                 inst=xml['Instruments']
