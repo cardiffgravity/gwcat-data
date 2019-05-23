@@ -239,6 +239,15 @@ class GWCat(object):
         gdb=gracedb.gracedb2cat(gracedbIn['data'],verbose=verbose,
             knownEvents=evTimes,forceUpdate=forceUpdate)
         for g in gdb['data']:
+            if gdb['data'][g]['meta'].get('type')=='Retraction':
+                if verbose:print('Skipping retracted event {}'.format(g))
+                if g in self.data:
+                    if verbose:print('Removing data for retracted event {}'.format(g))
+                    self.data.pop(g)
+                if g in self.links:
+                    if verbose:print('Removing links for retracted event {}'.format(g))
+                    self.links.pop(g)
+                continue
             # get old metadata
             dmeta={}
             if g in self.data:
@@ -253,6 +262,8 @@ class GWCat(object):
                 self.addLink(g,l,verbose=verbose)
             self.updateStatus(g,verbose=verbose,desc='GraceDB import')
         for ev in gdb['links']:
+            if gdb['data'][ev]['meta'].get('type')=='Retraction':
+                continue
             self.updateMapSrc(ev)
             self.updateStatus(ev,verbose=verbose,desc='Map src')
         self.json2dataframe(verbose=verbose)
