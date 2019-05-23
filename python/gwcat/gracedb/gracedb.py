@@ -164,6 +164,7 @@ def getSuperevents(export=False,dirOut=None,fileOut=None,indent=2,verbose=False,
                         else:
                             if verbose:print('no update needed for {}: [{}<={}]'.format(sid, tNew.isot,tOld.isot))
                             update=False
+                            validXML=True
                     else:
                         if verbose:print('getting files for {}: [{}>{}]'.format(sid,tNew.isot,tOld.isot))
                         update=True
