@@ -472,7 +472,10 @@ def plotContours(map,level=0.9,color='w',alpha=0.5,linestyle='-',linewidth=2,ver
     return(cont)
 
 
-def makePlot(ev='S190412m',mapIn=None,proj='moll',plotcont=False,smooth=0.5,zoomlim=0.92,rotmap=True,half_sky=False,pngOut=None,verbose=False,cbg=None,dirData='data/',minzoom=10,pngSize=3000,thumbOut=None,thumbSize=300,title=None,RAcen=0,grid=False):
+def makePlot(ev='S190412m',mapIn=None,proj='moll',plotcont=False,smooth=0.5,zoomlim=0.92,rotmap=True,
+    half_sky=False,pngOut=None,verbose=False,cbg=None,
+    dirData='data/',minzoom=10,pngSize=3000,thumbOut=None,
+    thumbSize=300,title=None,RAcen=0,grid=False,addCredit=True,addLogos=False):
     # ev: superevent ID [default='S190412m']
     # mapIn: map to read in (filename [string] or HEALPix map). [Default=None]. If not provided, tries to get event with superevent ID provided in <ev> from GraceDB
     # proj: projection (moll=Mollweide [Default], cart=Cartesian)
@@ -492,10 +495,11 @@ def makePlot(ev='S190412m',mapIn=None,proj='moll',plotcont=False,smooth=0.5,zoom
     # title: Title to plot on image (optional string) [Default = <ev>]
     # RAcen: Centre RA (Default=0; applies only if rotmap not set)
     # grid: set to plot grid (Default=False)
+    # addCredit: set to plot credit line (Default=True)
     if type(mapIn)==type(None):
         event=getSuperevent(ev,verbose=verbose)
         event['mapfile_local']=fileOut='{}_{}'.format(ev,event['mapfile'][0])
-        getMapFile(event['mapfile'][1],fileOut=event['mapfile_local'],verbose=verbose)
+        getMapFile(event['mapfile'][1],fileOut=event['mapfile_local'],verbose=verbose,dirOut=dirData)
         map=readMap(event['mapfile_local'],smooth=smooth,verbose=verbose,dirIn=dirData)
     elif type(mapIn)==str:
         map=readMap(mapIn,smooth=smooth,verbose=verbose,dirIn=dirData)
@@ -550,6 +554,24 @@ def makePlot(ev='S190412m',mapIn=None,proj='moll',plotcont=False,smooth=0.5,zoom
     plotConstLabs(color=(0,0.7,0.7),verbose=verbose,alpha=alphaLab,maxdist=maxdist,plotcentre=rot)
     plotConstLines(color=(0,0.7,0.7),verbose=verbose,alpha=0.5)
 
+    if addCredit:
+        credit='Credit: LIGO-Virgo/Cardiff Uni./C. North'
+        text=plot.figtext(0.99,0.01,credit,color='black',ha='right')
+    if addLogos:
+        # get height/width
+        figsize=plot.gcf().get_size_inches()
+        aspect=figsize[1]/figsize[0]
+        logosize=[0.05*aspect,0.05]
+        logo1=os.path.join(os.path.dirname(__file__),'logos/cardiffuniversitylogo-spot_500px.jpg')
+        im1=plot.imread(logo1)
+        axlogo1=plot.gcf().add_axes([0.01,0.01,logosize[0],logosize[1]],anchor='SW')
+        axlogo1.imshow(im1)
+        axlogo1.axis('off')
+        logo2=os.path.join(os.path.dirname(__file__),'logos/LigoVirgo14.jpg')
+        im2=plot.imread(logo2)
+        axlogo2=plot.gcf().add_axes([logosize[0]+0.02,0.01,logosize[0],logosize[1]],anchor='SW')
+        axlogo2.imshow(im2)
+        axlogo2.axis('off')
     if pngOut:
         plot.savefig(pngOut,dpi=pngSize/10)
     if thumbOut:
