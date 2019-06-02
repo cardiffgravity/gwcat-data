@@ -471,6 +471,45 @@ def plotContours(map,level=0.9,color='w',alpha=0.5,linestyle='-',linewidth=2,ver
         hp.projplot(raCont[s],decCont[s],lonlat=True,color=color,alpha=alpha,linestyle=linestyle,linewidth=linewidth)
     return(cont)
 
+def plotGravoscope(mapIn,fileIn='',cmap=cm.gray,pngOut='',res=4,verbose=False):
+
+    try:
+        nside=hp.get_nside(mapIn)
+        T=mapIn
+    except:
+        if verbose:print('reading map from {}'.format(fileIn))
+        T = hp.read_map(fileIn)
+        nside=hp.get_nside(mapIn)
+
+    sky = np.zeros((int(1024*res),int(1024*res/2)),dtype=np.float32)
+    tmp = np.zeros((1024,1024),dtype=np.float32)
+
+    dlon=(360/res)
+    dlat=dlon
+    for i in np.arange(res):
+        lon_off = (i-(res/2)+0.5)*dlon
+        for j in np.arange(int(res/2)):
+            lat0=-90 + j*dlon
+            lat1=lat0+dlon
+            if verbose:print('plotting {}x{} of {}x{} : [{},{}] - [{}:{}]'.format(
+                i,j,res,int(res/2),-lon_off-dlon/2,lat0,-lon_off+dlon/2,lat1))
+            tmp[...] = np.transpose(hp.cartview(T,coord=['C','G'],return_projected_map=1,
+                xsize=1024,ysize=1024,lonra=[-dlon/2,dlon/2],latra=[lat0,lat1],rot=[-lon_off,0]))
+            # print(i,j,i*1024,(i+1)*1024,j*1024,(j+1)*1024)
+            sky[i*1024:(i+1)*1024,j*1024:(j+1)*1024] = tmp
+
+        plot.close('all')
+    plot.figure(figsize=(10.24*res,10.24*res/2))
+    plot.figimage(np.flipud(np.transpose(sky)),cmap=cmap)
+
+    if pngOut!='':
+        plot.savefig(pngOut)
+
+    # cutterfile=os.path.join(os.path.dirname(__file__),'cutter.pl')
+    #
+    # os.execv('perl {} cutter.pl file="{}" minzoom=3 maxzoom=7'.format(cutterfile,pngOut))
+
+    return
 
 def makePlot(ev='S190412m',mapIn=None,proj='moll',plotcont=False,smooth=0.5,zoomlim=0.92,rotmap=True,
     half_sky=False,pngOut=None,verbose=False,cbg=None,

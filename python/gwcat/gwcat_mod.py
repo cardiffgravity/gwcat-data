@@ -369,6 +369,7 @@ class GWCat(object):
     def plotMapPngs(self,overwrite=False,verbose=False):
         print('*** Updating plots...')
         pngDir=os.path.join(self.dataDir,'png')
+        gravDir=os.path.join(self.dataDir,'gravoscope')
         dataDir=os.path.join(self.dataDir,'fits')
         if not os.path.exists(pngDir):
             os.mkdir(pngDir)
@@ -404,6 +405,7 @@ class GWCat(object):
 
             if nUpdate==0:
                 if verbose:print('all plots exist for {}'.format(ev))
+                mapread=False
             else:
                 try:
                     map=hp.read_map(filename)
@@ -454,6 +456,27 @@ class GWCat(object):
                             'type':'skymap-plot','created':Time.now().isot})
                         self.addLink(ev,{'url':self.rel2abs(pp['thumbFile']),'text':pp['linktxt'],
                             'type':'skymap-thumbnail','created':Time.now().isot})
+
+            res=8
+            gravNpix=int(8*1024)
+            updateGrav=False
+            gravFile=os.path.join(gravDir,'{}_{}.png'.format(ev,gravNpix))
+            if not os.path.isfile(gravFile):
+                updateGrav=True
+            gravLinktxt='Skymap (Gravoscope)'
+            gravLink=self.getLink(ev,gravLinktxt,srchtype='text')
+            if len(gravLink)>0:
+                if 'created' in gravLink[0]:
+                    if link[0]['created']<fitsCreated:
+                        updateGrav=True
+            if updateGrav:
+                if not mapread:
+                    map=hp.read_map(filename)
+                if verbose:
+                    print('plotting Gravoscope for {} ({}x{})'.format(ev,gravNpix,int(gravNpix/2)))
+                plotloc.plotGravoscope(mapIn=map,pngOut=gravFile,verbose=verbose,res=res)
+                self.addLink(ev,{'url':self.rel2abs(gravFile),'text':gravLinktxt,
+                    'type':'skymap-gravoscope','created':Time.now().isot})
 
         return
 
