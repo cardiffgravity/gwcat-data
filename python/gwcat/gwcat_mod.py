@@ -447,7 +447,8 @@ class GWCat(object):
                             proj=proj,plotcont=False,smooth=0,zoomlim=zoomlim,
                             rotmap=rotmap,minzoom=minzoom,
                             verbose=verbose,title=ptitle,
-                            pngOut=pp['pngFile'],thumbOut=pp['thumbFile'])
+                            pngOut=pp['pngFile'],thumbOut=pp['thumbFile'],
+                            addCredit=True,addLogos=True)
                         # add links
                         self.addLink(ev,{'url':self.rel2abs(pp['pngFile']),'text':pp['linktxt'],
                             'type':'skymap-plot','created':Time.now().isot})
