@@ -168,6 +168,8 @@ def getSuperevents(export=False,dirOut=None,fileOut=None,indent=2,verbose=False,
                     else:
                         if verbose:print('getting files for {}: [{}>{}]'.format(sid,tNew.isot,tOld.isot))
                         update=True
+                else:
+                    update=True
 
                 thisvoe_url = thisvo['links']['file']
                 vonum=thisvo['N']
