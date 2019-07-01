@@ -57,6 +57,7 @@ $maxZoom = $data{'maxzoom'} ? $data{'maxzoom'} : int(log($wide/$tileSize)/log(2)
 $fileExt = $data{'ext'} ? $data{'ext'} : "jpg";
 $compres = $data{'compression'} ? $data{'compression'} : 'JPEG';
 $quality = $data{'quality'} ? $data{'quality'} : 85;
+$verbose = $data{'verbose'} ? $data{'verbose'} : 0;
 
 
 # Here we assume the image is the entire sky. Could be adapted
@@ -68,17 +69,17 @@ $offx = ($wide > $tall) ? 0 : ($maxdim-$wide)/2.;
 $offy = ($wide > $tall) ? ($maxdim-$tall)/2.: 0;
 $map->Composite(image=>$image,compose=>'over',x=>$offx,y=>$offy);
 
-print "The original image is ".$wide."x".$tall."px. Expanding to ".$maxdim."x".$maxdim."\n";
+if($verbose){print "The original image is ".$wide."x".$tall."px. Expanding to ".$maxdim."x".$maxdim."\n";}
 
 for ($z = $minZoom; $z <= $maxZoom ; $z++){
 
-	print "Creating zoom level $z:\n";
+	if($verbose){int "Creating zoom level $z:\n";}
 	$xpix = 2**$z;
 	$ypix = 2**$z;
-	
+
 	# Scale the original to the appropriate size for the tiles
 	$zoommap = $map->Clone();
-	print "Resizing to ".($xpix*$tileSize)."x".($ypix*$tileSize)."px\n";
+	if($verbose){print "Resizing to ".($xpix*$tileSize)."x".($ypix*$tileSize)."px\n";}
 	$zoommap->Resize(width=>$xpix*$tileSize,height=>$ypix*$tileSize);
 
 	# Use the Transform() command to create an array of tiles of the appropriate size
@@ -90,10 +91,10 @@ for ($z = $minZoom; $z <= $maxZoom ; $z++){
 		$y = int($i / $xpix);
 		# Get the appropriate filename
 		$file = getTile($x,$y,$z).".".$fileExt;
-		print "$i => $dir/$file\n";
+		# print "$i => $dir/$file\n";
 		$tiles->[$i]->Write(filename=>$dir.'/'.$file, compression=>$compres,quality=>$quality);
 	}
-			
+
 }
 
 
