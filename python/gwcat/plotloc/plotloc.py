@@ -7,8 +7,68 @@ import os
 from matplotlib import pyplot as plot
 from matplotlib import cm
 from astropy.io import fits
+from astropy.table import Table, Column
+import astropy_healpix as ah
 # print ('plotloc file',__file__,os.path.dirname(__file__))
 # plot.ion()
+
+def read_map(fileIn,verbose=False,force=False,fullout=False):
+    hdr=fits.getheader(fileIn,ext=1)
+    if hdr.get('ORDERING')=='RING' or hdr.get('ORDERING')=='NESTED':
+        # read as normal map
+        hpmap=hp.read_map(fileIn)
+        return(hpmap)
+    maps={}
+    maps_re={}
+    maptot=[]
+    hpmap=[]
+    if hdr.get('ORDERING')=='NUNIQ':
+        if fileIn.find('multiorder')>=0:
+            fileOut=fileIn.replace('multiorder','healpix')
+        else:
+            fileOut=fileIn.replace('.fits','.healpix.fits')
+        fileRead=False
+        if os.path.isfile(fileOut):
+            try:
+                hpmap=hp.read_map(fileOut)
+                if verbose:
+                    print('Reading converted map: {}'.format(fileOut))
+                fileRead=True
+                return hpmap
+            except:
+                fileRead=False
+        if not fileRead or force:
+            if verbose:
+                print('Converting multiorder map: {}'.format(fileIn))
+            skymap=Table.read(fileIn)
+            # get pixel number for each map
+            level,ipix=ah.uniq_to_level_ipix(skymap['UNIQ'])
+            nside=ah.level_to_nside(level)
+            skymap.add_columns([Column(nside),Column(ipix)],names=['NSIDE','IPIX'])
+            #
+            maxns=np.max(nside)
+            pixarea=hp.nside2pixarea(maxns)
+            npixtot=hp.nside2npix(maxns)
+            # create maps at each level
+            for row in skymap:
+                ns=row['NSIDE']
+                nsstr='{}'.format(ns)
+                pa=hp.nside2pixarea(ns)
+                if not nsstr in maps:
+                    maps[nsstr]=np.zeros(hp.nside2npix(ns))
+                maps[nsstr][row['IPIX']]=row['PROBDENSITY']*pa
+            # reorder maps
+            hpmap=np.zeros(npixtot)
+            for n in maps:
+                maps_re[n]=hp.ud_grade(maps[n],maxns,order_in='NESTED',order_out='RING',power=-2)
+                hpmap += maps_re[n]
+            hp.write_map(fileOut,hpmap,overwrite=True)
+            if verbose:
+                print('Writing converted map: {}'.format(fileOut))
+    if fullout:
+        return(hpmap,maps,maps_re,maptot)
+    else:
+        return hpmap
 
 def getSuperevents(verbose=False):
     # get events list from GraceDB
@@ -505,10 +565,68 @@ def plotGravoscope(mapIn,fileIn='',cmap=cm.gray,pngOut='',res=4,verbose=False):
     if pngOut!='':
         plot.savefig(pngOut)
 
-    # cutterfile=os.path.join(os.path.dirname(__file__),'cutter.pl')
-    #
-    # os.execv('perl {} cutter.pl file="{}" minzoom=3 maxzoom=7'.format(cutterfile,pngOut))
+    return
 
+def makeTilesPerl(fileIn,verbose=False):
+    cutterfile=os.path.join(os.path.dirname(__file__),'cutter.pl')
+    if verbose:
+        v=1
+    else:
+        v=0
+    print('verbose',verbose,v)
+    os.system('perl {} cutter.pl file="{}" minzoom=3 maxzoom=6 ext="png" verbose={}'.format(cutterfile,fileIn,v))
+
+    return
+
+def makeTiles(map,dirOut='data/gravoscope/test',cmap=None,vmin=None,vmax=None,
+        maxres=3,minres=2,verbose=False):
+    if not os.path.exists(dirOut):
+        os.mkdir(dirOut)
+    if vmax==None:
+        vmax=np.max(map)
+    if vmin==None:
+        vmin=np.min(map)
+    if verbose:print('min={}; max={}'.format(vmin,vmax))
+    if cmap==None:
+        cmap=cm.gray
+    loc=[0]*maxres
+    name=['']*maxres
+    qrst=['q','r','s','t']
+    loc[0]=0
+    name[0]='t'
+
+    for res in range(1,maxres+1):
+        nimg=4**(res)
+        loc=[0]*(res+1)
+        name=['']*(res+1)
+        loc[0]=0
+        name[0]='t'
+        dra=360/(2**res)
+        ddec=360/(2**res)
+        if verbose:print('level {} ({} tiles) [{}x{}]'.format(res,nimg,dra,ddec))
+        for x in range(nimg):
+            xb4=np.base_repr(x,4)
+            if len(xb4) < res:
+                xb4=''.join(['0']*(res-len(xb4)))+xb4
+            ra0=-180
+            dec0=-180
+            for y in range(len(xb4)):
+                dy=360/(2**(y+1))
+                loc[y+1]=int(xb4[y])
+                name[y+1]=qrst[loc[y+1]]
+                ra0=ra0+dy*np.mod(int((loc[y+1]+1)/2),2)
+                dec0=dec0+dy*(1-int(loc[y+1]/2))
+            fileOut=''.join(name)+'.png'
+            if dec0>=-90 and dec0+ddec<=90:
+                # if verbose:print('{} ({}) [{},{}]'.format(x,fileOut,ra0,dec0))
+                img=np.transpose(hp.cartview(map,coord=['C','G'],return_projected_map=1,
+                    xsize=256,ysize=256,lonra=[-dra,0],latra=[dec0,dec0+ddec],rot=[-ra0,0]))
+                plot.figure(figsize=(2.56,2.56))
+                plot.figimage(np.flipud(np.transpose(img)),cmap=cmap,vmin=vmin,vmax=vmax)
+                plot.savefig(os.path.join(dirOut,fileOut))
+                plot.close('all')
+            # else:
+            #     if verbose:print('[{} ({}) [{},{}]]'.format(x,fileOut,ra0,dec0))
     return
 
 def makePlot(ev='S190412m',mapIn=None,proj='moll',plotcont=False,smooth=0.5,zoomlim=0.92,rotmap=True,

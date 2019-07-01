@@ -9,6 +9,8 @@ import requests
 from . import gwosc
 from . import gracedb
 from . import plotloc
+from astropy.table import Table
+import astropy_healpix as ah
 # import gracedb
 # import gwosc
 
@@ -96,6 +98,7 @@ def dataframe2jsonEvent(evIn,params,verbose=False):
             else:
                 if verbose: print('ERROR: unknown type for {} [{}]'.format(param,pv))
     return(evOut)
+
 
 class GWCat(object):
     def __init__(self,fileIn='../data/events.json',statusFile='status.json',
@@ -352,7 +355,8 @@ class GWCat(object):
 
     def calcAreas(self,ev,verbose=False):
         fitsFile=self.status[ev]['mapurllocal']
-        map=hp.read_map(fitsFile)
+        map=plotloc.read_map(fitsFile,verbose=verbose)
+
         totmap,a90=plotloc.getProbMap(map,prob=0.9,verbose=verbose)
         a50=plotloc.getArea(totmap,0.5,verbose=verbose)
         self.data[ev]['deltaOmega']={'best':round(a90)}
@@ -373,6 +377,8 @@ class GWCat(object):
         dataDir=os.path.join(self.dataDir,'fits')
         if not os.path.exists(pngDir):
             os.mkdir(pngDir)
+        if not os.path.exists(gravDir):
+            os.mkdir(gravDir)
         for ev in self.events:
             if not 'mapurllocal' in self.status[ev]:
                 self.getMap(ev,verbose=verbose)
@@ -408,7 +414,7 @@ class GWCat(object):
                 mapread=False
             else:
                 try:
-                    map=hp.read_map(filename)
+                    map=plotloc.read_map(filename,verbose=verbose)
                     mapread=True
                 except:
                     print('ERROR: problem reading map at {}'.format(filename))
@@ -471,13 +477,67 @@ class GWCat(object):
                         updateGrav=True
             if updateGrav:
                 if not mapread:
-                    map=hp.read_map(filename)
+                    map=plotloc.read_map(filename,verbose=verbose)
                 if verbose:
                     print('plotting Gravoscope for {} ({}x{})'.format(ev,gravNpix,int(gravNpix/2)))
                 plotloc.plotGravoscope(mapIn=map,pngOut=gravFile,verbose=verbose,res=res)
                 self.addLink(ev,{'url':self.rel2abs(gravFile),'text':gravLinktxt,
                     'type':'skymap-gravoscope','created':Time.now().isot})
 
+        return
+
+    def makeGravoscopeTilesPerl(self,overwrite=False,verbose=False):
+
+        gravDir=os.path.join(self.dataDir,'gravoscope')
+        dataDir=os.path.join(self.dataDir,'fits')
+        for ev in self.events:
+            fitsCreated=Time(self.status[ev]['mapdatelocal'])
+            res=8
+            gravNpix=int(8*1024)
+            updateGrav=False
+            gravFile=os.path.join(gravDir,'{}_{}.png'.format(ev,gravNpix))
+            tileFile=os.path.join(gravDir,'{}_{}-tiles/tt.png'.format(ev,gravNpix))
+
+            if not os.path.isfile(gravFile):
+                if verbose:print('No source PNG file for {}: {}'.format(ev,gravFile))
+            else:
+                if not os.path.isfile(tileFile) or overwrite:
+                    if verbose:print('plotting Gravoscope files for {}: {}'.format(ev,gravFile))
+                    plotloc.makeTiles(gravFile,verbose=verbose)
+        return
+
+    def makeGravoscopeTiles(self,maxres=3,overwrite=False,verbose=False):
+
+        gravDir=os.path.join(self.dataDir,'gravoscope')
+        for ev in self.events:
+            tilesDir=os.path.join(gravDir,'{}-tiles'.format(ev))
+            if not os.path.exists(tilesDir):
+                os.mkdir(tilesDir)
+            fitsCreated=Time(self.status[ev]['mapdatelocal'])
+            filename=self.status[ev]['mapurllocal']
+            tilesLinktxt='Gravoscope tiles'
+            tilesLink=self.getLink(ev,tilesLinktxt,srchtype='text')
+            updateTiles=False
+            if len(tilesLink)>0:
+                if 'created' in tilesLink[0]:
+                    if link[0]['created']<fitsCreated:
+                        updateTiles=True
+            tileFile=os.path.join(gravDir,'{}-tiles/{}.png'.format(ev,'ttrtttttt'[0:maxres+1]))
+            if not os.path.isfile(tileFile):
+                if verbose: print('file {} does not exist'.format(tileFile))
+                updateTiles=True
+            elif overwrite:
+                if verbose: print('file {} exists, but overwriting'.format(tileFile))
+                updateTiles=True
+            else:
+                if verbose: print('file {} exists'.format(tileFile))
+            res=8
+            gravNpix=int(8*1024)
+
+            if updateTiles:
+                if verbose:print('plotting Gravoscope files for {}: {}'.format(ev,tilesDir))
+                map=plotloc.read_map(filename,verbose=verbose)
+                plotloc.makeTiles(map,dirOut=tilesDir,maxres=maxres,verbose=verbose)
         return
 
     def getLink(self,ev,srchtxt,srchtype='type',verbose=False):

@@ -28,3 +28,5 @@ gcdat=json.load(open(os.path.join(dataDir,'gwosc_gracedb.json')))
 json.dump(gcdat,open(os.path.join(dataDir,'gwosc_gracedb.min.json'),'w'))
 gwcat.json2jsonp(os.path.join(dataDir,'gwosc_gracedb.json'),os.path.join(dataDir,'gwosc_gracedb.jsonp'))
 gwcat.json2jsonp(os.path.join(dataDir,'gwosc_gracedb.min.json'),os.path.join(dataDir,'gwosc_gracedb.min.jsonp'))
+
+gc.makeGravoscopeTiles(verbose=True)
