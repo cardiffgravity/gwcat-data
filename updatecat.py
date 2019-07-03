@@ -42,17 +42,17 @@ if update==True:
 else:
     print('importing from local file')
     gc=gwcat.GWCat(fileIn=os.path.join(dataDir,'gwosc_gracedb.json'),dataDir=dataDir)
-# 
-# gc.updateMaps(verbose=verbose,forceUpdate=forcemap)
-# gc.plotMapPngs(verbose=verbose,overwrite=overwrite)
-#
-# # export library
-# gc.exportJson(os.path.join(dataDir,'gwosc_gracedb.json'))
-# gcdat=json.load(open(os.path.join(dataDir,'gwosc_gracedb.json')))
-# # create minified version of json file
-# json.dump(gcdat,open(os.path.join(dataDir,'gwosc_gracedb.min.json'),'w'))
-# # convert json files to jsonp
-# gwcat.json2jsonp(os.path.join(dataDir,'gwosc_gracedb.json'),os.path.join(dataDir,'gwosc_gracedb.jsonp'))
-# gwcat.json2jsonp(os.path.join(dataDir,'gwosc_gracedb.min.json'),os.path.join(dataDir,'gwosc_gracedb.min.jsonp'))
+
+gc.updateMaps(verbose=verbose,forceUpdate=forcemap)
+gc.plotMapPngs(verbose=verbose,overwrite=overwrite)
+
+# export library
+gc.exportJson(os.path.join(dataDir,'gwosc_gracedb.json'))
+gcdat=json.load(open(os.path.join(dataDir,'gwosc_gracedb.json')))
+# create minified version of json file
+json.dump(gcdat,open(os.path.join(dataDir,'gwosc_gracedb.min.json'),'w'))
+# convert json files to jsonp
+gwcat.json2jsonp(os.path.join(dataDir,'gwosc_gracedb.json'),os.path.join(dataDir,'gwosc_gracedb.jsonp'))
+gwcat.json2jsonp(os.path.join(dataDir,'gwosc_gracedb.min.json'),os.path.join(dataDir,'gwosc_gracedb.min.jsonp'))
 
 gc.makeGravoscopeTiles(verbose=True,maxres=6)
