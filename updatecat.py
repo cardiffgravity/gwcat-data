@@ -11,6 +11,7 @@ parser.add_argument('-v','--verbose', dest='verbose', action='store_true', defau
 parser.add_argument('-o','--overwrite', dest='overwrite', action='store_true', default=False, help='Regenerate and overwrite image files')
 parser.add_argument('-f','--forceupdate', dest='forceupdate', action='store_true', default=False, help='Force (re)download of files')
 parser.add_argument('-m','--forcemap', dest='forcemap', action='store_true', default=False, help='Force (re)download of fits files')
+parser.add_argument('-g','--gravoscope', dest='gravoscope', action='store_true', default=False, help='Update Gravoscope tiles')
 parser.add_argument('-d','--datadir', dest='datadir', type=str, default='data/', help='directory in which data is stored')
 parser.add_argument('-b','--baseurl', dest='baseurl', type=str, default='https://data.cardiffgravity.org/gwcat-data/', help='Base URL to prepend to relative links [Default=https://data.cardiffgravity.org/gwcat-data/]')
 args=parser.parse_args()
@@ -21,6 +22,7 @@ forceupdate=args.forceupdate
 forcemap=args.forcemap
 overwrite=args.overwrite
 baseurl=args.baseurl
+gravoscope=args.gravoscope
 
 if update==True:
     gc=gwcat.GWCat(fileIn=os.path.join(dataDir,'gwosc_gracedb.json'),dataDir=dataDir,baseurl=baseurl,verbose=verbose)
@@ -46,6 +48,11 @@ else:
 gc.updateMaps(verbose=verbose,forceUpdate=forcemap)
 gc.plotMapPngs(verbose=verbose,overwrite=overwrite)
 
+if gravoscope:
+    print('Updating gravoscope')
+    gc.makeGravoscopeTiles(verbose=True,maxres=6)
+
+
 # export library
 gc.exportJson(os.path.join(dataDir,'gwosc_gracedb.json'))
 gcdat=json.load(open(os.path.join(dataDir,'gwosc_gracedb.json')))
@@ -55,4 +62,3 @@ json.dump(gcdat,open(os.path.join(dataDir,'gwosc_gracedb.min.json'),'w'))
 gwcat.json2jsonp(os.path.join(dataDir,'gwosc_gracedb.json'),os.path.join(dataDir,'gwosc_gracedb.jsonp'))
 gwcat.json2jsonp(os.path.join(dataDir,'gwosc_gracedb.min.json'),os.path.join(dataDir,'gwosc_gracedb.min.jsonp'))
 
-gc.makeGravoscopeTiles(verbose=True,maxres=6)
