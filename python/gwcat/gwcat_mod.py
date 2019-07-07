@@ -515,13 +515,20 @@ class GWCat(object):
                 os.mkdir(tilesDir)
             fitsCreated=Time(self.status[ev]['mapdatelocal'])
             filename=self.status[ev]['mapurllocal']
-            tilesLinktxt='Gravoscope tiles'
-            tilesLink=self.getLink(ev,tilesLinktxt,srchtype='text')
+            tilesLinktype='gravoscope-tiles'
+            tilesLink=self.getLink(ev,tilesLinktype,srchtype='type')
             updateTiles=False
             if len(tilesLink)>0:
                 if 'created' in tilesLink[0]:
-                    if link[0]['created']<fitsCreated:
+                    timeTiles=Time(tilesLink[0]['created'])
+                    if timeTiles.gps < fitsCreated.gps-1:
+                        if verbose: print('tiles for {} exists, but are older than map. {} < {}; {} < {}'.format(ev,timeTiles,fitsCreated,timeTiles.gps,fitsCreated.gps))
                         updateTiles=True
+            else:
+                if verbose: print('adding tiles link for Gravoscope tileset for {}'.format(ev))
+                gravLinktxt='Gravoscope tileset'
+                self.addLink(ev,{'url':self.rel2abs(tilesDir),'text':gravLinktxt,
+                    'type':'gravoscope-tiles','created':fitsCreated.isot})
             tileFile=os.path.join(gravDir,'{}-tiles/{}.png'.format(ev,'ttrtttttt'[0:maxres+1]))
             if not os.path.isfile(tileFile):
                 if verbose: print('file {} does not exist'.format(tileFile))
@@ -538,6 +545,9 @@ class GWCat(object):
                 if verbose:print('plotting Gravoscope files for {}: {}'.format(ev,tilesDir))
                 map=plotloc.read_map(filename,verbose=verbose)
                 plotloc.makeTiles(map,dirOut=tilesDir,maxres=maxres,verbose=verbose)
+                gravLinktxt='Gravoscope tileset'
+                self.addLink(ev,{'url':self.rel2abs(tilesDir),'text':gravLinktxt,
+                    'type':'gravoscope-tiles','created':Time.now().isot})
         return
 
     def getLink(self,ev,srchtxt,srchtype='type',verbose=False):
