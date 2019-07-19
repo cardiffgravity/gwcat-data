@@ -552,7 +552,7 @@ def plotGravoscope(mapIn,fileIn='',cmap=cm.gray,pngOut='',res=4,verbose=False):
             lat0=-90 + j*dlon
             lat1=lat0+dlon
             if verbose:print('plotting {}x{} of {}x{} : [{},{}] - [{}:{}]'.format(
-                i,j,res,int(res/2),-lon_off-dlon/2,lat0,-lon_off+dlon/2,lat1))
+                i+1,j+1,res,int(res/2),-lon_off-dlon/2,lat0,-lon_off+dlon/2,lat1))
             tmp[...] = np.transpose(hp.cartview(T,coord=['C','G'],return_projected_map=1,
                 xsize=1024,ysize=1024,lonra=[-dlon/2,dlon/2],latra=[lat0,lat1],rot=[-lon_off,0]))
             # print(i,j,i*1024,(i+1)*1024,j*1024,(j+1)*1024)
