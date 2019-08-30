@@ -469,7 +469,7 @@ class GWCat(object):
             gravFile=os.path.join(gravDir,'{}_{}.png'.format(ev,gravNpix))
             if not os.path.isfile(gravFile):
                 updateGrav=True
-            gravLinktxt='Skymap (Gravoscope)'
+            gravLinktxt='Skymap (no annotations)'
             gravLink=self.getLink(ev,gravLinktxt,srchtype='text')
             if len(gravLink)>0:
                 if 'created' in gravLink[0]:
@@ -482,7 +482,7 @@ class GWCat(object):
                     print('plotting Gravoscope for {} ({}x{})'.format(ev,gravNpix,int(gravNpix/2)))
                 plotloc.plotGravoscope(mapIn=map,pngOut=gravFile,verbose=verbose,res=res)
                 self.addLink(ev,{'url':self.rel2abs(gravFile),'text':gravLinktxt,
-                    'type':'skymap-gravoscope','created':Time.now().isot})
+                    'type':'skymap-plain','created':Time.now().isot})
 
         return
 
