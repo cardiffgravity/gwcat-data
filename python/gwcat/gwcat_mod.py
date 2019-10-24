@@ -847,15 +847,20 @@ class GWCat(object):
 
         return()
 
-    def exportCSV(self,datafileout,dictfileout=None,linksfileout=None,dir='',verbose=False):
+    def exportCSV(self,datafileout,dictfileout=None,linksfileout=None,dir='',verbose=False,clearcols=True):
         """Export data to CSV file(s)
         Inputs:
             * datafileout [string]: filename to write events data to
             * dictfileout [string, OPTIONAL]: filename to write data dictionary to. Default: do not export
             * linksfileout [string OPTIONAL]: filename to write references to. Default: to not export
+            * clearcols [boolean OPTIONAL]: Remove columns that are empty. Default=True
             * dir [string OPTIONAL]: directory to write files to. Default=''
         """
         (dataframe,units,links) = self.json2dataframe(verbose=verbose)
+        if clearcols:
+            if verbose:
+                print('removing empty rows')
+            dataframe.dropna(axis=0,how='all',inplace=True)
 
         if verbose: print('Writing data to CSV: {}'.format(os.path.join(dir,datafileout)))
         dataframe.transpose().to_csv(os.path.join(dir,datafileout),encoding='utf8',index_label='Event')
