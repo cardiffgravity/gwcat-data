@@ -13,6 +13,7 @@ parser.add_argument('-f','--forceupdate', dest='forceupdate', action='store_true
 parser.add_argument('-m','--forcemap', dest='forcemap', action='store_true', default=False, help='Force (re)download of fits files')
 parser.add_argument('-g','--gravoscope', dest='gravoscope', action='store_true', default=False, help='Update Gravoscope tiles')
 parser.add_argument('-d','--datadir', dest='datadir', type=str, default='data/', help='directory in which data is stored')
+parser.add_argument('-l','--datelim', dest='datelim', type=float, default=999, help='number of days to go back in time')
 parser.add_argument('-b','--baseurl', dest='baseurl', type=str, default='https://data.cardiffgravity.org/gwcat-data/', help='Base URL to prepend to relative links [Default=https://data.cardiffgravity.org/gwcat-data/]')
 args=parser.parse_args()
 dataDir=args.datadir
@@ -23,6 +24,7 @@ forcemap=args.forcemap
 overwrite=args.overwrite
 baseurl=args.baseurl
 gravoscope=args.gravoscope
+datelim=args.datelim
 
 if update==True:
     gc=gwcat.GWCat(fileIn=os.path.join(dataDir,'gwosc_gracedb.json'),dataDir=dataDir,baseurl=baseurl,verbose=verbose)
@@ -32,7 +34,7 @@ if update==True:
 
     gwoscdata=gwcat.gwosc.getGwosc(export=True,dirOut=dataDir,verbose=verbose)
     gdb=gwcat.gracedb.getSuperevents(export=True,dirOut=dataDir,verbose=verbose,
-        knownEvents=knownEvents,forceUpdate=forceupdate)
+        knownEvents=knownEvents,forceUpdate=forceupdate,datelim=datelim)
     json.dump(gwoscdata,open(os.path.join(dataDir,'gwosc.min.json'),'w'))
     json.dump(gdb,open(os.path.join(dataDir,'gracedb.min.json'),'w'))
 

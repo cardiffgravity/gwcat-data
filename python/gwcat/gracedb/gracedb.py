@@ -105,12 +105,12 @@ def gracedb2cat(gdb,force=True,verbose=False,knownEvents={},forceUpdate=False):
 
     return {'data':catOut,'links':linksOut}
 
-def getSuperevents(export=False,dirOut=None,fileOut=None,indent=2,verbose=False,knownEvents={},forceUpdate=False):
+def getSuperevents(export=False,dirOut=None,fileOut=None,indent=2,verbose=False,knownEvents={},forceUpdate=False,datelim=999):
 
     service_url = 'https://gracedb.ligo.org/api/'
     if verbose: print('Retrieving GraceDB data from {}'.format(service_url))
     client = GraceDb(service_url,force_noauth=True)
-
+    if verbose: print('Limiting to {} days'.format(datelim))
     # Retrieve an iterator for events matching a query.
     events = client.superevents('far < 1.0e-4')
     # if verbose: print('retrieved {} events'.format(len(events)))
@@ -120,6 +120,12 @@ def getSuperevents(export=False,dirOut=None,fileOut=None,indent=2,verbose=False,
     links = {}
     for event in events:
         sid = event['superevent_id']
+        tEvent=Time(event['t_0'],format='gps')
+        tNow=Time.now()
+        dtEvent=(tNow-tEvent).jd
+        if dtEvent>datelim:
+            print('Too old ({} days). Skipping {}'.format(dtEvent,sid))
+            continue
         # if sid in knownEvents:
         #     tOld=Time(knownEvents[sid])
         #     try:
