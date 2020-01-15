@@ -99,6 +99,28 @@ def dataframe2jsonEvent(evIn,params,verbose=False):
                 if verbose: print('ERROR: unknown type for {} [{}]'.format(param,pv))
     return(evOut)
 
+def getManual(loc='',verbose=True,export=False,
+    dirOut=None,fileOut=None,indent=2):
+    if loc=='':
+        loc='data/manual-events.json'
+    if verbose: print('Retrieving Manual data from {}'.format(loc))
+    manread=json.load(open(loc,'r'))
+    mandata={'meta':{'retrieved':Time.now().isot,'src':loc}}
+    for s in manread:
+        mandata[s]=manread[s]
+
+    if verbose: print('Retrieved data for {} events'.format(len(mandata['data'])))
+
+    if export:
+        if dirOut==None:
+            dirOut='../../data/'
+        if fileOut==None:
+            fileOut='manual-events.json'
+        if verbose: print('Exporting to {}'.format(os.path.join(dirOut,fileOut)))
+        fOut=open(os.path.join(dirOut,fileOut),'w')
+        json.dump(mandata,fOut,indent=indent)
+        fOut.close()
+    return mandata
 
 class GWCat(object):
     def __init__(self,fileIn='../data/events.json',statusFile='status.json',
@@ -208,6 +230,34 @@ class GWCat(object):
             except:
                 print('WARNING: Error loading skymap for {}:'.format(ev),l)
 
+    def importManual(self,manIn,verbose=False):
+        print('*** Importing Manual Data...')
+        for g in manIn['data']:
+            # get old metadata
+            dmeta={}
+            if g in self.data:
+                if 'meta' in self.data[g]:
+                    dmeta=self.data[g]['meta']
+            self.data[g]=manIn['data'][g]
+            # update metadata
+            for m in manIn['data'][g]['meta']:
+                dmeta[m]=manIn['data'][g]['meta'][m]
+            self.data[g]['meta']=dmeta
+            if g in manIn['links']:
+                for l in manIn['links'][g]:
+                    self.addLink(g,l,verbose=verbose)
+            self.updateStatus(g,verbose=verbose,desc='Manual import')
+        for ev in manIn['links']:
+            self.updateMapSrc(ev,verbose=True)
+            self.updateStatus(ev,verbose=verbose,desc='Map src')
+        self.evTimes = self.getTimestamps()
+        self.json2dataframe(verbose=verbose)
+        if not 'manuall' in self.meta:
+            self.meta['manual']={}
+        for m in manIn['meta']:
+            self.meta['manual'][m]=manIn['meta'][m]
+        return
+
     def importGwosc(self,gwoscIn,verbose=False):
         print('*** Importing GWOSC...')
         catData=gwosc.gwosc2cat(gwoscIn,verbose=verbose)
@@ -229,6 +279,7 @@ class GWCat(object):
         for ev in catData['links']:
             self.updateMapSrc(ev,verbose=True)
             self.updateStatus(ev,verbose=verbose,desc='Map src')
+        self.evTimes = self.getTimestamps()
         self.json2dataframe(verbose=verbose)
         if not 'gwosc' in self.meta:
             self.meta['gwosc']={}
@@ -269,11 +320,29 @@ class GWCat(object):
                 continue
             self.updateMapSrc(ev)
             self.updateStatus(ev,verbose=verbose,desc='Map src')
+        self.evTimes = self.getTimestamps()
         self.json2dataframe(verbose=verbose)
         if not 'graceDB' in self.meta:
             self.meta['graceDB']={}
         for m in gracedbIn['meta']:
             self.meta['graceDB'][m]=gracedbIn['meta'][m]
+        return
+
+    def removeCandidates(self,verbose=False):
+        remCands=[]
+        for ev in self.data:
+            if 'gracedb' in self.data[ev]['meta']:
+                evgdb=self.data[ev]['meta']['gracedb']
+                if ev!=evgdb:
+                    remCands.append(evgdb)
+        self.evTimes = self.getTimestamps()
+        self.json2dataframe(verbose=verbose)
+        for remev in remCands:
+            if remev in self.data:
+                if verbose: print('Removing {}'.format(evgdb))
+                self.data.pop(remev)
+            if remev in self.links:
+                self.links.pop(remev)
         return
 
     def updateMaps(self,verbose=False,forceUpdate=False):

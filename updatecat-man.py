@@ -47,9 +47,6 @@ if update==True:
     gc.importGwosc(gwoscdata,verbose=verbose)
     print('importing GraceDB...')
     gc.importGraceDB(gdb,verbose=verbose,forceUpdate=forceupdate)
-    print('removing unnecessary GraceDB candidates')
-    gc.removeCandidates(verbose=verbose)
-
 else:
     print('importing from local file')
     gc=gwcat.GWCat(fileIn=os.path.join(dataDir,'gwosc_gracedb.json'),dataDir=dataDir)
