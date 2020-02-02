@@ -16,6 +16,7 @@ parser.add_argument('--manual', dest='manual', action='store_true', default=Fals
 parser.add_argument('-d','--datadir', dest='datadir', type=str, default='data/', help='directory in which data is stored')
 parser.add_argument('-l','--datelim', dest='datelim', type=float, default=999, help='number of days to go back in time')
 parser.add_argument('-b','--baseurl', dest='baseurl', type=str, default='https://data.cardiffgravity.org/gwcat-data/', help='Base URL to prepend to relative links [Default=https://data.cardiffgravity.org/gwcat-data/]')
+parser.add_argument('-t','--tilesurl', dest='tilesurl', type=str, default='https://gravity.astro.cf.ac.uk/gwcat-data/', help='Base URL to prepend to relative links for tiles [Default=https://gravity.astro.cf.ac.uk/gwcat-data/]')
 args=parser.parse_args()
 dataDir=args.datadir
 update=args.update
@@ -24,6 +25,7 @@ forceupdate=args.forceupdate
 forcemap=args.forcemap
 overwrite=args.overwrite
 baseurl=args.baseurl
+tilesLinkurl=args.tilesurl
 gravoscope=args.gravoscope
 datelim=args.datelim
 
@@ -59,7 +61,7 @@ gc.plotMapPngs(verbose=verbose,overwrite=overwrite)
 
 if gravoscope:
     print('Updating gravoscope')
-    gc.makeGravoscopeTiles(verbose=True,maxres=6)
+    gc.makeGravoscopeTiles(verbose=True,maxres=6,tilesurl=tilesurl)
 
 
 # export library
