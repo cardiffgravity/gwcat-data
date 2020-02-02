@@ -1,4 +1,4 @@
-#!/Applications/anaconda3/anaconda3/bin/python3.6
+#!/home/spxcen/miniconda3/bin/python3
 #test update
 import gwcat
 import json
