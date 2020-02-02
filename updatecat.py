@@ -25,7 +25,7 @@ forceupdate=args.forceupdate
 forcemap=args.forcemap
 overwrite=args.overwrite
 baseurl=args.baseurl
-tilesLinkurl=args.tilesurl
+tilesurl=args.tilesurl
 gravoscope=args.gravoscope
 datelim=args.datelim
 
