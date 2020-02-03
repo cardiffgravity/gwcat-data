@@ -193,7 +193,7 @@ def getSuperevents(export=False,dirOut=None,fileOut=None,indent=2,verbose=False,
                 evOut['xmlfile']=[os.path.split(thisvoe_url)[-1],thisvoe_url]
                 if update:
                     if logFile:
-                        logF.write(sid)
+                        logF.write(sid+'\n')
 
                     # parse XML
                     xml={}
