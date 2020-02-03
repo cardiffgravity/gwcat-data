@@ -2,7 +2,7 @@
 #test update
 statusFile='./status.log'
 statF=open(statusFile,'w')
-statF.write('pending')
+statF.write('pending\n')
 statF.close()
 
 import gwcat
@@ -84,5 +84,5 @@ gwcat.json2jsonp(os.path.join(dataDir,'gwosc_gracedb.min.json'),os.path.join(dat
 gc.exportCSV(os.path.join(dataDir,'gwosc_gracedb.csv'),verbose=True,dictfileout=os.path.join(dataDir,'parameters.csv'))
 
 statF=open(statusFile,'w')
-statF.write('success')
+statF.write('success\n')
 statF.close()
