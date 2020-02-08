@@ -712,8 +712,11 @@ def makePlot(ev='S190412m',mapIn=None,proj='moll',plotcont=False,smooth=0.5,zoom
 
     if grid:
         plotGrid(dRA=45, dDec=30)
+    if verbose: print('plotting constellation bounds ({})'.format(proj))
     plotConstBounds(color=(0.5,0.5,0.5),verbose=verbose,alpha=0.5)
+    if verbose: print('plotting constellation labels ({})'.format(proj))
     plotConstLabs(color=(0,0.7,0.7),verbose=verbose,alpha=alphaLab,maxdist=maxdist,plotcentre=rot)
+    if verbose: print('plotting constellation lines ({})'.format(proj))
     plotConstLines(color=(0,0.7,0.7),verbose=verbose,alpha=0.5)
     if verbose: print('plotted constellations ({})'.format(proj))
 
