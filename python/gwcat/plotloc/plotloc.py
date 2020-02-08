@@ -663,7 +663,7 @@ def makePlot(ev='S190412m',mapIn=None,proj='moll',plotcont=False,smooth=0.5,zoom
     else:
         map=mapIn
     maptot,area95=getProbMap(map,0.95,verbose=verbose)
-    print('got map ({}): 95%={}'.format(len(maptop),area95))
+    print('got map ({}): 95%={}'.format(len(maptot),area95))
     if title==None:
         title=ev
 
