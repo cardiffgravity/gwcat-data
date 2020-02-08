@@ -389,6 +389,9 @@ class GWCat(object):
         if verbose: print('Downloading skymap for {} from {}'.format(ev,url))
         srcfile=os.path.split(url)[-1]
         mapreq=requests.get(url)
+        if verbose:
+            print('map requests:',mapreq)
+            print('map requests (OK):',mapreq.ok)
         if mapreq.ok:
             try:
                 # if url.find('.fits.gz')>=0:
