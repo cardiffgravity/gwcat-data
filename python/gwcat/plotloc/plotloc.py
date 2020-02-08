@@ -663,7 +663,7 @@ def makePlot(ev='S190412m',mapIn=None,proj='moll',plotcont=False,smooth=0.5,zoom
     else:
         map=mapIn
     maptot,area95=getProbMap(map,0.95,verbose=verbose)
-
+    print('got map ({}): 95%={}'.format(len(maptop),area95))
     if title==None:
         title=ev
 
@@ -695,6 +695,8 @@ def makePlot(ev='S190412m',mapIn=None,proj='moll',plotcont=False,smooth=0.5,zoom
         ralim=[-180,180]
         declim=[-90,90]
     # print (radec95)
+    if verbose:
+        print('plotting map ({})'.format(proj))
     fig=plotMap(map,cmap=cm.hot,proj=proj,rot=rot,verbose=verbose,zoomrng=radeczoom,title=title,half_sky=half_sky,cbg=cbg)
 
     if plotcont:
