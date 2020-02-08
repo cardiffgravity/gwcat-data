@@ -162,10 +162,11 @@ def plotConstBounds(color='w',alpha=1,verbose=False):
     cb=getConstBounds(verbose=verbose)
     if verbose: print('got const bounds',len(cb))
     for c in cb:
-        if verbose: print('constellation {}'.format(c))
         const=cb[c]
         nra=len(const['ra'])
+        if verbose: print('constellation {} ({})'.format(c,nra))
         for i in range(nra-1):
+            if verbose: print('line {}'.format(i))
             line=hp.projplot(const['ra'][i:i+2],const['dec'][i:i+2],lonlat=True,color=color,linewidth=1,alpha=alpha)
             if len(line)>1:
                 # catch lines that don't plot properly
