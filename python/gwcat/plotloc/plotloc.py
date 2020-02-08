@@ -443,6 +443,7 @@ def getContLines(xx,yy,zz,level=0.9,ax=None,verbose=False):
 
 def plotMap(map,proj='moll',fig=None,pmax=None,pmin=None,rot=None,cmap=None,cbg=None,verbose=False,half_sky=False,zoomrng=None,title=None):
     # plot map based on options specified
+    if verbose: print('plotMap: plotting map ({})'.format(proj))
     if not cmap:
         cmap=cm.gray
     if not cbg:
@@ -495,6 +496,7 @@ def plotMap(map,proj='moll',fig=None,pmax=None,pmin=None,rot=None,cmap=None,cbg=
         fig=hp.gnomview(map,cmap=cmap,max=pmax,min=pmin,cbar=False,rot=rot,half_sky=half_sky,fig=fig.number,title=title)
     else:
         print('unknown projection:',proj)
+    if verbose: print('plotMap: plotted map ({})'.format(proj),fig)
     return fig
 
 def getPeak(map,verbose=False,getmin=False):
@@ -698,7 +700,7 @@ def makePlot(ev='S190412m',mapIn=None,proj='moll',plotcont=False,smooth=0.5,zoom
     if verbose:
         print('plotting map ({})'.format(proj))
     fig=plotMap(map,cmap=cm.hot,proj=proj,rot=rot,verbose=verbose,zoomrng=radeczoom,title=title,half_sky=half_sky,cbg=cbg)
-
+    if verbose: print('plotted map ({})'.format(proj))
     if plotcont:
         cont90=plotContours(maptot,level=0.9,color='w',alpha=0.5,linestyle='-',linewidth=2,verbose=verbose)
 
@@ -712,6 +714,7 @@ def makePlot(ev='S190412m',mapIn=None,proj='moll',plotcont=False,smooth=0.5,zoom
     plotConstBounds(color=(0.5,0.5,0.5),verbose=verbose,alpha=0.5)
     plotConstLabs(color=(0,0.7,0.7),verbose=verbose,alpha=alphaLab,maxdist=maxdist,plotcentre=rot)
     plotConstLines(color=(0,0.7,0.7),verbose=verbose,alpha=0.5)
+    if verbose: print('plotted constellations ({})'.format(proj))
 
     if addCredit:
         credit='Credit: LIGO-Virgo/Cardiff Uni./C. North'
@@ -733,6 +736,7 @@ def makePlot(ev='S190412m',mapIn=None,proj='moll',plotcont=False,smooth=0.5,zoom
         axlogo2.axis('off')
     if pngOut:
         plot.savefig(pngOut,dpi=pngSize/10)
+        if verbose: print('saved map ({}) to {}'.format(proj,pngOut))
     if thumbOut:
         plot.savefig(thumbOut,dpi=thumbSize/10)
 
