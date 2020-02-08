@@ -160,7 +160,7 @@ def getConstBounds(fIn=None,verbose=False):
 def plotConstBounds(color='w',alpha=1,verbose=False):
     # plot constellation boundaries
     cb=getConstBounds(verbose=verbose)
-    if verbose: print('got const bounds',cb)
+    if verbose: print('got const bounds',len(cb))
     for c in cb:
         const=cb[c]
         nra=len(const['ra'])
@@ -177,6 +177,7 @@ def plotConstBounds(color='w',alpha=1,verbose=False):
                     plot.plot([xy0[0],xy1[0]],[xy0[1],xy1[1]],color=color,linewidth=1,alpha=alpha)
                 # else:
                 #     print('***')
+    return
 
 
 def getConstLines(fIn=None,verbose=False):
