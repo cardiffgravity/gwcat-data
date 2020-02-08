@@ -460,6 +460,7 @@ def plotMap(map,proj='moll',fig=None,pmax=None,pmin=None,rot=None,cmap=None,cbg=
         else:
             figsize=(20,10)
         fig=plot.figure(figsize=figsize)
+    if verbose: print('plotMap: figure made ({})'.format(proj),fig,figsize)
 
     if proj=='cart':
         if zoomrng==None:
