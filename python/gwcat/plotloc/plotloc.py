@@ -162,6 +162,7 @@ def plotConstBounds(color='w',alpha=1,verbose=False):
     cb=getConstBounds(verbose=verbose)
     if verbose: print('got const bounds',len(cb))
     for c in cb:
+        if verbose: print('constellation {}'.format(c))
         const=cb[c]
         nra=len(const['ra'])
         for i in range(nra-1):
