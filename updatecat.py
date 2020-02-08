@@ -15,6 +15,7 @@ parser.add_argument('-u','--update', dest='update', action='store_true', default
 parser.add_argument('-v','--verbose', dest='verbose', action='store_true', default=False, help='Set to print more helpful text to the screen')
 parser.add_argument('-o','--overwrite', dest='overwrite', action='store_true', default=False, help='Regenerate and overwrite image files')
 parser.add_argument('-f','--forceupdate', dest='forceupdate', action='store_true', default=False, help='Force (re)download of files')
+parser.add_argument('-s','--skymaps', dest='skymaps', action='store_true', default=False, help='Plot skymaps')
 parser.add_argument('-m','--forcemap', dest='forcemap', action='store_true', default=False, help='Force (re)download of fits files')
 parser.add_argument('-g','--gravoscope', dest='gravoscope', action='store_true', default=False, help='Update Gravoscope tiles')
 parser.add_argument('--manual', dest='manual', action='store_true', default=False, help='Read in manual data')
@@ -35,6 +36,7 @@ tilesurl=args.tilesurl
 gravoscope=args.gravoscope
 datelim=args.datelim
 logfile=args.logfile
+skymaps=args.skymaps
 
 if update==True:
     gc=gwcat.GWCat(fileIn=os.path.join(dataDir,'gwosc_gracedb.json'),
@@ -64,7 +66,9 @@ else:
     gc=gwcat.GWCat(fileIn=os.path.join(dataDir,'gwosc_gracedb.json'),dataDir=dataDir)
 
 gc.updateMaps(verbose=verbose,forceUpdate=forcemap)
-gc.plotMapPngs(verbose=verbose,overwrite=overwrite)
+if skymaps:
+    print('Plotting Skymaps')
+    gc.plotMapPngs(verbose=verbose,overwrite=overwrite)
 
 if gravoscope:
     print('Updating gravoscope')
