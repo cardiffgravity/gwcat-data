@@ -141,6 +141,7 @@ def getConstBounds(fIn=None,verbose=False):
     # get constellation boundaries from file
     if not fIn:
         fIn=os.path.join(os.path.dirname(__file__),'constdata/constellations.bounds.json')
+    if verbose: print('retrieving const bounds from {}'.format(fIn))
     cBounds=json.load(open(fIn))['features']
     const={}
     for c in cBounds:
@@ -153,11 +154,13 @@ def getConstBounds(fIn=None,verbose=False):
         ra.append(coords[0][0])
         dec.append(coords[0][1])
         const[c['id']]={'coord':coords,'ra':ra,'dec':dec}
+    if verbose: print('retrieved const bounds from {}'.format(fIn))
     return(const)
 
 def plotConstBounds(color='w',alpha=1,verbose=False):
     # plot constellation boundaries
     cb=getConstBounds(verbose=verbose)
+    if verbose: print('got const bounds',cb)
     for c in cb:
         const=cb[c]
         nra=len(const['ra'])
