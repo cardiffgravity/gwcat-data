@@ -67,7 +67,7 @@ else:
 gc.updateMaps(verbose=verbose,forceUpdate=forcemap)
 if skymaps:
     print('Plotting Skymaps')
-    gc.plotMapPngs(verbose=verbose,overwrite=overwrite)
+    gc.plotMapPngs(verbose=verbose,overwrite=overwrite,logFile=logfile+'_maps')
 
 if gravoscope:
     print('Updating gravoscope')
