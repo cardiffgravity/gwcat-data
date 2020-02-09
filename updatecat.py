@@ -67,7 +67,12 @@ else:
 gc.updateMaps(verbose=verbose,forceUpdate=forcemap)
 if skymaps:
     print('Plotting Skymaps')
-    gc.plotMapPngs(verbose=verbose,overwrite=overwrite,logFile=logfile+'_maps')
+    logfileMaps=logfile+'_maps'
+    gc.plotMapPngs(verbose=verbose,overwrite=overwrite,logFile=logfileMaps)
+else:
+    if os.path.exists(logfileMaps):
+        os.remove(logfileMaps)
+        print('Removing log file: {}'.format(logFile))
 
 if gravoscope:
     print('Updating gravoscope')
