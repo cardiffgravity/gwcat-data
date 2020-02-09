@@ -73,6 +73,8 @@ else:
     if os.path.exists(logfileMaps):
         os.remove(logfileMaps)
         print('Removing log file: {}'.format(logfileMaps))
+        fM=open(logfileMaps,'w')
+        fM.close()
 
 if gravoscope:
     print('Updating gravoscope')
