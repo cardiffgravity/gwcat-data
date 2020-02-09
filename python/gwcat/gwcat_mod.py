@@ -444,8 +444,17 @@ class GWCat(object):
             url=self.baseurl
         return(url + rel)
 
-    def plotMapPngs(self,overwrite=False,verbose=False):
+    def plotMapPngs(self,overwrite=False,verbose=False,logFile=None):
         print('*** Updating plots...')
+        if os.path.exists(logFile):
+            os.remove(logFile)
+            print('Removing log file: {}'.format(logFile))
+        else:
+            print("Log file doesn't exist: {}".format(logFile))
+        if logFile:
+            print('Writing Maps log to: {}'.format(logFile))
+            logF=open(logFile,'a')
+
         pngDir=os.path.join(self.dataDir,'png')
         gravDir=os.path.join(self.dataDir,'gravoscope')
         dataDir=os.path.join(self.dataDir,'fits')
@@ -493,6 +502,8 @@ class GWCat(object):
                 except:
                     print('ERROR: problem reading map at {}'.format(filename))
                     return
+                if logFile:
+                    logF.write(ev+'\n')
                 for p in plots:
                     pp=plots[p]
                     if p=='cartzoom':
@@ -557,7 +568,8 @@ class GWCat(object):
                 plotloc.plotGravoscope(mapIn=map,pngOut=gravFile,verbose=verbose,res=res)
                 self.addLink(ev,{'url':self.rel2abs(gravFile),'text':gravLinktxt,
                     'type':'skymap-plain','created':Time.now().isot})
-
+        if logFile:
+            logF.close()
         return
 
     def makeGravoscopeTilesPerl(self,overwrite=False,verbose=False):
