@@ -65,9 +65,9 @@ else:
     gc=gwcat.GWCat(fileIn=os.path.join(dataDir,'gwosc_gracedb.json'),dataDir=dataDir)
 
 gc.updateMaps(verbose=verbose,forceUpdate=forcemap)
+logfileMaps=logfile+'_maps'
 if skymaps:
     print('Plotting Skymaps')
-    logfileMaps=logfile+'_maps'
     gc.plotMapPngs(verbose=verbose,overwrite=overwrite,logFile=logfileMaps)
 else:
     if os.path.exists(logfileMaps):
