@@ -1,4 +1,3 @@
-#!/home/spxcen/miniconda3/envs/gw3.6/bin/python3
 #test update
 statusFile='./status.log'
 statF=open(statusFile,'w')
