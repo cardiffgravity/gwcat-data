@@ -72,7 +72,7 @@ if skymaps:
 else:
     if os.path.exists(logfileMaps):
         os.remove(logfileMaps)
-        print('Removing log file: {}'.format(logFile))
+        print('Removing log file: {}'.format(logfileMaps))
 
 if gravoscope:
     print('Updating gravoscope')
