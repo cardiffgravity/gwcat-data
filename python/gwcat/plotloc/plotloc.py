@@ -164,7 +164,7 @@ def plotConstBounds(color='w',alpha=1,verbose=False):
     for c in cb:
         const=cb[c]
         nra=len(const['ra'])
-        # if verbose: print('constellation {} ({})'.format(c,nra))
+        if verbose: print('constellation {} ({})'.format(c,nra))
         for i in range(nra-1):
             # if verbose: print('line {}'.format(i))
             line=hp.projplot(const['ra'][i:i+2],const['dec'][i:i+2],lonlat=True,color=color,linewidth=1,alpha=alpha)
@@ -449,7 +449,7 @@ def getContLines(xx,yy,zz,level=0.9,ax=None,verbose=False):
 
 def plotMap(map,proj='moll',fig=None,pmax=None,pmin=None,rot=None,cmap=None,cbg=None,verbose=False,half_sky=False,zoomrng=None,title=None):
     # plot map based on options specified
-    if verbose: print('plotMap: plotting map ({})'.format(proj))
+    # if verbose: print('plotMap: plotting map ({})'.format(proj))
     if not cmap:
         cmap=cm.gray
     if not cbg:
@@ -466,7 +466,7 @@ def plotMap(map,proj='moll',fig=None,pmax=None,pmin=None,rot=None,cmap=None,cbg=
         else:
             figsize=(20,10)
         fig=plot.figure(figsize=figsize)
-    if verbose: print('plotMap: figure made ({})'.format(proj),fig,figsize)
+    # if verbose: print('plotMap: figure made ({})'.format(proj),fig,figsize)
 
     if proj=='cart':
         if zoomrng==None:
@@ -503,7 +503,7 @@ def plotMap(map,proj='moll',fig=None,pmax=None,pmin=None,rot=None,cmap=None,cbg=
         fig=hp.gnomview(map,cmap=cmap,max=pmax,min=pmin,cbar=False,rot=rot,half_sky=half_sky,fig=fig.number,title=title)
     else:
         print('unknown projection:',proj)
-    if verbose: print('plotMap: plotted map ({})'.format(proj),fig)
+    # if verbose: print('plotMap: plotted map ({})'.format(proj),fig)
     return fig
 
 def getPeak(map,verbose=False,getmin=False):
