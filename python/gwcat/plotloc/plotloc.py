@@ -142,7 +142,7 @@ def getConstBounds(fIn=None,verbose=False):
     if not fIn:
         fIn=os.path.join(os.path.dirname(__file__),'constdata/constellations.bounds.json')
     # if verbose: print('retrieving const bounds from {}'.format(fIn))
-    cBounds=json.load(open(fIn))['features']
+    cBounds=json.load(open(fIn,encoding="utf-8"))['features']
     const={}
     for c in cBounds:
         coords=c['geometry']['coordinates'][0]
@@ -186,7 +186,7 @@ def getConstLines(fIn=None,verbose=False):
     # get constellation lines from files
     if not fIn:
         fIn=os.path.join(os.path.dirname(__file__),'constdata/constellations.lines.json')
-    cLines=json.load(open(fIn))['features']
+    cLines=json.load(open(fIn,encoding="utf-8"))['features']
     const={}
     for c in cLines:
         coords=c['geometry']['coordinates']
@@ -241,7 +241,7 @@ def getConstLabs(fIn=None,verbose=False):
     # get constellation labels from input file
     if not fIn:
         fIn=os.path.join(os.path.dirname(__file__),'constdata/constellations.json')
-    constellations=json.load(open(fIn))['features']
+    constellations=json.load(open(fIn,encoding="utf-8"))['features']
     const={}
     for c in constellations:
         const[c['id']]={}
