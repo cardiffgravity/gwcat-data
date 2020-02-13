@@ -560,7 +560,9 @@ class GWCat(object):
                 if 'created' in gravLink[0]:
                     if link[0]['created']<fitsCreated:
                         updateGrav=True
-            if updateGrav:
+            else:
+                updateGrav=True
+            if updateGrav or overwrite:
                 if not mapread:
                     map=plotloc.read_map(filename,verbose=verbose)
                 if verbose:
