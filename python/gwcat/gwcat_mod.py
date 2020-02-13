@@ -490,6 +490,8 @@ class GWCat(object):
                     if 'created' in link[0]:
                         if link[0]['created']<fitsCreated:
                             plots[p]['update']=True
+                else:
+                    plots[p]['update']=True
                 if plots[p]['update']: nUpdate+=1
 
             if nUpdate==0:
