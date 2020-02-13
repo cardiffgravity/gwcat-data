@@ -560,7 +560,7 @@ class GWCat(object):
             gravLink=self.getLink(ev,gravLinktxt,srchtype='text')
             if len(gravLink)>0:
                 if 'created' in gravLink[0]:
-                    if link[0]['created']<fitsCreated:
+                    if gravLink[0]['created']<fitsCreated:
                         updateGrav=True
             else:
                 updateGrav=True
