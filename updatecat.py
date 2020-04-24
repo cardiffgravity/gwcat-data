@@ -4,9 +4,11 @@ statF=open(statusFile,'w')
 statF.write('pending\n')
 statF.close()
 
-import gwcat
+import sys,os
+sys.path.insert(0,os.path.join(os.getcwd(),'python'))
+
+import gwcatpy
 import json
-import os
 import argparse
 
 parser=argparse.ArgumentParser(prog="updatecat.py", description="Updates the gwcat-data database")
