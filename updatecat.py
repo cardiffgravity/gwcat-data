@@ -40,23 +40,23 @@ logfile=args.logfile
 skymaps=args.skymaps
 
 if update==True:
-    gc=gwcat.GWCat(fileIn=os.path.join(dataDir,'gwosc_gracedb.json'),
+    gc=gwcatpy.GWCat(fileIn=os.path.join(dataDir,'gwosc_gracedb.json'),
         dataDir=dataDir,baseurl=baseurl,verbose=verbose)
     gdb=json.load(open(os.path.join(dataDir,'gracedb.json')))
-    gwoscdata=json.load(open(os.path.join(dataDir,'gwosc.json')))
+    gwoscdata=json.load(open(os.path.join(dataDir,'gwtc1.json')))
     knownEvents=gc.getTimestamps()
 
-    mandata=gwcat.getManual(export=True,dirOut=dataDir,verbose=verbose)
-    gwoscdata=gwcat.gwosc.getGwosc(export=True,dirOut=dataDir,verbose=verbose)
-    gdb=gwcat.gracedb.getSuperevents(export=True,dirOut=dataDir,verbose=verbose,
+    mandata=gwcatpy.getManual(export=True,dirOut=dataDir,verbose=verbose)
+    gwtc1data=gwcatpy.gwosc.getGWTC1(export=True,dirOut=dataDir,verbose=verbose)
+    gdb=gwcatpy.gracedb.getSuperevents(export=True,dirOut=dataDir,verbose=verbose,
         knownEvents=knownEvents,forceUpdate=forceupdate,datelim=datelim,logFile=logfile)
-    json.dump(gwoscdata,open(os.path.join(dataDir,'gwosc.min.json'),'w'))
-    json.dump(gdb,open(os.path.join(dataDir,'gracedb.min.json'),'w'))
+    json.dump(gwoscdata,open(os.path.join(dataDir,'gwtc1.min.json'),'w'))
+    json.dump(gdb,open(os.path.join(dataDir,'gwtc1.min.json'),'w'))
 
     print('importing Manual Data...')
     gc.importManual(mandata,verbose=verbose)
-    print('importing GWOSC...')
-    gc.importGwosc(gwoscdata,verbose=verbose)
+    print('importing GWTC-1...')
+    gc.importGWTC1(gwtc1data,verbose=verbose)
     print('importing GraceDB...')
     gc.importGraceDB(gdb,verbose=verbose,forceUpdate=forceupdate)
     print('removing unnecessary GraceDB candidates')
@@ -64,7 +64,7 @@ if update==True:
 
 else:
     print('importing from local file')
-    gc=gwcat.GWCat(fileIn=os.path.join(dataDir,'gwosc_gracedb.json'),dataDir=dataDir)
+    gc=gwcatpy.GWCat(fileIn=os.path.join(dataDir,'gwosc_gracedb.json'),dataDir=dataDir)
 
 gc.updateMaps(verbose=verbose,forceUpdate=forcemap)
 logfileMaps=logfile+'_maps'
@@ -89,8 +89,8 @@ gcdat=json.load(open(os.path.join(dataDir,'gwosc_gracedb.json')))
 # create minified version of json file
 json.dump(gcdat,open(os.path.join(dataDir,'gwosc_gracedb.min.json'),'w'))
 # convert json files to jsonp
-gwcat.json2jsonp(os.path.join(dataDir,'gwosc_gracedb.json'),os.path.join(dataDir,'gwosc_gracedb.jsonp'))
-gwcat.json2jsonp(os.path.join(dataDir,'gwosc_gracedb.min.json'),os.path.join(dataDir,'gwosc_gracedb.min.jsonp'))
+gwcatpy.json2jsonp(os.path.join(dataDir,'gwosc_gracedb.json'),os.path.join(dataDir,'gwosc_gracedb.jsonp'))
+gwcatpy.json2jsonp(os.path.join(dataDir,'gwosc_gracedb.min.json'),os.path.join(dataDir,'gwosc_gracedb.min.jsonp'))
 
 #export data to CSV files
 gc.exportCSV(os.path.join(dataDir,'gwosc_gracedb.csv'),verbose=True,dictfileout=os.path.join(dataDir,'parameters.csv'))
