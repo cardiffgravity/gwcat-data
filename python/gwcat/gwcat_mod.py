@@ -389,6 +389,9 @@ class GWCat(object):
         if verbose: print('Downloading skymap for {} from {}'.format(ev,url))
         srcfile=os.path.split(url)[-1]
         mapreq=requests.get(url)
+        # if verbose:
+        #     print('map requests:',mapreq)
+        #     print('map requests (OK):',mapreq.ok)
         if mapreq.ok:
             try:
                 # if url.find('.fits.gz')>=0:
@@ -436,11 +439,22 @@ class GWCat(object):
         #     print('WARNING: Problem calculating area for {}'.format(ev))
             # return
 
-    def rel2abs(self,rel):
-        return(self.baseurl + rel)
+    def rel2abs(self,rel,url=None):
+        if url==None:
+            url=self.baseurl
+        return(url + rel)
 
-    def plotMapPngs(self,overwrite=False,verbose=False):
+    def plotMapPngs(self,overwrite=False,verbose=False,logFile=None):
         print('*** Updating plots...')
+        if os.path.exists(logFile):
+            os.remove(logFile)
+            print('Removing log file: {}'.format(logFile))
+        else:
+            print("Log file doesn't exist: {}".format(logFile))
+        if logFile:
+            print('Writing Maps log to: {}'.format(logFile))
+            logF=open(logFile,'a')
+
         pngDir=os.path.join(self.dataDir,'png')
         gravDir=os.path.join(self.dataDir,'gravoscope')
         dataDir=os.path.join(self.dataDir,'fits')
@@ -476,6 +490,8 @@ class GWCat(object):
                     if 'created' in link[0]:
                         if link[0]['created']<fitsCreated:
                             plots[p]['update']=True
+                else:
+                    plots[p]['update']=True
                 if plots[p]['update']: nUpdate+=1
 
             if nUpdate==0:
@@ -488,6 +504,8 @@ class GWCat(object):
                 except:
                     print('ERROR: problem reading map at {}'.format(filename))
                     return
+                if logFile:
+                    logF.write(ev+'\n')
                 for p in plots:
                     pp=plots[p]
                     if p=='cartzoom':
@@ -542,9 +560,11 @@ class GWCat(object):
             gravLink=self.getLink(ev,gravLinktxt,srchtype='text')
             if len(gravLink)>0:
                 if 'created' in gravLink[0]:
-                    if link[0]['created']<fitsCreated:
+                    if gravLink[0]['created']<fitsCreated:
                         updateGrav=True
-            if updateGrav:
+            else:
+                updateGrav=True
+            if updateGrav or overwrite:
                 if not mapread:
                     map=plotloc.read_map(filename,verbose=verbose)
                 if verbose:
@@ -552,7 +572,8 @@ class GWCat(object):
                 plotloc.plotGravoscope(mapIn=map,pngOut=gravFile,verbose=verbose,res=res)
                 self.addLink(ev,{'url':self.rel2abs(gravFile),'text':gravLinktxt,
                     'type':'skymap-plain','created':Time.now().isot})
-
+        if logFile:
+            logF.close()
         return
 
     def makeGravoscopeTilesPerl(self,overwrite=False,verbose=False):
@@ -575,7 +596,7 @@ class GWCat(object):
                     plotloc.makeTiles(gravFile,verbose=verbose)
         return
 
-    def makeGravoscopeTiles(self,maxres=3,overwrite=False,verbose=False):
+    def makeGravoscopeTiles(self,maxres=3,overwrite=False,verbose=False,tilesurl=None):
 
         gravDir=os.path.join(self.dataDir,'gravoscope')
         for ev in self.events:
@@ -596,7 +617,7 @@ class GWCat(object):
             else:
                 if verbose: print('adding tiles link for Gravoscope tileset for {}'.format(ev))
                 gravLinktxt='Gravoscope tileset'
-                self.addLink(ev,{'url':self.rel2abs(tilesDir),'text':gravLinktxt,
+                self.addLink(ev,{'url':self.rel2abs(tilesDir,url=tilesurl),'text':gravLinktxt,
                     'type':'gravoscope-tiles','created':fitsCreated.isot})
             tileFile=os.path.join(gravDir,'{}-tiles/{}.png'.format(ev,'ttrtttttt'[0:maxres+1]))
             if not os.path.isfile(tileFile):
@@ -615,7 +636,7 @@ class GWCat(object):
                 map=plotloc.read_map(filename,verbose=verbose)
                 plotloc.makeTiles(map,dirOut=tilesDir,maxres=maxres,verbose=verbose)
                 gravLinktxt='Gravoscope tileset'
-                self.addLink(ev,{'url':self.rel2abs(tilesDir),'text':gravLinktxt,
+                self.addLink(ev,{'url':self.rel2abs(tilesDir,url=tilesurl),'text':gravLinktxt,
                     'type':'gravoscope-tiles','created':Time.now().isot})
         return
 

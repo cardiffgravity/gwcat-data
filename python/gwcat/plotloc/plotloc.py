@@ -141,7 +141,8 @@ def getConstBounds(fIn=None,verbose=False):
     # get constellation boundaries from file
     if not fIn:
         fIn=os.path.join(os.path.dirname(__file__),'constdata/constellations.bounds.json')
-    cBounds=json.load(open(fIn))['features']
+    # if verbose: print('retrieving const bounds from {}'.format(fIn))
+    cBounds=json.load(open(fIn,encoding="utf-8"))['features']
     const={}
     for c in cBounds:
         coords=c['geometry']['coordinates'][0]
@@ -153,15 +154,19 @@ def getConstBounds(fIn=None,verbose=False):
         ra.append(coords[0][0])
         dec.append(coords[0][1])
         const[c['id']]={'coord':coords,'ra':ra,'dec':dec}
+    # if verbose: print('retrieved const bounds from {}'.format(fIn))
     return(const)
 
 def plotConstBounds(color='w',alpha=1,verbose=False):
     # plot constellation boundaries
     cb=getConstBounds(verbose=verbose)
+    if verbose: print('got const bounds',len(cb))
     for c in cb:
         const=cb[c]
         nra=len(const['ra'])
+        # if verbose: print('constellation {} ({})'.format(c,nra))
         for i in range(nra-1):
+            # if verbose: print('line {}'.format(i))
             line=hp.projplot(const['ra'][i:i+2],const['dec'][i:i+2],lonlat=True,color=color,linewidth=1,alpha=alpha)
             if len(line)>1:
                 # catch lines that don't plot properly
@@ -174,13 +179,14 @@ def plotConstBounds(color='w',alpha=1,verbose=False):
                     plot.plot([xy0[0],xy1[0]],[xy0[1],xy1[1]],color=color,linewidth=1,alpha=alpha)
                 # else:
                 #     print('***')
+    return
 
 
 def getConstLines(fIn=None,verbose=False):
     # get constellation lines from files
     if not fIn:
         fIn=os.path.join(os.path.dirname(__file__),'constdata/constellations.lines.json')
-    cLines=json.load(open(fIn))['features']
+    cLines=json.load(open(fIn,encoding="utf-8"))['features']
     const={}
     for c in cLines:
         coords=c['geometry']['coordinates']
@@ -235,7 +241,7 @@ def getConstLabs(fIn=None,verbose=False):
     # get constellation labels from input file
     if not fIn:
         fIn=os.path.join(os.path.dirname(__file__),'constdata/constellations.json')
-    constellations=json.load(open(fIn))['features']
+    constellations=json.load(open(fIn,encoding="utf-8"))['features']
     const={}
     for c in constellations:
         const[c['id']]={}
@@ -443,6 +449,7 @@ def getContLines(xx,yy,zz,level=0.9,ax=None,verbose=False):
 
 def plotMap(map,proj='moll',fig=None,pmax=None,pmin=None,rot=None,cmap=None,cbg=None,verbose=False,half_sky=False,zoomrng=None,title=None):
     # plot map based on options specified
+    # if verbose: print('plotMap: plotting map ({})'.format(proj))
     if not cmap:
         cmap=cm.gray
     if not cbg:
@@ -459,6 +466,7 @@ def plotMap(map,proj='moll',fig=None,pmax=None,pmin=None,rot=None,cmap=None,cbg=
         else:
             figsize=(20,10)
         fig=plot.figure(figsize=figsize)
+    # if verbose: print('plotMap: figure made ({})'.format(proj),fig,figsize)
 
     if proj=='cart':
         if zoomrng==None:
@@ -495,6 +503,7 @@ def plotMap(map,proj='moll',fig=None,pmax=None,pmin=None,rot=None,cmap=None,cbg=
         fig=hp.gnomview(map,cmap=cmap,max=pmax,min=pmin,cbar=False,rot=rot,half_sky=half_sky,fig=fig.number,title=title)
     else:
         print('unknown projection:',proj)
+    # if verbose: print('plotMap: plotted map ({})'.format(proj),fig)
     return fig
 
 def getPeak(map,verbose=False,getmin=False):
@@ -663,7 +672,7 @@ def makePlot(ev='S190412m',mapIn=None,proj='moll',plotcont=False,smooth=0.5,zoom
     else:
         map=mapIn
     maptot,area95=getProbMap(map,0.95,verbose=verbose)
-
+    # print('got map ({}): 95%={}'.format(len(maptot),area95))
     if title==None:
         title=ev
 
@@ -695,8 +704,10 @@ def makePlot(ev='S190412m',mapIn=None,proj='moll',plotcont=False,smooth=0.5,zoom
         ralim=[-180,180]
         declim=[-90,90]
     # print (radec95)
+    # if verbose:
+    #     print('plotting map ({})'.format(proj))
     fig=plotMap(map,cmap=cm.hot,proj=proj,rot=rot,verbose=verbose,zoomrng=radeczoom,title=title,half_sky=half_sky,cbg=cbg)
-
+    # if verbose: print('plotted map ({})'.format(proj))
     if plotcont:
         cont90=plotContours(maptot,level=0.9,color='w',alpha=0.5,linestyle='-',linewidth=2,verbose=verbose)
 
@@ -707,9 +718,13 @@ def makePlot(ev='S190412m',mapIn=None,proj='moll',plotcont=False,smooth=0.5,zoom
 
     if grid:
         plotGrid(dRA=45, dDec=30)
+    # if verbose: print('plotting constellation bounds ({})'.format(proj))
     plotConstBounds(color=(0.5,0.5,0.5),verbose=verbose,alpha=0.5)
+    # if verbose: print('plotting constellation labels ({})'.format(proj))
     plotConstLabs(color=(0,0.7,0.7),verbose=verbose,alpha=alphaLab,maxdist=maxdist,plotcentre=rot)
+    # if verbose: print('plotting constellation lines ({})'.format(proj))
     plotConstLines(color=(0,0.7,0.7),verbose=verbose,alpha=0.5)
+    # if verbose: print('plotted constellations ({})'.format(proj))
 
     if addCredit:
         credit='Credit: LIGO-Virgo/Cardiff Uni./C. North'
@@ -731,6 +746,7 @@ def makePlot(ev='S190412m',mapIn=None,proj='moll',plotcont=False,smooth=0.5,zoom
         axlogo2.axis('off')
     if pngOut:
         plot.savefig(pngOut,dpi=pngSize/10)
+        if verbose: print('saved map ({}) to {}'.format(proj,pngOut))
     if thumbOut:
         plot.savefig(thumbOut,dpi=thumbSize/10)
 
