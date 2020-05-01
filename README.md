@@ -30,7 +30,7 @@ Data from LIGO-Virgo gravitational wave detections, built from [Gravitational Wa
  * grayscale image
 
 ### Dependencies
- * python>=3.6 (though it may work in python 
+ * python>=3.6 (it almost certainly works in earlier versions of python3, and it may well work in python 2, possibly with minor changes)
  * Contains the submodule gwcatpy, which has the following dependencies:
     * LIGO-specific dependencies
       * pesummary
