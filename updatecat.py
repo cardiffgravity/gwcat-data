@@ -7,7 +7,7 @@ statF.close()
 import sys,os
 sys.path.insert(0,os.path.join(os.getcwd(),'python'))
 
-import gwcat
+import gwcatpy
 import json
 import argparse
 
