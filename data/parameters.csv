@@ -1,22 +1,22 @@
-Parameter,name,priority,sigfig,err,name_en,type,unit,unit_en
-GPS,%data.GPS.name%,4,12,0,GPS,,,
-UTC,%data.UTC.name%,1,0,0,UTC,varchar,,
-rho,%data.rho.name%,3,3,0,Signal to Noise ratio (Network),,,
-FAR,%data.FAR.name%,1,2,0,False alarm rate,,%data.FAR.unit%,yr^-1
-sigma,%data.sigma.name%,6,2,0,Significance,,,
-M1,%data.M1.name%,1,3,2,Primary mass,,%data.mass.unit.msun%,M_sun
-M2,%data.M2.name%,1,3,2,Secondary mass,,%data.mass.unit.msun%,M_sun
-Mchirp,%data.Mchirp.name%,3,3,2,Chirp mass,,%data.mass.unit.msun%,M_sun
-Mtotal,%data.Mtotal.name%,2,3,2,Total mass,,%data.mass.unit.msun%,M_sun
-chi,%data.chi.name%,4,2,2,Effective inspiral spin,,,
-Mfinal,%data.Mfinal.name%,2,3,2,Final mass,,%data.mass.unit.msun%,M_sun
-Mratio,%data.Mratio.name%,2,3,2,Mass ratio,,False,
-af,%data.af.name%,3,2,2,Final spin,,,
-Erad,%data.Erad.name%,6,2,2,Radiated energy,,%data.Erad.unit%,M_sun c^2
-lpeak,%data.lpeak.name%,6,2,2,Peak luminosity,,%data.lpeak.unit%,10^56 erg s^-1
-DL,%data.DL.name%,2,2,2,Luminosity distance,,%data.DL.unit%,Mpc
-z,%data.z.name%,2,2,2,Redshift,,,
-deltaOmega,%data.skyArea.name%,5,2,0,Sky localization area,,%data.skyArea.unit%,deg^2
-obsrun,%data.obsrun.name%,5,0,0,Observing run,,,
-net,%data.net.name,5,0,0,Detector network,,,
-detType,%data.dettype.name%,,,,Detection type,,,
+Parameter,err,name,name_en,priority,sigfig,type,unit,unit_en
+GPS,0,%data.GPS.name%,GPS,4,12,,,
+UTC,0,%data.UTC.name%,UTC,1,0,varchar,,
+rho,0,%data.rho.name%,Signal to Noise ratio (Network),3,3,,,
+FAR,0,%data.FAR.name%,False alarm rate,1,2,,%data.FAR.unit%,yr^-1
+sigma,0,%data.sigma.name%,Significance,6,2,,,
+M1,2,%data.M1.name%,Primary mass,1,3,,%data.mass.unit.msun%,M_sun
+M2,2,%data.M2.name%,Secondary mass,1,3,,%data.mass.unit.msun%,M_sun
+Mchirp,2,%data.Mchirp.name%,Chirp mass,3,3,,%data.mass.unit.msun%,M_sun
+Mtotal,2,%data.Mtotal.name%,Total mass,2,3,,%data.mass.unit.msun%,M_sun
+chi,2,%data.chi.name%,Effective inspiral spin,4,2,,,
+Mfinal,2,%data.Mfinal.name%,Final mass,2,3,,%data.mass.unit.msun%,M_sun
+Mratio,2,%data.Mratio.name%,Mass ratio,2,3,,False,
+af,2,%data.af.name%,Final spin,3,2,,,
+Erad,2,%data.Erad.name%,Radiated energy,6,2,,%data.Erad.unit%,M_sun c^2
+lpeak,2,%data.lpeak.name%,Peak luminosity,6,2,,%data.lpeak.unit%,10^56 erg s^-1
+DL,2,%data.DL.name%,Luminosity distance,2,2,,%data.DL.unit%,Mpc
+z,2,%data.z.name%,Redshift,2,2,,,
+deltaOmega,0,%data.skyArea.name%,Sky localization area,5,2,,%data.skyArea.unit%,deg^2
+obsrun,0,%data.obsrun.name%,Observing run,5,0,,,
+net,0,%data.net.name,Detector network,5,0,,,
+detType,,%data.dettype.name%,Detection type,,,,,
