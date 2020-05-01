@@ -47,8 +47,8 @@ if update==True:
     knownEvents=gc.getTimestamps()
 
     mandata=gwcatpy.getManual(export=True,dirOut=dataDir,verbose=verbose)
-    gwoscdata=gwcat.gwosc.getGwosc(export=True,dirOut=dataDir,verbose=verbose)
-    gdb=gwcat.gracedb.getSuperevents(export=True,dirOut=dataDir,verbose=verbose,
+    gwoscdata=gwcatpy.gwosc.getGwosc(export=True,dirOut=dataDir,verbose=verbose)
+    gdb=gwcatpy.gracedb.getSuperevents(export=True,dirOut=dataDir,verbose=verbose,
         knownEvents=knownEvents,forceUpdate=forceupdate,datelim=datelim,logFile=logfile)
     json.dump(gwoscdata,open(os.path.join(dataDir,'gwosc.min.json'),'w'))
     json.dump(gdb,open(os.path.join(dataDir,'gracedb.min.json'),'w'))
@@ -89,8 +89,8 @@ gcdat=json.load(open(os.path.join(dataDir,'gwosc_gracedb.json')))
 # create minified version of json file
 json.dump(gcdat,open(os.path.join(dataDir,'gwosc_gracedb.min.json'),'w'))
 # convert json files to jsonp
-gwcat.json2jsonp(os.path.join(dataDir,'gwosc_gracedb.json'),os.path.join(dataDir,'gwosc_gracedb.jsonp'))
-gwcat.json2jsonp(os.path.join(dataDir,'gwosc_gracedb.min.json'),os.path.join(dataDir,'gwosc_gracedb.min.jsonp'))
+gwcatpy.json2jsonp(os.path.join(dataDir,'gwosc_gracedb.json'),os.path.join(dataDir,'gwosc_gracedb.jsonp'))
+gwcapy.json2jsonp(os.path.join(dataDir,'gwosc_gracedb.min.json'),os.path.join(dataDir,'gwosc_gracedb.min.jsonp'))
 
 #export data to CSV files
 gc.exportCSV(os.path.join(dataDir,'gwosc_gracedb.csv'),verbose=True,dictfileout=os.path.join(dataDir,'parameters.csv'))
