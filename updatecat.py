@@ -90,7 +90,7 @@ gcdat=json.load(open(os.path.join(dataDir,'gwosc_gracedb.json')))
 json.dump(gcdat,open(os.path.join(dataDir,'gwosc_gracedb.min.json'),'w'))
 # convert json files to jsonp
 gwcatpy.json2jsonp(os.path.join(dataDir,'gwosc_gracedb.json'),os.path.join(dataDir,'gwosc_gracedb.jsonp'))
-gwcapy.json2jsonp(os.path.join(dataDir,'gwosc_gracedb.min.json'),os.path.join(dataDir,'gwosc_gracedb.min.jsonp'))
+gwcatpy.json2jsonp(os.path.join(dataDir,'gwosc_gracedb.min.json'),os.path.join(dataDir,'gwosc_gracedb.min.jsonp'))
 
 #export data to CSV files
 gc.exportCSV(os.path.join(dataDir,'gwosc_gracedb.csv'),verbose=True,dictfileout=os.path.join(dataDir,'parameters.csv'))
