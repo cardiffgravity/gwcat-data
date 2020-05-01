@@ -80,7 +80,7 @@ else:
 
 if gravoscope:
     print('Updating gravoscope')
-    gc.makeGravoscopeTiles(verbose=True,maxres=6,tilesurl=tilesurl)
+    gc.makeGravoscopeTiles(verbose=True,maxres=6,tilesurl=tilesurl,updateLinks=True)
 
 
 # export library
