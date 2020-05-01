@@ -4,9 +4,11 @@ statF=open(statusFile,'w')
 statF.write('pending\n')
 statF.close()
 
+import sys,os
+sys.path.insert(0,os.path.join(os.getcwd(),'python'))
+
 import gwcat
 import json
-import os
 import argparse
 
 parser=argparse.ArgumentParser(prog="updatecat.py", description="Updates the gwcat-data database")
@@ -38,13 +40,13 @@ logfile=args.logfile
 skymaps=args.skymaps
 
 if update==True:
-    gc=gwcat.GWCat(fileIn=os.path.join(dataDir,'gwosc_gracedb.json'),
+    gc=gwcatpy.GWCat(fileIn=os.path.join(dataDir,'gwosc_gracedb.json'),
         dataDir=dataDir,baseurl=baseurl,verbose=verbose)
     gdb=json.load(open(os.path.join(dataDir,'gracedb.json')))
     gwoscdata=json.load(open(os.path.join(dataDir,'gwosc.json')))
     knownEvents=gc.getTimestamps()
 
-    mandata=gwcat.getManual(export=True,dirOut=dataDir,verbose=verbose)
+    mandata=gwcatpy.getManual(export=True,dirOut=dataDir,verbose=verbose)
     gwoscdata=gwcat.gwosc.getGwosc(export=True,dirOut=dataDir,verbose=verbose)
     gdb=gwcat.gracedb.getSuperevents(export=True,dirOut=dataDir,verbose=verbose,
         knownEvents=knownEvents,forceUpdate=forceupdate,datelim=datelim,logFile=logfile)
@@ -62,7 +64,7 @@ if update==True:
 
 else:
     print('importing from local file')
-    gc=gwcat.GWCat(fileIn=os.path.join(dataDir,'gwosc_gracedb.json'),dataDir=dataDir)
+    gc=gwcatpy.GWCat(fileIn=os.path.join(dataDir,'gwosc_gracedb.json'),dataDir=dataDir)
 
 gc.updateMaps(verbose=verbose,forceUpdate=forcemap)
 logfileMaps=logfile+'_maps'
