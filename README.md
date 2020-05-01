@@ -28,3 +28,11 @@ Data from LIGO-Virgo gravitational wave detections, built from [Gravitational Wa
    * e.g. [data/gravoscope/S191105e_9192.png](data/gravoscope/S191105e_9192.png)
  * 8192x4096 px
  * grayscale image
+
+### Dependencies
+ * Contains the submodule gwcatpy
+ * Other dependencies:
+   * astropy
+   * healpy
+   * matplotlib
+   * 
