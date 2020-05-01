@@ -30,9 +30,20 @@ Data from LIGO-Virgo gravitational wave detections, built from [Gravitational Wa
  * grayscale image
 
 ### Dependencies
- * Contains the submodule gwcatpy
- * Other dependencies:
-   * astropy
-   * healpy
-   * matplotlib
-   * 
+ * python>=3.6 (though it may work in python 
+ * Contains the submodule gwcatpy, which has the following dependencies:
+    * LIGO-specific dependencies
+      * pesummary
+      * ligo.gracedb
+    * Other community-developed dependencies:
+      * astropy
+      * healpy
+      * matplotlib
+      * pandas
+      * h5py
+      * astropy_healpix
+      * numpy
+      * scipy
+      * requests
+      * json
+      * bs4
