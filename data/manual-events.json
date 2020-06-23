@@ -172,102 +172,120 @@
     }
   },
   "data": {
-      "GW190814A": {
-          "name": "GW190814A",
-          "version": 1,
-          "GPS": {
-              "best": 1249852257.0
-          },
-          "M1": {
-              "best": 23.4,
-              "err": [
-                  -2.5,
-                  5.3
-              ]
-          },
-          "M2": {
-              "best": 2.6,
-              "err": [
-                  -0.3,
-                  0.2
-              ]
-          },
-          "DL": {
-              "best": 222.0,
-              "err": [
-                  -59.0,
-                  48.0
-              ]
-          },
-          "z": {
-              "best": 0.05,
-              "err": [
-                  -0.01,
-                  0.01
-              ]
-          },
-          "Mtotal": {
-              "best": 26.0,
-              "err": [
-                  -2.3,
-                  5.0
-              ]
-          },
-          "Mchirp": {
-              "best": 6.1,
-              "err": [
-                  -0.1,
-                  0.1
-              ]
-          },
-          "rho": {
-              "best": 25.4,
-              "err": [
-                  -0.2,
-                  0.1
-              ]
-          },
-          "chi": {
-              "best": 0.0,
-              "err": [
-                  -0.0,
-                  0.0
-              ]
-          },
-          "Mratio": {
-              "best": 0.11,
-              "err": [
-                  -0.03,
-                  0.02
-              ]
-          },
-          "FAR": {
-              "best": 5.2071e-12
-          },
-          "obsrun": {
-              "best": "O3"
-          },
-          "jsonURL": "https://openscience-dev.ligo.caltech.edu/eventapi/json/GWTC-2/GW190814A/v1",
-          "detType": {
-              "best": "GW"
-          },
-          "conf": {
-              "best": "GW"
-          },
-          "UTC": {
-              "best": "2019-08-14T21:11:16.000"
-          },
-          "meta": {
-              "retrieved": "2020-06-02T12:58:10.495",
-              "src": "https://openscience-dev.ligo.caltech.edu/eventapi/json/O3_Discovery_Papers/",
-              "gracedb": "S190814bv",
-              "h5urllocal": "data/h5/GW190814A_v1.h5",
-              "h5datelocal": "2020-05-29T22:21:01.961",
-              "h5datesrc": "2020-05-29T22:21:01.961",
-              "mapurllocal": "data/fits/GW190814A_LALInference.v1.fits.gz",
-              "mapdatelocal": "2019-08-15T09:07:09.379882"
-          }
-        },
+    "GW190814": {
+      "name": "GW190814",
+      "version": 1,
+      "approximant": "combined",
+      "GPS": {
+        "best": 1249852257.0
+      },
+      "M1": {
+        "best": 23.2,
+        "err": [
+          -1.0,
+          1.1
+        ]
+      },
+      "M2": {
+        "best": 2.29,
+        "err": [
+          -0.09,
+          0.08
+        ]
+      },
+      "DL": {
+        "best": 241.0,
+        "err": [
+          -45.0,
+          41.0
+        ]
+      },
+      "z": {
+        "best": 0.053,
+        "err": [
+          -0.01,
+          0.009
+        ]
+      },
+      "Mtotal": {
+        "best": 25.8,
+        "err": [
+          -0.9,
+          1.0
+        ]
+      },
+      "Mchirp": {
+        "best": 6.09,
+        "err": [
+          -0.06,
+          0.06
+        ]
+      },
+      "Mfinal": {
+        "best": 25.55,
+        "err": [
+          -0.94,
+          1.05
+        ]
+      },
+      "rho": {
+        "best": 25.0,
+        "err": [
+          -0.2,
+          0.1
+        ]
+      },
+      "chi": {
+        "best": 0.002,
+        "err": [
+          -0.061,
+          0.06
+        ]
+      },
+      "a": {
+        "best": 0.28,
+        "err": [
+          -0.02,
+          0.02
+        ]
+      },
+      "Mratio": {
+        "best": 0.11,
+        "err": [
+          -0.008,
+          0.008
+        ]
+      },
+      "FAR": {
+        "best": 5.2071e-12
+      },
+      "obsrun": {
+        "best": "O3"
+      },
+      "jsonURL": "https://openscience-dev.ligo.caltech.edu/eventapi/json/GWTC-2/GW190814A/v1",
+      "detType": {
+        "best": "GW"
+      },
+      "conf": {
+        "best": "GW"
+      },
+      "UTC": {
+        "best": "2019-08-14T21:10:00"
+      },
+      "net": {
+        "best": "HLV"
+      },
+      "meta": {
+        "retrieved": "2020-06-02T12:58:10.495",
+        "src": "https://gw-openscience.ligo.caltech.edu/eventapi/json/O3_Discovery_Papers/",
+        "gracedb": "S190814bv",
+        "h5urllocal": "data/h5/GW190814A_v1.h5",
+        "h5datelocal": "2020-05-29T22:21:01.961",
+        "h5datesrc": "2020-05-29T22:21:01.961",
+        "mapurllocal": "data/fits/GW190814A_LALInference.v1.fits.gz",
+        "mapdatelocal": "2019-08-15T09:07:09.379882"
+      }
+    },
     "GW190425": {
       "M1": {
         "best": 1.75,
@@ -490,6 +508,39 @@
         "url": "http://astrog80.astro.cf.ac.uk/GW/gw190425_skymap.fits",
         "text": "Bayestar Skymap",
         "type": "skymap-fits"
+      }
+    ],
+    "GW190814": [
+      {
+        "url": "https://gracedb.ligo.org/superevents/S190814bv/view/",
+        "text": "GraceDB page",
+        "type": "web-data"
+      },
+      {
+        "url": "https://www.gw-openscience.org/eventapi/html/O3_Discovery_Papers/GW190814/v1/",
+        "text": "Open Data page",
+        "type": "open-data"
+      },
+      {
+        "url": "https://dcc.ligo.org/LIGO-P190814/public",
+        "text": "Discovery paper",
+        "citation": "LIGO Scientific Collaboration & Virgo Collaboration (2020) (submitted)",
+        "type": "pub"
+      },
+      {
+        "url": "https://gracedb.ligo.org/api/superevents/S190814bv/files/LALInference.v1.fits.gz",
+        "text": "Bayestar Skymap",
+        "type": "skymap-fits"
+      },
+      {
+        "url": "https://gracedb.ligo.org/api/superevents/S190814bv/files/LALInference.v1.fits.gz",
+        "text": "Bayestar Skymap",
+        "type": "skymap-fits"
+      },
+      {
+        "url": "data/h5/GW190814_v1.h5",
+        "text": "Data file (local)",
+        "type": "data-local"
       }
     ],
     "GW190412": [
