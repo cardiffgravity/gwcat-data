@@ -28,6 +28,7 @@ parser.add_argument('-l','--datelim', dest='datelim', type=float, default=999, h
 parser.add_argument('-b','--baseurl', dest='baseurl', type=str, default='https://data.cardiffgravity.org/gwcat-data/', help='Base URL to prepend to relative links [Default=https://data.cardiffgravity.org/gwcat-data/]')
 parser.add_argument('-t','--tilesurl', dest='tilesurl', type=str, default='https://gravity.astro.cf.ac.uk/gwcat-data/', help='Base URL to prepend to relative links for tiles [Default=https://gravity.astro.cf.ac.uk/gwcat-data/]')
 parser.add_argument('--log',dest='logfile',type=str, default='logs/gdb_updates.log', help='File to output GraceDB logs to. [Default=logs/gdb_updates.log]')
+parser.add_argument('--skipgracedb',dest='skipgracedb',action='store_true', default=False, help='Set to skip GraceDB load')
 args=parser.parse_args()
 dataDir=args.datadir
 update=args.update
@@ -41,33 +42,43 @@ gravoscope=args.gravoscope
 datelim=args.datelim
 logfile=args.logfile
 skymaps=args.skymaps
+skipgracedb=args.skipgracedb
 
 if update==True:
-    gc=gwcat.GWCat(fileIn=os.path.join(dataDir,'gwosc_gracedb.json'),
+    gc=gwcatpy.GWCat(fileIn=os.path.join(dataDir,'gwosc_gracedb.json'),
         dataDir=dataDir,baseurl=baseurl,verbose=verbose)
     gdb=json.load(open(os.path.join(dataDir,'gracedb.json')))
-    gwoscdata=json.load(open(os.path.join(dataDir,'gwosc.json')))
+    gwoscdata=json.load(open(os.path.join(dataDir,'gwtc1.json')))
     knownEvents=gc.getTimestamps()
 
-    mandata=gwcat.getManual(export=True,dirOut=dataDir,verbose=verbose)
-    gwoscdata=gwcat.gwosc.getGwosc(export=True,dirOut=dataDir,verbose=verbose)
-    gdb=gwcat.gracedb.getSuperevents(export=True,dirOut=dataDir,verbose=verbose,
-        knownEvents=knownEvents,forceUpdate=forceupdate,datelim=datelim,logFile=logfile)
-    json.dump(gwoscdata,open(os.path.join(dataDir,'gwosc.min.json'),'w'))
+    mandata=gwcatpy.getManual(export=True,dirOut=dataDir,verbose=verbose)
+    if not skipgracedb:
+        gdb=gwcatpy.gracedb.getSuperevents(export=True,dirOut=dataDir,verbose=verbose,
+            knownEvents=knownEvents,forceUpdate=forceupdate,datelim=datelim,logFile=logfile)
+    gwtc1data=gwcatpy.gwosc.getGWTC1(export=True,dirOut=dataDir,verbose=verbose)
+    json.dump(gwtc1data,open(os.path.join(dataDir,'gwtc1.min.json'),'w'))
     json.dump(gdb,open(os.path.join(dataDir,'gracedb.min.json'),'w'))
 
     print('importing Manual Data...')
     gc.importManual(mandata,verbose=verbose)
-    print('importing GWOSC...')
-    gc.importGwosc(gwoscdata,verbose=verbose)
+    print('importing GWTC1...')
+    gc.importGWTC1(gwtc1data,verbose=verbose)
     print('importing GraceDB...')
     gc.importGraceDB(gdb,verbose=verbose,forceUpdate=forceupdate)
+    print('updating data from H5 files...')
+    gc.updateH5(verbose=verbose,forceUpdate=False)
+    print('setting precision...')
+    gc.setPrecision(extraprec=1,verbose=verbose)
+    print('matching GraceDB entries')
+    gc.matchGraceDB(verbose=verbose)
     print('removing unnecessary GraceDB candidates')
     gc.removeCandidates(verbose=verbose)
+    print('adding references')
+    gc.addrefs(verbose=verbose)
 
 else:
     print('importing from local file')
-    gc=gwcat.GWCat(fileIn=os.path.join(dataDir,'gwosc_gracedb.json'),dataDir=dataDir)
+    gc=gwcatpy.GWCat(fileIn=os.path.join(dataDir,'gwosc_gracedb.json'),dataDir=dataDir)
 
 gc.updateMaps(verbose=verbose,forceUpdate=forcemap)
 logfileMaps=logfile+'_maps'
@@ -92,8 +103,8 @@ gcdat=json.load(open(os.path.join(dataDir,'gwosc_gracedb.json')))
 # create minified version of json file
 json.dump(gcdat,open(os.path.join(dataDir,'gwosc_gracedb.min.json'),'w'))
 # convert json files to jsonp
-gwcat.json2jsonp(os.path.join(dataDir,'gwosc_gracedb.json'),os.path.join(dataDir,'gwosc_gracedb.jsonp'))
-gwcat.json2jsonp(os.path.join(dataDir,'gwosc_gracedb.min.json'),os.path.join(dataDir,'gwosc_gracedb.min.jsonp'))
+gwcatpy.json2jsonp(os.path.join(dataDir,'gwosc_gracedb.json'),os.path.join(dataDir,'gwosc_gracedb.jsonp'))
+gwcatpy.json2jsonp(os.path.join(dataDir,'gwosc_gracedb.min.json'),os.path.join(dataDir,'gwosc_gracedb.min.jsonp'))
 
 #export data to CSV files
 gc.exportCSV(os.path.join(dataDir,'gwosc_gracedb.csv'),verbose=True,dictfileout=os.path.join(dataDir,'parameters.csv'))
