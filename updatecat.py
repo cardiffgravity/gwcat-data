@@ -21,7 +21,8 @@ parser.add_argument('-o','--overwrite', dest='overwrite', action='store_true', d
 parser.add_argument('-f','--forceupdate', dest='forceupdate', action='store_true', default=False, help='Force (re)download of files')
 parser.add_argument('-s','--skymaps', dest='skymaps', action='store_true', default=False, help='Plot skymaps')
 parser.add_argument('-m','--forcemap', dest='forcemap', action='store_true', default=False, help='Force (re)download of fits files')
-parser.add_argument('-g','--gravoscope', dest='gravoscope', action='store_true', default=False, help='Update Gravoscope tiles')
+parser.add_argument('-g','--gravoscope', dest='gravoscope', action='store_true', default=False, help='Update Waveforms')
+parser.add_argument('-w','--waveforms', dest='waveforms', action='store_true', default=False, help='Update Gravoscope tiles')
 parser.add_argument('--manual', dest='manual', action='store_true', default=False, help='Read in manual data')
 parser.add_argument('-d','--datadir', dest='datadir', type=str, default='data/', help='directory in which data is stored')
 parser.add_argument('-l','--datelim', dest='datelim', type=float, default=999, help='number of days to go back in time')
@@ -39,6 +40,7 @@ overwrite=args.overwrite
 baseurl=args.baseurl
 tilesurl=args.tilesurl
 gravoscope=args.gravoscope
+waveforms=args.waveforms
 datelim=args.datelim
 logfile=args.logfile
 skymaps=args.skymaps
@@ -95,6 +97,10 @@ else:
 if gravoscope:
     print('Updating gravoscope')
     gc.makeGravoscopeTiles(verbose=True,maxres=6,tilesurl=tilesurl)
+
+if waveforms:
+    print('Updating waveforms')
+    gc.makeWaveforms(verbose=True,overwrite=False)
 
 
 # export library
