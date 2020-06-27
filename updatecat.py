@@ -5,16 +5,10 @@ statF.write('pending\n')
 statF.close()
 
 import sys,os
-if os.getcwd().split('/')[-1]=='python':
-    relDir='../'
-else:
-    relDir='./'
-sys.path.insert(0,os.path.join(relDir,'python'))
-import gwcatpy
-import json
 import argparse
 
 parser=argparse.ArgumentParser(prog="updatecat.py", description="Updates the gwcat-data database")
+parser.add_argument('--codedir', dest='codedir', type=str, default='python', help='directory in which dev code is stored')
 parser.add_argument('-u','--update', dest='update', action='store_true', default=False, help='Update from GWOSC and GraceDB source')
 parser.add_argument('-v','--verbose', dest='verbose', action='store_true', default=False, help='Set to print more helpful text to the screen')
 parser.add_argument('-o','--overwrite', dest='overwrite', action='store_true', default=False, help='Regenerate and overwrite image files')
@@ -32,6 +26,7 @@ parser.add_argument('--log',dest='logfile',type=str, default='logs/gdb_updates.l
 parser.add_argument('--skipgracedb',dest='skipgracedb',action='store_true', default=False, help='Set to skip GraceDB load')
 args=parser.parse_args()
 dataDir=args.datadir
+codedir=args.codedir
 update=args.update
 verbose=args.verbose
 forceupdate=args.forceupdate
@@ -45,6 +40,15 @@ datelim=args.datelim
 logfile=args.logfile
 skymaps=args.skymaps
 skipgracedb=args.skipgracedb
+
+if os.getcwd().split('/')[-1]=='python':
+    relDir='../'
+else:
+    relDir='./'
+sys.path.insert(0,os.path.join(relDir,codedir))
+
+import gwcatpy
+import json
 
 if update==True:
     gc=gwcatpy.GWCat(fileIn=os.path.join(dataDir,'gwosc_gracedb.json'),
