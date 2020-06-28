@@ -21,7 +21,7 @@ parser.add_argument('--manual', dest='manual', action='store_true', default=Fals
 parser.add_argument('-d','--datadir', dest='datadir', type=str, default='data/', help='directory in which data is stored')
 parser.add_argument('-l','--datelim', dest='datelim', type=float, default=999, help='number of days to go back in time')
 parser.add_argument('-b','--baseurl', dest='baseurl', type=str, default='https://data.cardiffgravity.org/gwcat-data/', help='Base URL to prepend to relative links [Default=https://data.cardiffgravity.org/gwcat-data/]')
-parser.add_argument('-t','--tilesurl', dest='tilesurl', type=str, default='https://gravity.astro.cf.ac.uk/gwcat-data/', help='Base URL to prepend to relative links for tiles [Default=https://gravity.astro.cf.ac.uk/gwcat-data/]')
+parser.add_argument('-t','--tilesurl', dest='tilesurl', type=str, default='https://gravity.astro.cf.ac.uk/gwcat-data/', help='Base URL to prepend to relative links for tiles [Default=https://ligo.gravity.cf.ac.uk/chris.north/gwcat-data/]')
 parser.add_argument('--log',dest='logfile',type=str, default='logs/gdb_updates.log', help='File to output GraceDB logs to. [Default=logs/gdb_updates.log]')
 parser.add_argument('--skipgracedb',dest='skipgracedb',action='store_true', default=False, help='Set to skip GraceDB load')
 args=parser.parse_args()
