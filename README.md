@@ -38,7 +38,7 @@ Data from LIGO-Virgo gravitational wave detections, built from [Gravitational Wa
  * Galactic: http://data.cardiffgravity.org/gwcat-data/data/gravoscope/\<event\>_8192.png
    * e.g. [data/gravoscope/S191105e_9192.png](data/gravoscope/S191105e_8192.png)
  * Equatorial (J2000): http://data.cardiffgravity.org/gwcat-data/data/gravoscope/\<event\>_8192_eq.png
-   * e.g. [data/gravoscope/S191105e_9192.png](data/gravoscope/S191105e_8192_eq.png)
+   * e.g. [data/gravoscope/S191105e_8192_eq.png](data/gravoscope/S191105e_8192_eq.png)
  * 8192x4096 px
  * grayscale image
 
