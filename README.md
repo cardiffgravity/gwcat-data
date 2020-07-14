@@ -21,11 +21,24 @@ Data from LIGO-Virgo gravitational wave detections, built from [Gravitational Wa
         * (e.g. [data/png/S191105e_cart_rot.png](data/png/S191105e_cart_rot.png)
     * Cartesian zoomed onto peak location: data/png/\<event\>_cartzoom.png
         * (e.g. [data/png/S191105e_cartzoom.png](data/png/S191105e_cartzoom.png)
+ * "Pretty" versions of images (NB these are under development, and may change style)
+    * Mollweide (white background): data/png/\<event\>_moll_pretty.png
+        * (e.g. [data/png/S191105e_moll_black.png](data/png/S191105e_moll_pretty.png))
+    * Mollweide (black background): data/png/\<event\>_moll_pretty_black.png
+        * (e.g. [data/png/S191105e_moll_black.png](data/png/S191105e_moll_pretty_black.png))
+    * Cartesian zoomed on peak location (no border): data/png/\<event\>_cartzoom_pretty.png
+        * (e.g. [data/png/S191105e_cartzoom_pretty.png](data/png/S191105e_cartzoom_pretty_.png))
+ * Thumnail of all images have .thumb.png extension
+    * e.g. [data/png/S191105e_cartzoom.thumb.png](data/png/S191105e_cartzoom.thumb.png)
+ * All images are in Equatorial (J2000) coordinates.
+
  
  
 ### High-res sky localisation images:
- * Location: http://data.cardiffgravity.org/gwcat-data/data/gravoscope/\<event\>_8192.png
-   * e.g. [data/gravoscope/S191105e_9192.png](data/gravoscope/S191105e_9192.png)
+ * Galactic: http://data.cardiffgravity.org/gwcat-data/data/gravoscope/\<event\>_8192.png
+   * e.g. [data/gravoscope/S191105e_9192.png](data/gravoscope/S191105e_8192.png)
+ * Equatorial (J2000): http://data.cardiffgravity.org/gwcat-data/data/gravoscope/\<event\>_8192_eq.png
+   * e.g. [data/gravoscope/S191105e_9192.png](data/gravoscope/S191105e_8192_eq.png)
  * 8192x4096 px
  * grayscale image
 
