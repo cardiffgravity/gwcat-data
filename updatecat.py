@@ -10,6 +10,7 @@ sys.path.insert(0,os.path.join(os.getcwd(),'python'))
 import gwcatpy
 import json
 import argparse
+import ciecplib
 
 parser=argparse.ArgumentParser(prog="updatecat.py", description="Updates the gwcat-data database")
 parser.add_argument('-u','--update', dest='update', action='store_true', default=False, help='Update from GWOSC and GraceDB source')
@@ -24,8 +25,8 @@ parser.add_argument('-w','--waveforms', dest='waveforms', action='store_true', d
 parser.add_argument('--manual', dest='manual', action='store_true', default=False, help='Read in manual data')
 parser.add_argument('-d','--datadir', dest='datadir', type=str, default='data/', help='directory in which data is stored')
 parser.add_argument('-l','--datelim', dest='datelim', type=float, default=999, help='number of days to go back in time')
-parser.add_argument('-b','--baseurl', dest='baseurl', type=str, default='https://data.cardiffgravity.org/gwcat-data/', help='Base URL to prepend to relative links [Default=https://data.cardiffgravity.org/gwcat-data/]')
-parser.add_argument('-t','--tilesurl', dest='tilesurl', type=str, default='Default=https://ligo.gravity.cf.ac.uk/chris.north/gwcat-data/', help='Base URL to prepend to relative links for tiles [Default=Default=https://ligo.gravity.cf.ac.uk/chris.north/gwcat-data/]')
+parser.add_argument('-b','--baseurl', dest='baseurl', type=str, default='https://ligo.gravity.cf.ac.uk/~chris.north/LVC/gwcat-data-dev/', help='Base URL to prepend to relative links [Default=https://ligo.gravity.cf.ac.uk/~chris.north/LVC/gwcat-data-dev/]')
+parser.add_argument('-t','--tilesurl', dest='tilesurl', type=str, default='https://ligo.gravity.cf.ac.uk/~chris.north/LVC/gwcat-data-dev/', help='Base URL to prepend to relative links for tiles [Default=https://ligo.gravity.cf.ac.uk/~chris.north/LVC/gwcat-data-dev/]')
 parser.add_argument('--log',dest='logfile',type=str, default='logs/gdb_updates.log', help='File to output GraceDB logs to. [Default=logs/gdb_updates.log]')
 parser.add_argument('--skipgracedb',dest='skipgracedb',action='store_true', default=False, help='Set to skip GraceDB load')
 parser.add_argument('--devMode',dest='devMode',action='store_true', default=False, help='Set to use dev mode (requires LVK login)')
@@ -49,6 +50,7 @@ devMode=args.devMode
 
 if devMode:
     mode='dev'
+    sess=ciecplib.Session("LIGO")
 else:
     mode=None
 
@@ -60,10 +62,16 @@ gc=gwcatpy.GWCat(fileIn=fileIn,dataDir=dataDir,mode=mode,baseurl=baseurl)
 if update==True:
 
     print('\n\n*****\nReading GWTC...\n*****\n\n')
-    gwtcdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode)
+    gwtcdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode,catalog='GWTC',sess=sess)
     print('\n\n*****\nImporting GWTC...\n*****\n\n')
-    gc.importGWTC(gwtcdata,verbose=verbose, devMode=devMode)
+    gc.importGWTC(gwtcdata,verbose=verbose, devMode=devMode,catalog='GWTC',forceOverwrite=forceupdate)
     knownEvents=gc.getTimestamps()
+    
+    print('\n\n*****\nReading O3 Discovery Papers...\n*****\n\n')
+    o3discdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,catalog='O3_Discovery_Papers',sess=sess,devMode=devMode)
+    print('\n\n*****\nImporting O3 Discovery Papers...\n*****\n\n')
+    gc.importGWTC(o3discdata,verbose=verbose, devMode=devMode,catalog='O3_Discovery_Papers')
+    
     json.dump(gwtcdata,open(os.path.join(dataDir,'gwtc.min.json'),'w'))
     if not skipgracedb:
         print('\n\n*****\nReading GraceDB...\n*****\n\n')
@@ -73,10 +81,11 @@ if update==True:
                     
         print('\n\n*****\nimporting GraceDB...\n*****\n\n')
         gc.importGraceDB(gdb,verbose=verbose,forceUpdate=forceupdate)
-        print('\n\n*****\nmatching GraceDB entries...\n*****\n\n')
-        gc.matchGraceDB(verbose=verbose)
-        print('\n\n*****\nremoving unnecessary GraceDB candidates\n*****\n\n')
-        gc.removeCandidates(verbose=verbose)
+        
+    print('\n\n*****\nmatching GraceDB entries...\n*****\n\n')
+    gc.matchGraceDB(verbose=verbose)
+    print('\n\n*****\nremoving unnecessary GraceDB candidates\n*****\n\n')
+    gc.removeCandidates(verbose=verbose)
     
     print('\n\n*****\nAdding manual references...\n*****\n\n')    
     gc.addRefs(verbose=verbose)
@@ -113,7 +122,7 @@ if gravoscope:
 
 if waveforms:
     print('\n\n*****\nUpdating waveforms\n*****\n\n')
-    gc.makeWaveforms(verbose=verbose,overwrite=False)
+    gc.makeWaveforms(verbose=verbose,overwrite=overwrite)
 
 # export library
 gc.exportJson(os.path.join(dataDir,'gwosc_gracedb.json'))
