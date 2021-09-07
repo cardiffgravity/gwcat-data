@@ -53,6 +53,7 @@ if devMode:
     sess=ciecplib.Session("LIGO")
 else:
     mode=None
+    sess=None
 
 fileIn=os.path.join(dataDir,'gwosc_gracedb.json')
 
