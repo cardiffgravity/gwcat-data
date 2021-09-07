@@ -102,7 +102,7 @@ if update==True:
 
 else:
     print('importing from local file')
-    gc=gwcatpy.GWCat(fileIn=os.path.join(dataDir,'gwosc_gracedb.json'),dataDir=dataDir,mode=mode)
+    gc=gwcatpy.GWCat(fileIn=fileIn,dataDir=dataDir,mode=mode)
 
     
 logfileMaps=logfile+'_maps'
