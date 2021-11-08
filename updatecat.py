@@ -28,8 +28,10 @@ parser.add_argument('-l','--datelim', dest='datelim', type=float, default=999, h
 parser.add_argument('-b','--baseurl', dest='baseurl', type=str, default='https://ligo.gravity.cf.ac.uk/~chris.north/LVC/gwcat-data-dev/', help='Base URL to prepend to relative links [Default=https://ligo.gravity.cf.ac.uk/~chris.north/LVC/gwcat-data-dev/]')
 parser.add_argument('-t','--tilesurl', dest='tilesurl', type=str, default='https://ligo.gravity.cf.ac.uk/~chris.north/LVC/gwcat-data-dev/', help='Base URL to prepend to relative links for tiles [Default=https://ligo.gravity.cf.ac.uk/~chris.north/LVC/gwcat-data-dev/]')
 parser.add_argument('--log',dest='logfile',type=str, default='logs/gdb_updates.log', help='File to output GraceDB logs to. [Default=logs/gdb_updates.log]')
+parser.add_argument('--gracedb',dest='gracedb',action='store_true', default=False, help='Set to include GraceDB load')
 parser.add_argument('--skipgracedb',dest='skipgracedb',action='store_true', default=False, help='Set to skip GraceDB load')
 parser.add_argument('--devMode',dest='devMode',action='store_true', default=False, help='Set to use dev mode (requires LVK login)')
+parser.add_argument('--skiph5',dest='skiph5',action='store_true', default=False, help='Set to skip using H5 files')
 args=parser.parse_args()
 dataDir=args.datadir
 update=args.update
@@ -45,6 +47,8 @@ waveforms=args.waveforms
 datelim=args.datelim
 logfile=args.logfile
 skipgracedb=args.skipgracedb
+gracedb=args.gracedb
+skiph5=args.skiph5
 skymaps=args.skymaps
 devMode=args.devMode
 
@@ -66,15 +70,26 @@ if update==True:
     gwtcdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode,catalog='GWTC',sess=sess)
     print('\n\n*****\nImporting GWTC...\n*****\n\n')
     gc.importGWTC(gwtcdata,verbose=verbose, devMode=devMode,catalog='GWTC',forceOverwrite=forceupdate)
+    
+    print('\n\n*****\nReading GWTC-3-marginal...\n*****\n\n')
+    gwtc3margdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode,catalog='GWTC-3-marginal',sess=sess)
+    print('\n\n*****\nImporting GWTC-3-marginal...\n*****\n\n')
+    gc.importGWTC(gwtc3margdata,verbose=verbose, devMode=devMode,catalog='GWTC-3-marginal',forceOverwrite=True)
+    
+    print('\n\n*****\nReading GWTC-2.1-marginal...\n*****\n\n')
+    gwtc21margdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode,catalog='GWTC-2.1-marginal',sess=sess)
+    print('\n\n*****\nImporting GWTC-2.1-marginal...\n*****\n\n')
+    gc.importGWTC(gwtc21margdata,verbose=verbose, devMode=devMode,catalog='GWTC-2.1-marginal',forceOverwrite=True)
+    
+    print('\n\n*****\nReading GWTC-1-marginal...\n*****\n\n')
+    gwtc1margdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode,catalog='GWTC-1-marginal',sess=sess)
+    print('\n\n*****\nImporting GWTC-1-marginal...\n*****\n\n')
+    gc.importGWTC(gwtc1margdata,verbose=verbose, devMode=devMode,catalog='GWTC-1-marginal',forceOverwrite=True)
+    
     knownEvents=gc.getTimestamps()
     
-    print('\n\n*****\nReading O3 Discovery Papers...\n*****\n\n')
-    o3discdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,catalog='O3_Discovery_Papers',sess=sess,devMode=devMode)
-    print('\n\n*****\nImporting O3 Discovery Papers...\n*****\n\n')
-    gc.importGWTC(o3discdata,verbose=verbose, devMode=devMode,catalog='O3_Discovery_Papers')
-    
     json.dump(gwtcdata,open(os.path.join(dataDir,'gwtc.min.json'),'w'))
-    if not skipgracedb:
+    if gracedb:
         print('\n\n*****\nReading GraceDB...\n*****\n\n')
         gdb=gwcatpy.gracedb.getSuperevents(export=True,dirOut=dataDir,verbose=verbose,
         knownEvents=knownEvents,forceUpdate=forceupdate,datelim=datelim,logFile=logfile)
@@ -91,8 +106,11 @@ if update==True:
     print('\n\n*****\nAdding manual references...\n*****\n\n')    
     gc.addRefs(verbose=verbose)
 
-    print('\n\n*****\nUpdating data from H5\n*****\n\n')
-    gc.updateH5(verbose=verbose,forceUpdate=forceupdate,forceUpdateData=forceh5)
+    if skiph5:
+        print('\n\n*****\Skipping getting data from H5\n*****\n\n')
+    else:
+        print('\n\n*****\nUpdating data from H5\n*****\n\n')
+        gc.updateH5(verbose=verbose,forceUpdate=forceupdate,forceUpdateData=forceh5)
 
     print('\n\n*****\nsetting precision...\n*****\n\n')
     gc.setPrecision(extraprec=1,verbose=verbose)
