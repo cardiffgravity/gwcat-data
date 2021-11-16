@@ -32,6 +32,7 @@ parser.add_argument('--gracedb',dest='gracedb',action='store_true', default=Fals
 parser.add_argument('--skipgracedb',dest='skipgracedb',action='store_true', default=False, help='Set to skip GraceDB load')
 parser.add_argument('--devMode',dest='devMode',action='store_true', default=False, help='Set to use dev mode (requires LVK login)')
 parser.add_argument('--skiph5',dest='skiph5',action='store_true', default=False, help='Set to skip using H5 files')
+parser.add_argument('--blank',dest='blank',action='store_true', default=False, help='Set to start from blank file')
 args=parser.parse_args()
 dataDir=args.datadir
 update=args.update
@@ -51,6 +52,7 @@ gracedb=args.gracedb
 skiph5=args.skiph5
 skymaps=args.skymaps
 devMode=args.devMode
+blank=args.blank
 
 if devMode:
     mode='dev'
@@ -59,7 +61,10 @@ else:
     mode=None
     sess=None
 
-fileIn=os.path.join(dataDir,'gwosc_gracedb.json')
+if blank:
+    fileIn=os.path.join(dataDir,'gwosc_gracedb_blank.json')
+else:
+    fileIn=os.path.join(dataDir,'gwosc_gracedb.json')
 
 print('\n\n*****\nImporting from local file\n*****\n\n')
 gc=gwcatpy.GWCat(fileIn=fileIn,dataDir=dataDir,mode=mode,baseurl=baseurl)
