@@ -67,7 +67,7 @@ else:
     fileIn=os.path.join(dataDir,'gwosc_gracedb.json')
 
 print('\n\n*****\nImporting from local file\n*****\n\n')
-gc=gwcatpy.GWCat(fileIn=fileIn,dataDir=dataDir,mode=mode,baseurl=baseurl)
+gc=gwcatpy.GWCat(fileIn=fileIn,dataDir=dataDir,mode=mode,baseurl=baseurl,dataurl=tilesurl)
 
 if update==True:
 
@@ -75,40 +75,40 @@ if update==True:
     gwtcdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode,catalog='GWTC',sess=sess)
     print('\n\n*****\nImporting GWTC...\n*****\n\n')
     gc.importGWTC(gwtcdata,verbose=verbose, devMode=devMode,catalog='GWTC',forceOverwrite=forceupdate)
-    
+
     print('\n\n*****\nReading GWTC-3-marginal...\n*****\n\n')
     gwtc3margdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode,catalog='GWTC-3-marginal',sess=sess)
     print('\n\n*****\nImporting GWTC-3-marginal...\n*****\n\n')
     gc.importGWTC(gwtc3margdata,verbose=verbose, devMode=devMode,catalog='GWTC-3-marginal',forceOverwrite=True)
-    
+
     print('\n\n*****\nReading GWTC-2.1-marginal...\n*****\n\n')
     gwtc21margdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode,catalog='GWTC-2.1-marginal',sess=sess)
     print('\n\n*****\nImporting GWTC-2.1-marginal...\n*****\n\n')
     gc.importGWTC(gwtc21margdata,verbose=verbose, devMode=devMode,catalog='GWTC-2.1-marginal',forceOverwrite=True)
-    
+
     print('\n\n*****\nReading GWTC-1-marginal...\n*****\n\n')
     gwtc1margdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode,catalog='GWTC-1-marginal',sess=sess)
     print('\n\n*****\nImporting GWTC-1-marginal...\n*****\n\n')
     gc.importGWTC(gwtc1margdata,verbose=verbose, devMode=devMode,catalog='GWTC-1-marginal',forceOverwrite=True)
-    
+
     knownEvents=gc.getTimestamps()
-    
+
     json.dump(gwtcdata,open(os.path.join(dataDir,'gwtc.min.json'),'w'))
     if gracedb:
         print('\n\n*****\nReading GraceDB...\n*****\n\n')
         gdb=gwcatpy.gracedb.getSuperevents(export=True,dirOut=dataDir,verbose=verbose,
         knownEvents=knownEvents,forceUpdate=forceupdate,datelim=datelim,logFile=logfile)
         json.dump(gdb,open(os.path.join(dataDir,'gracedb.min.json'),'w'))
-                    
+
         print('\n\n*****\nimporting GraceDB...\n*****\n\n')
         gc.importGraceDB(gdb,verbose=verbose,forceUpdate=forceupdate)
-        
+
     print('\n\n*****\nmatching GraceDB entries...\n*****\n\n')
     gc.matchGraceDB(verbose=verbose)
     print('\n\n*****\nremoving unnecessary GraceDB candidates\n*****\n\n')
     gc.removeCandidates(verbose=verbose)
-    
-    print('\n\n*****\nAdding manual references...\n*****\n\n')    
+
+    print('\n\n*****\nAdding manual references...\n*****\n\n')
     gc.addRefs(verbose=verbose)
 
     if skiph5:
@@ -122,13 +122,13 @@ if update==True:
 
     print('\n\n*****\nUpdating maps\n*****\n\n')
     gc.updateMaps(verbose=verbose,forceUpdate=forcemap)
-    
+
 
 else:
     print('importing from local file')
     gc=gwcatpy.GWCat(fileIn=fileIn,dataDir=dataDir,mode=mode)
 
-    
+
 logfileMaps=logfile+'_maps'
 if skymaps:
     print('\n\n*****\nPlotting maps\n*****\n\n')
