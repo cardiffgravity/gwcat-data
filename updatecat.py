@@ -5,7 +5,7 @@ statF.write('pending\n')
 statF.close()
 
 import sys,os
-sys.path.insert(0,os.path.join(os.getcwd(),'python'))
+# sys.path.insert(0,os.path.join(os.getcwd(),'python'))
 
 import gwcatpy
 import json
