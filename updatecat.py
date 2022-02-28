@@ -158,7 +158,7 @@ gwcatpy.json2jsonp(os.path.join(dataDir,'gwosc_gracedb.json'),os.path.join(dataD
 gwcatpy.json2jsonp(os.path.join(dataDir,'gwosc_gracedb.min.json'),os.path.join(dataDir,'gwosc_gracedb.min.jsonp'))
 
 #export data to CSV files
-gc.exportCSV(os.path.join(dataDir,'gwosc_gracedb.csv'),verbose=True,dictfileout=os.path.join(dataDir,'parameters.csv'))
+gc.exportCSV(os.path.join(dataDir,'gwosc_gracedb.csv'),verbose=True,dictfileout=os.path.join(dataDir,'parameters.csv'),linksfileout=os.path.join(dataDir,'links.csv'))
 
 statF=open(statusFile,'w')
 statF.write('success\n')
