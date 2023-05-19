@@ -29,7 +29,7 @@ parser.add_argument('-b','--baseurl', dest='baseurl', type=str, default='https:/
 parser.add_argument('-t','--tilesurl', dest='tilesurl', type=str, default='https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/', help='Base URL to prepend to relative links for tiles [Default=https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/]')
 parser.add_argument('--log',dest='logfile',type=str, default='logs/gdb_updates.log', help='File to output GraceDB logs to. [Default=logs/gdb_updates.log]')
 parser.add_argument('--gracedb',dest='gracedb',action='store_true', default=False, help='Set to include GraceDB load')
-parser.add_argument('--skipgracedb',dest='skipgracedb',action='store_true', default=False, help='Set to skip GraceDB load')
+parser.add_argument('--skipgwosc',dest='skipgwosc',action='store_true', default=False, help='Set to skip GWOSC load')
 parser.add_argument('--devMode',dest='devMode',action='store_true', default=False, help='Set to use dev mode (requires LVK login)')
 parser.add_argument('--skiph5',dest='skiph5',action='store_true', default=False, help='Set to skip using H5 files')
 parser.add_argument('--blank',dest='blank',action='store_true', default=False, help='Set to start from blank file')
@@ -47,8 +47,8 @@ gravoscope=args.gravoscope
 waveforms=args.waveforms
 datelim=args.datelim
 logfile=args.logfile
-skipgracedb=args.skipgracedb
-gracedb=args.gracedb
+ImportGracedb=args.gracedb
+skipGwosc=args.skipgwosc
 skiph5=args.skiph5
 skymaps=args.skymaps
 devMode=args.devMode
@@ -71,30 +71,32 @@ gc=gwcatpy.GWCat(fileIn=fileIn,dataDir=dataDir,mode=mode,baseurl=baseurl,dataurl
 
 if update==True:
 
-    print('\n\n*****\nReading GWTC...\n*****\n\n')
-    gwtcdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode,catalog='GWTC',sess=sess)
-    print('\n\n*****\nImporting GWTC...\n*****\n\n')
-    gc.importGWTC(gwtcdata,verbose=verbose, devMode=devMode,catalog='GWTC',forceOverwrite=forceupdate)
+    if not skipGwosc:
+        print('\n\n*****\nReading GWTC...\n*****\n\n')
+        gwtcdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode,catalog='GWTC',sess=sess)
+        print('\n\n*****\nImporting GWTC...\n*****\n\n')
+        gc.importGWTC(gwtcdata,verbose=verbose, devMode=devMode,catalog='GWTC',forceOverwrite=forceupdate)
 
-    print('\n\n*****\nReading GWTC-3-marginal...\n*****\n\n')
-    gwtc3margdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode,catalog='GWTC-3-marginal',sess=sess)
-    print('\n\n*****\nImporting GWTC-3-marginal...\n*****\n\n')
-    gc.importGWTC(gwtc3margdata,verbose=verbose, devMode=devMode,catalog='GWTC-3-marginal',forceOverwrite=True)
+        print('\n\n*****\nReading GWTC-3-marginal...\n*****\n\n')
+        gwtc3margdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode,catalog='GWTC-3-marginal',sess=sess)
+        print('\n\n*****\nImporting GWTC-3-marginal...\n*****\n\n')
+        gc.importGWTC(gwtc3margdata,verbose=verbose, devMode=devMode,catalog='GWTC-3-marginal',forceOverwrite=True)
 
-    print('\n\n*****\nReading GWTC-2.1-marginal...\n*****\n\n')
-    gwtc21margdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode,catalog='GWTC-2.1-marginal',sess=sess)
-    print('\n\n*****\nImporting GWTC-2.1-marginal...\n*****\n\n')
-    gc.importGWTC(gwtc21margdata,verbose=verbose, devMode=devMode,catalog='GWTC-2.1-marginal',forceOverwrite=True)
+        print('\n\n*****\nReading GWTC-2.1-marginal...\n*****\n\n')
+        gwtc21margdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode,catalog='GWTC-2.1-marginal',sess=sess)
+        print('\n\n*****\nImporting GWTC-2.1-marginal...\n*****\n\n')
+        gc.importGWTC(gwtc21margdata,verbose=verbose, devMode=devMode,catalog='GWTC-2.1-marginal',forceOverwrite=True)
 
-    print('\n\n*****\nReading GWTC-1-marginal...\n*****\n\n')
-    gwtc1margdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode,catalog='GWTC-1-marginal',sess=sess)
-    print('\n\n*****\nImporting GWTC-1-marginal...\n*****\n\n')
-    gc.importGWTC(gwtc1margdata,verbose=verbose, devMode=devMode,catalog='GWTC-1-marginal',forceOverwrite=True)
+        print('\n\n*****\nReading GWTC-1-marginal...\n*****\n\n')
+        gwtc1margdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode,catalog='GWTC-1-marginal',sess=sess)
+        print('\n\n*****\nImporting GWTC-1-marginal...\n*****\n\n')
+        gc.importGWTC(gwtc1margdata,verbose=verbose, devMode=devMode,catalog='GWTC-1-marginal',forceOverwrite=True)
 
+        json.dump(gwtcdata,open(os.path.join(dataDir,'gwtc.min.json'),'w'))
+    
     knownEvents=gc.getTimestamps()
 
-    json.dump(gwtcdata,open(os.path.join(dataDir,'gwtc.min.json'),'w'))
-    if gracedb:
+    if ImportGracedb:
         print('\n\n*****\nReading GraceDB...\n*****\n\n')
         gdb=gwcatpy.gracedb.getSuperevents(export=True,dirOut=dataDir,verbose=verbose,
         knownEvents=knownEvents,forceUpdate=forceupdate,datelim=datelim,logFile=logfile)
