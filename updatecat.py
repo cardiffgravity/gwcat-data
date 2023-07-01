@@ -34,6 +34,8 @@ parser.add_argument('--skipmarginal',dest='skipmarginal',action='store_true', de
 parser.add_argument('--devMode',dest='devMode',action='store_true', default=False, help='Set to use dev mode (requires LVK login)')
 parser.add_argument('--skiph5',dest='skiph5',action='store_true', default=False, help='Set to skip using H5 files')
 parser.add_argument('--blank',dest='blank',action='store_true', default=False, help='Set to start from blank file')
+parser.add_argument('--highonly',dest='highonly',action='store_true', default=False, help='Set to exclude low significance events')
+parser.add_argument('--lowsigmaps',dest='lowsigmaps',action='store_true', default=False, help='Set to plot maps for low significance events')
 args=parser.parse_args()
 dataDir=args.datadir
 update=args.update
@@ -55,6 +57,8 @@ skiph5=args.skiph5
 skymaps=args.skymaps
 devMode=args.devMode
 blank=args.blank
+highonly=args.highonly
+lowsigmaps=args.lowsigmaps
 
 if devMode:
     mode='dev'
@@ -106,7 +110,7 @@ if update==True:
         json.dump(gdb,open(os.path.join(dataDir,'gracedb.min.json'),'w'))
 
         print('\n\n*****\nimporting GraceDB...\n*****\n\n')
-        gc.importGraceDB(gdb,verbose=verbose,forceUpdate=forceupdate)
+        gc.importGraceDB(gdb,verbose=verbose,forceUpdate=forceupdate,highSigOnly=highonly)
 
     print('\n\n*****\nmatching GraceDB entries...\n*****\n\n')
     gc.matchGraceDB(verbose=verbose)
@@ -137,7 +141,7 @@ else:
 logfileMaps=logfile+'_maps'
 if skymaps:
     print('\n\n*****\nPlotting maps\n*****\n\n')
-    gc.plotMapPngs(verbose=verbose,overwrite=overwrite,logFile=logfileMaps)
+    gc.plotMapPngs(verbose=verbose,overwrite=overwrite,logFile=logfileMaps,lowSigMaps=lowsigmaps)
 else:
     if os.path.exists(logfileMaps):
         os.remove(logfileMaps)
