@@ -106,7 +106,7 @@ if update==True:
     if ImportGracedb:
         print('\n\n*****\nReading GraceDB...\n*****\n\n')
         gdb=gwcatpy.gracedb.getSuperevents(export=True,dirOut=dataDir,verbose=verbose,
-        knownEvents=knownEvents,forceUpdate=forceupdate,datelim=datelim,logFile=logfile)
+        knownEvents=knownEvents,forceUpdate=forceupdate,datelim=datelim,logFile=logfile,highSigOnly=highonly)
         json.dump(gdb,open(os.path.join(dataDir,'gracedb.min.json'),'w'))
 
         print('\n\n*****\nimporting GraceDB...\n*****\n\n')
