@@ -24,6 +24,7 @@ parser.add_argument('-g','--gravoscope', dest='gravoscope', action='store_true',
 parser.add_argument('-w','--waveforms', dest='waveforms', action='store_true', default=False, help='Update Waveforms')
 parser.add_argument('--manual', dest='manual', action='store_true', default=False, help='Read in manual data')
 parser.add_argument('-d','--datadir', dest='datadir', type=str, default='data/', help='directory in which data is stored')
+parser.add_argument('-p','--pubdatadir', dest='pubdatadir', type=str, default='docs/data/', help='directory in which data is published')
 parser.add_argument('-l','--datelim', dest='datelim', type=float, default=999, help='number of days to go back in time')
 parser.add_argument('-b','--baseurl', dest='baseurl', type=str, default='https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/', help='Base URL to prepend to relative links [Default=https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/]')
 parser.add_argument('-t','--tilesurl', dest='tilesurl', type=str, default='https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/', help='Base URL to prepend to relative links for tiles [Default=https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/]')
@@ -38,6 +39,7 @@ parser.add_argument('--highonly',dest='highonly',action='store_true', default=Fa
 parser.add_argument('--lowsigmaps',dest='lowsigmaps',action='store_true', default=False, help='Set to plot maps for low significance events')
 args=parser.parse_args()
 dataDir=args.datadir
+pubDataDir=args.pubdatadir
 update=args.update
 verbose=args.verbose
 forceupdate=args.forceupdate
@@ -159,15 +161,23 @@ if waveforms:
 
 # export library
 gc.exportJson(os.path.join(dataDir,'gwosc_gracedb.json'))
-gcdat=json.load(open(os.path.join(dataDir,'gwosc_gracedb.json')))
-# create minified version of json file
-json.dump(gcdat,open(os.path.join(dataDir,'gwosc_gracedb.min.json'),'w'))
-# convert json files to jsonp
-gwcatpy.json2jsonp(os.path.join(dataDir,'gwosc_gracedb.json'),os.path.join(dataDir,'gwosc_gracedb.jsonp'))
-gwcatpy.json2jsonp(os.path.join(dataDir,'gwosc_gracedb.min.json'),os.path.join(dataDir,'gwosc_gracedb.min.jsonp'))
 
-#export data to CSV files
-gc.exportCSV(os.path.join(dataDir,'gwosc_gracedb.csv'),verbose=True,dictfileout=os.path.join(dataDir,'parameters.csv'),linksfileout=os.path.join(dataDir,'links.csv'))
+#export library to published files
+gc.exportJson(os.path.join(pubDataDir,'gwosc_gracedb.json'))
+gc.exportJson(os.path.join(pubDataDir,'data.json'),contents='data')
+gc.exportJson(os.path.join(pubDataDir,'links.json'),contents='links')
+gc.exportJson(os.path.join(pubDataDir,'parameters.json'),contents='datadict')
+
+# create minified version of json file (not needed for unpublished files)
+gcdat=json.load(open(os.path.join(pubDataDir,'gwosc_gracedb.json')))
+json.dump(gcdat,open(os.path.join(pubDataDir,'gwosc_gracedb.min.json'),'w'))
+
+# create jsonp files (needed for backward compatibility)
+gwcatpy.json2jsonp(os.path.join(pubDataDir,'gwosc_gracedb.json'),os.path.join(pubDataDir,'gwosc_gracedb.jsonp'))
+gwcatpy.json2jsonp(os.path.join(pubDataDir,'gwosc_gracedb.min.json'),os.path.join(pubDataDir,'gwosc_gracedb.min.jsonp'))
+
+#export data to published CSV files
+gc.exportCSV(os.path.join(pubDataDir,'gwosc_gracedb.csv'),verbose=True,dictfileout=os.path.join(pubDataDir,'parameters.csv'),linksfileout=os.path.join(pubDataDir,'links.csv'))
 
 statF=open(statusFile,'w')
 statF.write('success\n')
