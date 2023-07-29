@@ -4,8 +4,12 @@ Data from LIGO-Virgo gravitational wave detections, built from [Gravitational Wa
 ### Data files (GWOSC + GraceDB):
  * [all data (JSON)](data/gwosc_gracedb.json) (_includes parameter definitions and referece links_)
  * [all data (JSON, minified))](data/gwosc_gracedb.min.json) (_includes parameter definitions and reference links_)
+ * [data values only (JSON))](data/data.json)
+ * [Data parameters only (JSON))](data/parameters.json)
+ * [References/links only (JSON))](data/links.json)
  * [data values (CSV)](data/gwosc_gracedb.csv)
  * [Data parameters (CSV)](data/parameters.csv)
+ * [References/Links (CSV)](data/links.csv)
 
 ### Sky localisation images:
  * Location: https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/data/png/\<filename\>
@@ -26,7 +30,7 @@ Data from LIGO-Virgo gravitational wave detections, built from [Gravitational Wa
     * Mollweide (black background): \<event\>_moll_pretty_black.png
         * (e.g. [S191105e_moll_black.png](https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/data/png/S191105e_moll_pretty_black.png))
     * Cartesian zoomed on peak location (no border): \<event\>_cartzoom_pretty.png
-        * (e.g. [S191105e_cartzoom_pretty.png](https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/data/png/S191105e_cartzoom_pretty_.png))
+        * (e.g. [S191105e_cartzoom_pretty.png](https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/data/png/S191105e_cartzoom_pretty.png))
  * Thumnail of all images have .thumb.png extension
     * (e.g. [S191105e_cartzoom.thumb.png](https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/data/png/S191105e_cartzoom.thumb.png))
  * All images are in Equatorial (J2000) coordinates.
@@ -35,7 +39,7 @@ Data from LIGO-Virgo gravitational wave detections, built from [Gravitational Wa
  
 ### High-res sky localisation images:
  * Galactic: https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/data/gravoscope/\<event\>_8192.png
-   * e.g. [S191105e_9192.png](https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/data/gravoscope/S191105e_8192.png)
+   * e.g. [S191105e_8192.png](https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/data/gravoscope/S191105e_8192.png)
  * Equatorial (J2000): https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/data/gravoscope/\<event\>_8192_eq.png
    * e.g. [S191105e_8192_eq.png](https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/data/gravoscope/S191105e_8192_eq.png)
  * 8192x4096 px
