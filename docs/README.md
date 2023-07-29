@@ -9,23 +9,23 @@ Data from LIGO-Virgo gravitational wave detections, built from [Gravitational Wa
 
 ### Sky localisation images:
  * Location: https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/data/png/\<filename\>
- * Filename formats for <event\> (e.g. GW150914, S190510g etc.):
-    * Mollweide: <event\>_moll.png
+ * Filename formats for \<event\> (e.g. GW150914, S190510g etc.):
+    * Mollweide: \<event\>_moll.png
         * (e.g. [S191105e_moll.png](https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/data/png/S191105e_moll.png))
-    * Mollweide (rotated to centre on peak location): <event\>_moll_rot.png
+    * Mollweide (rotated to centre on peak location): \<event\>_moll_rot.png
         * (e.g. [S191105e_moll_rot.png](https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/data/png/S191105e_moll_rot.png))
-    * Cartesian fullsky: <event\>_cart.png
+    * Cartesian fullsky: \<event\>_cart.png
         * (e.g. [S191105e_cart.png](https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/data/png/S191105e_cart.png))
-    * Cartesian fullsky (rotated to centre on peak location): <event\>_cart_rot.png
+    * Cartesian fullsky (rotated to centre on peak location): \<event\>_cart_rot.png
         * (e.g. [S191105e_cart_rot.png](https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/data/png/S191105e_cart_rot.png))
-    * Cartesian zoomed onto peak location: <event\>_cartzoom.png
+    * Cartesian zoomed onto peak location: \<event\>_cartzoom.png
         * (e.g. [S191105e_cartzoom.png](https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/data/png/S191105e_cartzoom.png))
  * "Pretty" versions of images (NB these are under development, and may change style)
-    * Mollweide (white background): <event\>_moll_pretty.png
+    * Mollweide (white background): \<event\>_moll_pretty.png
         * (e.g. [S191105e_moll_black.png](https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/data/png/S191105e_moll_pretty.png))
-    * Mollweide (black background): <event\>_moll_pretty_black.png
+    * Mollweide (black background): \<event\>_moll_pretty_black.png
         * (e.g. [S191105e_moll_black.png](https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/data/png/S191105e_moll_pretty_black.png))
-    * Cartesian zoomed on peak location (no border): <event\>_cartzoom_pretty.png
+    * Cartesian zoomed on peak location (no border): \<event\>_cartzoom_pretty.png
         * (e.g. [S191105e_cartzoom_pretty.png](https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/data/png/S191105e_cartzoom_pretty_.png))
  * Thumnail of all images have .thumb.png extension
     * (e.g. [S191105e_cartzoom.thumb.png](https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/data/png/S191105e_cartzoom.thumb.png))
