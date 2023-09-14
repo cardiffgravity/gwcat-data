@@ -1,6 +1,6 @@
 {
   "meta": {
-    "retrieved": "2023-09-14T13:01:31.780",
+    "retrieved": "2023-09-14T17:06:29.842",
     "src": "https://gracedb.ligo.org/api/"
   },
   "data": {
@@ -10,16 +10,18 @@
       "category": "Production",
       "created": "2023-09-14 11:14:15 UTC",
       "submitter": "emfollow",
-      "em_type": null,
+      "em_type": "E437701",
       "t_start": 1378725258.724431,
       "t_0": 1378725259.728516,
       "t_end": 1378725260.729965,
       "far": 9.002829592930084e-10,
-      "time_coinc_far": null,
-      "space_coinc_far": null,
+      "time_coinc_far": 1.5505086951880592e-09,
+      "space_coinc_far": 1.5784177159571215e-09,
       "labels": [
         "EM_READY",
+        "PE_READY",
         "ADVOK",
+        "EM_COINC",
         "SKYMAP_READY",
         "EMBRIGHT_READY",
         "PASTRO_READY",
@@ -83,16 +85,16 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:21.890",
+        "retrieved": "2023-09-14T17:05:26.152",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": true,
         "validXML": true,
-        "created_date": "2023-09-14T11:50:58.000"
+        "created_date": "2023-09-14T15:23:01.000"
       },
       "voevents": {
         "start": 0,
-        "numRows": 3,
+        "numRows": 4,
         "voevents": [
           {
             "voevent_type": "PR",
@@ -132,6 +134,19 @@
               "self": "https://gracedb.ligo.org/api/superevents/S230914ak/voevents/3/",
               "file": "https://gracedb.ligo.org/api/superevents/S230914ak/files/S230914ak-3-Initial.xml,0"
             }
+          },
+          {
+            "voevent_type": "UP",
+            "file_version": 0,
+            "ivorn": "ivo://gwnet/LVC#S230914ak-4-Update",
+            "created": "2023-09-14 15:23:01 UTC",
+            "issuer": "emfollow",
+            "filename": "S230914ak-4-Update.xml",
+            "N": 4,
+            "links": {
+              "self": "https://gracedb.ligo.org/api/superevents/S230914ak/voevents/4/",
+              "file": "https://gracedb.ligo.org/api/superevents/S230914ak/files/S230914ak-4-Update.xml,0"
+            }
           }
         ],
         "links": {
@@ -141,20 +156,20 @@
         }
       },
       "xmlfile": [
-        "S230914ak-3-Initial.xml,0",
-        "https://gracedb.ligo.org/api/superevents/S230914ak/files/S230914ak-3-Initial.xml,0"
+        "S230914ak-4-Update.xml,0",
+        "https://gracedb.ligo.org/api/superevents/S230914ak/files/S230914ak-4-Update.xml,0"
       ],
       "validXML": true,
       "mapfile": [
-        "bayestar.multiorder.fits,1",
-        "https://gracedb.ligo.org/api/superevents/S230914ak/files/bayestar.multiorder.fits,1"
+        "Bilby.multiorder.fits,0",
+        "https://gracedb.ligo.org/api/superevents/S230914ak/files/Bilby.multiorder.fits,0"
       ],
       "xml": {
-        "Packet_Type": "151",
+        "Packet_Type": "152",
         "internal": "0",
-        "Pkt_Ser_Num": "3",
+        "Pkt_Ser_Num": "4",
         "GraceID": "S230914ak",
-        "AlertType": "Initial",
+        "AlertType": "Update",
         "HardwareInj": "0",
         "OpenAlert": "1",
         "EventPage": "https://gracedb.ligo.org/superevents/S230914ak/view/",
@@ -165,7 +180,7 @@
         "Pipeline": "spiir",
         "Search": "AllSky",
         "GW_SKYMAP": {
-          "skymap_fits": "https://gracedb.ligo.org/api/superevents/S230914ak/files/bayestar.multiorder.fits,1"
+          "skymap_fits": "https://gracedb.ligo.org/api/superevents/S230914ak/files/Bilby.multiorder.fits,0"
         },
         "Classification": {
           "BNS": "0.0",
@@ -240,7 +255,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:22.926",
+        "retrieved": "2023-09-14T17:05:27.237",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -393,7 +408,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:23.942",
+        "retrieved": "2023-09-14T17:05:28.341",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -528,7 +543,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:24.146",
+        "retrieved": "2023-09-14T17:05:28.543",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -681,7 +696,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:25.321",
+        "retrieved": "2023-09-14T17:05:29.595",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -846,7 +861,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:26.507",
+        "retrieved": "2023-09-14T17:05:32.275",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -996,7 +1011,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:26.751",
+        "retrieved": "2023-09-14T17:05:32.511",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -1157,7 +1172,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:29.429",
+        "retrieved": "2023-09-14T17:05:33.599",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -1322,7 +1337,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:31.387",
+        "retrieved": "2023-09-14T17:05:34.676",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -1485,7 +1500,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:31.836",
+        "retrieved": "2023-09-14T17:05:35.274",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -1650,7 +1665,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:34.072",
+        "retrieved": "2023-09-14T17:05:37.391",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Retraction",
         "created_date": "2023-08-30T05:27:35.000"
@@ -1765,7 +1780,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:35.103",
+        "retrieved": "2023-09-14T17:05:37.590",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -1902,7 +1917,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:36.369",
+        "retrieved": "2023-09-14T17:05:39.125",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -2060,7 +2075,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:37.724",
+        "retrieved": "2023-09-14T17:05:40.202",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -2194,7 +2209,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:38.194",
+        "retrieved": "2023-09-14T17:05:40.397",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -2352,7 +2367,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:39.279",
+        "retrieved": "2023-09-14T17:05:42.150",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -2506,7 +2521,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:39.485",
+        "retrieved": "2023-09-14T17:05:42.345",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -2657,7 +2672,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:39.691",
+        "retrieved": "2023-09-14T17:05:42.543",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -2822,7 +2837,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:40.790",
+        "retrieved": "2023-09-14T17:05:43.557",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -2972,7 +2987,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:41.045",
+        "retrieved": "2023-09-14T17:05:43.753",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -3137,7 +3152,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:44.967",
+        "retrieved": "2023-09-14T17:05:45.832",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -3299,7 +3314,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:45.225",
+        "retrieved": "2023-09-14T17:05:46.030",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -3453,7 +3468,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:46.196",
+        "retrieved": "2023-09-14T17:05:46.225",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -3608,7 +3623,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:47.200",
+        "retrieved": "2023-09-14T17:05:46.422",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -3773,7 +3788,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:47.551",
+        "retrieved": "2023-09-14T17:05:46.618",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Retraction",
         "created_date": "2023-08-10T10:38:48.000"
@@ -3879,7 +3894,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:48.312",
+        "retrieved": "2023-09-14T17:05:46.812",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Retraction",
         "created_date": "2023-08-08T08:05:27.000"
@@ -4028,7 +4043,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:48.516",
+        "retrieved": "2023-09-14T17:05:47.007",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -4182,7 +4197,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:48.713",
+        "retrieved": "2023-09-14T17:05:47.204",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -4316,7 +4331,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:48.913",
+        "retrieved": "2023-09-14T17:05:47.398",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -4473,7 +4488,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:49.980",
+        "retrieved": "2023-09-14T17:05:48.509",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -4622,7 +4637,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:50.963",
+        "retrieved": "2023-09-14T17:05:49.642",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -4777,7 +4792,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:51.159",
+        "retrieved": "2023-09-14T17:05:49.840",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -4927,7 +4942,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:51.372",
+        "retrieved": "2023-09-14T17:05:50.036",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -5091,7 +5106,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:52.399",
+        "retrieved": "2023-09-14T17:05:51.215",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -5241,7 +5256,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:52.596",
+        "retrieved": "2023-09-14T17:05:51.415",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -5400,7 +5415,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:53.613",
+        "retrieved": "2023-09-14T17:05:52.484",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -5550,7 +5565,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:53.813",
+        "retrieved": "2023-09-14T17:05:52.680",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -5714,7 +5729,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:54.818",
+        "retrieved": "2023-09-14T17:05:53.690",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -5864,7 +5879,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:55.018",
+        "retrieved": "2023-09-14T17:05:53.883",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -6007,7 +6022,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:56.068",
+        "retrieved": "2023-09-14T17:05:54.886",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -6165,7 +6180,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:57.822",
+        "retrieved": "2023-09-14T17:05:56.670",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Retraction",
         "created_date": "2023-08-30T05:50:52.000"
@@ -6310,7 +6325,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:58.023",
+        "retrieved": "2023-09-14T17:05:56.868",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -6452,7 +6467,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:00:59.046",
+        "retrieved": "2023-09-14T17:05:57.872",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -6588,7 +6603,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:00.061",
+        "retrieved": "2023-09-14T17:05:58.878",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -6725,7 +6740,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:01.096",
+        "retrieved": "2023-09-14T17:05:59.895",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -6881,7 +6896,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:02.183",
+        "retrieved": "2023-09-14T17:06:00.981",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Retraction",
         "created_date": "2023-07-12T02:05:13.000"
@@ -7013,7 +7028,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:02.381",
+        "retrieved": "2023-09-14T17:06:01.196",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -7177,7 +7192,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:03.391",
+        "retrieved": "2023-09-14T17:06:02.267",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -7311,7 +7326,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:03.591",
+        "retrieved": "2023-09-14T17:06:02.462",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -7468,7 +7483,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:04.601",
+        "retrieved": "2023-09-14T17:06:03.470",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -7622,7 +7637,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:05.742",
+        "retrieved": "2023-09-14T17:06:04.600",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Retraction",
         "created_date": "2023-07-08T17:55:04.000"
@@ -7758,7 +7773,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:05.938",
+        "retrieved": "2023-09-14T17:06:04.799",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -7913,7 +7928,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:06.138",
+        "retrieved": "2023-09-14T17:06:04.999",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -8080,7 +8095,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:06.338",
+        "retrieved": "2023-09-14T17:06:05.203",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -8234,7 +8249,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:06.536",
+        "retrieved": "2023-09-14T17:06:05.399",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -8384,7 +8399,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:06.738",
+        "retrieved": "2023-09-14T17:06:05.594",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -8548,7 +8563,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:07.765",
+        "retrieved": "2023-09-14T17:06:06.604",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -8702,7 +8717,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:07.963",
+        "retrieved": "2023-09-14T17:06:06.800",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -8856,7 +8871,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:08.163",
+        "retrieved": "2023-09-14T17:06:06.994",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -9010,7 +9025,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:08.360",
+        "retrieved": "2023-09-14T17:06:07.189",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -9163,7 +9178,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:09.358",
+        "retrieved": "2023-09-14T17:06:08.176",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -9300,7 +9315,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:09.557",
+        "retrieved": "2023-09-14T17:06:08.369",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -9465,7 +9480,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:10.574",
+        "retrieved": "2023-09-14T17:06:09.378",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -9598,7 +9613,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:10.770",
+        "retrieved": "2023-09-14T17:06:09.573",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -9755,7 +9770,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:11.779",
+        "retrieved": "2023-09-14T17:06:10.583",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -9889,7 +9904,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:11.979",
+        "retrieved": "2023-09-14T17:06:10.778",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -10042,7 +10057,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:12.998",
+        "retrieved": "2023-09-14T17:06:11.793",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -10202,7 +10217,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:14.028",
+        "retrieved": "2023-09-14T17:06:12.819",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -10366,7 +10381,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:15.034",
+        "retrieved": "2023-09-14T17:06:13.826",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Retraction",
         "created_date": "2023-06-22T15:05:44.000"
@@ -10481,7 +10496,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:15.233",
+        "retrieved": "2023-09-14T17:06:14.019",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -10634,7 +10649,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:17.084",
+        "retrieved": "2023-09-14T17:06:15.859",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -10778,7 +10793,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:18.110",
+        "retrieved": "2023-09-14T17:06:16.870",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -10931,7 +10946,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:19.382",
+        "retrieved": "2023-09-14T17:06:17.895",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -11095,7 +11110,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:20.432",
+        "retrieved": "2023-09-14T17:06:19.223",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -11258,7 +11273,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:20.636",
+        "retrieved": "2023-09-14T17:06:19.462",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -11422,7 +11437,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:21.769",
+        "retrieved": "2023-09-14T17:06:20.481",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -11560,7 +11575,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:21.965",
+        "retrieved": "2023-09-14T17:06:20.679",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -11721,7 +11736,7 @@
         }
       },
       "meta": {
-        "retrieved": "2023-09-14T13:01:22.991",
+        "retrieved": "2023-09-14T17:06:21.734",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
