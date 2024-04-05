@@ -85,6 +85,11 @@ if update==True:
         print('\n\n*****\nImporting GWTC...\n*****\n\n')
         gc.importGWTC(gwtcdata,verbose=verbose, devMode=devMode,catalog='GWTC',forceOverwrite=forceupdate)
 
+        print('\n\n*****\nReading O4a Discovery Papers...\n*****\n\n')
+        gwtcdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode,catalog='O4_Discovery_Papers',sess=sess)
+        print('\n\n*****\nImporting O4a Discovery Papers...\n*****\n\n')
+        gc.importGWTC(gwtcdata,verbose=verbose, devMode=devMode,catalog='O4_Discovery_Papers',forceOverwrite=forceupdate)
+
         if not skipMarginal:
             print('\n\n*****\nReading GWTC-3-marginal...\n*****\n\n')
             gwtc3margdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode,catalog='GWTC-3-marginal',sess=sess)
