@@ -1,6 +1,6 @@
 catdata({
     "meta": {
-        "created": "2024-04-20T05:05:15.131",
+        "created": "2024-04-21T07:05:14.905",
         "GWTC": {
             "retrieved": "2024-04-05T23:58:20.560",
             "src": "https://www.gw-openscience.org/eventapi/json/GWTC",
@@ -19,7 +19,7 @@ catdata({
             "src": "https://www.gw-openscience.org/eventapi/json/GWTC-1-marginal"
         },
         "graceDB": {
-            "retrieved": "2024-04-20T05:05:43.074",
+            "retrieved": "2024-04-21T07:05:44.663",
             "src": "https://gracedb.ligo.org/api/"
         },
         "contents": {
@@ -18716,8 +18716,8 @@ catdata({
                 "best": 480
             }
         },
-        "S240420aw": {
-            "name": "S240420aw",
+        "S240421ar": {
+            "name": "S240421ar",
             "detType": {
                 "best": "Candidate"
             },
@@ -18726,57 +18726,50 @@ catdata({
             },
             "catalog": "gracedb",
             "GPS": {
-                "best": 1397622183.509
+                "best": 1397712593.734
             },
             "UTC": {
-                "best": "2024-04-20T04:23:22.509"
+                "best": "2024-04-21T05:30:12.734"
             },
             "obsrun": {
                 "best": "O4"
             },
             "FAR": {
-                "best": 0.0225,
-                "fartype": "gstlal"
+                "best": 1.14,
+                "fartype": "CWB"
             },
             "net": {
-                "best": "HLV"
+                "best": "HL"
             },
             "objType": {
                 "prob": {
-                    "BNS": 1.1129356938908993e-18,
-                    "NSBH": 9.033083092634072e-17,
-                    "BBH": 0.9992518997566358,
-                    "Terrestrial": 0.0007481002433641359
+                    "BNS": 0.0,
+                    "NSBH": 0.0,
+                    "BBH": 0.41391150101247964,
+                    "Terrestrial": 0.5860884989875204
                 },
-                "best": "BBH"
+                "best": "Terrestrial"
             },
             "Significance": {
                 "best": "High"
             },
             "meta": {
-                "retrieved": "2024-04-20T05:05:18.031",
+                "retrieved": "2024-04-21T07:05:16.560",
                 "src": "https://gracedb.ligo.org/api/",
                 "type": "Candidate",
                 "include": true,
                 "validXML": true,
-                "created_date": "2024-04-20T04:35:38.000",
-                "mapdatesrc": "2024-04-20T04:23:18.000000",
-                "mapurlsrc": "https://gracedb.ligo.org/api/superevents/S240420aw/files/bayestar.multiorder.fits,2",
-                "mapurllocal": "data/fits/S240420aw_bayestar.multiorder.fits,2",
-                "mapdatelocal": "2024-04-20T05:05:53.726"
-            },
-            "DL": {
-                "best": 8160.0,
-                "err": [
-                    -3570.0,
-                    3570.0
-                ]
+                "created_date": "2024-04-21T06:16:36.000",
+                "mapdatesrc": "2024-04-21T05:29:58.000000",
+                "mapurlsrc": "https://gracedb.ligo.org/api/superevents/S240421ar/files/cwb.multiorder.fits,1",
+                "mapurllocal": "data/fits/S240421ar_cwb.multiorder.fits,1",
+                "mapdatelocal": "2024-04-21T07:05:54.011"
             },
             "deltaOmega": {
-                "best": 1513
+                "best": 5984
             },
             "skyarea(50)": {
-                "best": 261
+                "best": 1601
             }
         }
     },
@@ -45521,145 +45514,21 @@ catdata({
                 }
             }
         ],
-        "S240420aw": [
+        "S240421ar": [
             {
-                "url": "https://gracedb.ligo.org/api/superevents/S240420aw/",
+                "url": "https://gracedb.ligo.org/api/superevents/S240421ar/",
                 "text": "GraceDB data",
                 "type": "open-data"
             },
             {
-                "url": "https://gracedb.ligo.org/api/superevents/S240420aw/files/bayestar.multiorder.fits,2",
+                "url": "https://gracedb.ligo.org/api/superevents/S240421ar/files/cwb.multiorder.fits,1",
                 "text": "Sky Map",
                 "type": "skymap-fits"
             },
             {
-                "url": "https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/data/fits/S240420aw_bayestar.multiorder.fits,2",
+                "url": "https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/data/fits/S240421ar_cwb.multiorder.fits,1",
                 "text": "Sky Map (local mirror)",
                 "type": "skymap-fits-local"
-            },
-            {
-                "url": "https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/data/png/",
-                "text": "Skymaps",
-                "type": "skymaps-plot",
-                "created": "2024-04-20T05:55:55.790",
-                "files": {
-                    "moll": {
-                        "file": "S240420aw_moll.png",
-                        "text": "Skymap (Mollweide fullsky)"
-                    },
-                    "moll_pretty": {
-                        "file": "S240420aw_moll_pretty.png",
-                        "text": "Skymap (Mollweide fullsky, pretty)"
-                    },
-                    "moll_pretty_black": {
-                        "file": "S240420aw_moll_pretty_black.png",
-                        "text": "Skymap (Mollweide fullsky, pretty black)"
-                    },
-                    "cartzoom": {
-                        "file": "S240420aw_cartzoom.png",
-                        "text": "Skymap (Cartesian zoomed)"
-                    },
-                    "cartzoom_pretty": {
-                        "file": "S240420aw_cartzoom_pretty.png",
-                        "text": "Skymap (Cartesian zoomed, pretty)"
-                    },
-                    "cart": {
-                        "file": "S240420aw_cart.png",
-                        "text": "Skymap (Cartesian fullsky)"
-                    },
-                    "moll_rot": {
-                        "file": "S240420aw_moll_rot.png",
-                        "text": "Skymap (Mollweide fullsky, rotated)"
-                    },
-                    "cart_rot": {
-                        "file": "S240420aw_cart_rot.png",
-                        "text": "Skymap (Cartesian fullsky, rotated)"
-                    }
-                }
-            },
-            {
-                "url": "https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/data/png/",
-                "text": "Skymaps",
-                "type": "skymaps-thumb",
-                "created": "2024-04-20T05:55:55.791",
-                "files": {
-                    "moll": {
-                        "file": "S240420aw_moll.thumb.png",
-                        "text": "Skymap (Mollweide fullsky)"
-                    },
-                    "moll_pretty": {
-                        "file": "S240420aw_moll_pretty.thumb.png",
-                        "text": "Skymap (Mollweide fullsky, pretty)"
-                    },
-                    "moll_pretty_black": {
-                        "file": "S240420aw_moll_pretty_black.thumb.png",
-                        "text": "Skymap (Mollweide fullsky, pretty black)"
-                    },
-                    "cartzoom": {
-                        "file": "S240420aw_cartzoom.thumb.png",
-                        "text": "Skymap (Cartesian zoomed)"
-                    },
-                    "cartzoom_pretty": {
-                        "file": "S240420aw_cartzoom_pretty.thumb.png",
-                        "text": "Skymap (Cartesian zoomed, pretty)"
-                    },
-                    "cart": {
-                        "file": "S240420aw_cart.thumb.png",
-                        "text": "Skymap (Cartesian fullsky)"
-                    },
-                    "moll_rot": {
-                        "file": "S240420aw_moll_rot.thumb.png",
-                        "text": "Skymap (Mollweide fullsky, rotated)"
-                    },
-                    "cart_rot": {
-                        "file": "S240420aw_cart_rot.thumb.png",
-                        "text": "Skymap (Cartesian fullsky, rotated)"
-                    }
-                }
-            },
-            {
-                "url": "https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/data/gravoscope/S240420aw_8192.png",
-                "text": "Skymap (no annotations)",
-                "file": "data/gravoscope/S240420aw_8192.png",
-                "url-loc": "skymap-base-url",
-                "type": "skymap-plain",
-                "created": "2024-04-20T05:56:21.804"
-            },
-            {
-                "url": "https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/data/gravoscope/S240420aw_8192_eq.png",
-                "text": "Skymap (Equatorial, no annotations)",
-                "file": "data/gravoscope/S240420aw_8192_eq.png",
-                "url-loc": "skymap-base-url",
-                "type": "skymaps-plain",
-                "created": "2024-04-20T05:56:47.574"
-            },
-            {
-                "url": "https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/data/gravoscope/S240420aw_4096_eq.png",
-                "text": "Skymap 4096px (Equatorial, no annotations)",
-                "file": "data/gravoscope/S240420aw_4096_eq.png",
-                "url-loc": "skymap-base-url",
-                "type": "skymap-plain",
-                "created": "2024-04-20T05:56:53.121"
-            },
-            {
-                "url": "https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/data/gravoscope/",
-                "text": "Skymaps (plain)",
-                "type": "skymaps-plain",
-                "created": "2024-04-20T05:56:53.121",
-                "files": {
-                    "gal_8192": {
-                        "text": "Skymap (no annotations)",
-                        "file": "S240420aw_8192.png"
-                    },
-                    "eq_8192": {
-                        "text": "Skymap (Equatorial, no annotations)",
-                        "file": "S240420aw_8192_eq.png"
-                    },
-                    "eq_4096": {
-                        "text": "Skymap 4096px (Equatorial, no annotations)",
-                        "file": "S240420aw_4096_eq.png"
-                    }
-                }
             }
         ]
     }
