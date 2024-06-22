@@ -1,6 +1,6 @@
 catdata({
     "meta": {
-        "created": "2024-06-22T11:05:33.545",
+        "created": "2024-06-22T15:05:14.930",
         "GWTC": {
             "retrieved": "2024-04-05T23:58:20.560",
             "src": "https://www.gw-openscience.org/eventapi/json/GWTC",
@@ -19,7 +19,7 @@ catdata({
             "src": "https://www.gw-openscience.org/eventapi/json/GWTC-1-marginal"
         },
         "graceDB": {
-            "retrieved": "2024-06-22T11:06:17.245",
+            "retrieved": "2024-06-22T15:05:56.824",
             "src": "https://gracedb.ligo.org/api/"
         },
         "contents": {
@@ -20411,7 +20411,7 @@ catdata({
                 ]
             },
             "deltaOmega": {
-                "best": 920
+                "best": 920.0
             },
             "skyarea(50)": {
                 "best": 223
@@ -20474,7 +20474,7 @@ catdata({
                 ]
             },
             "deltaOmega": {
-                "best": 21
+                "best": 21.0
             },
             "skyarea(50)": {
                 "best": 5
@@ -20507,9 +20507,9 @@ catdata({
             },
             "objType": {
                 "prob": {
-                    "BNS": 2.0388122515028645e-14,
-                    "NSBH": 1.501059450340751e-12,
-                    "BBH": 0.9607097159611109,
+                    "BNS": 0.0,
+                    "NSBH": 6.953966180844242e-06,
+                    "BBH": 0.9607027619964514,
                     "Terrestrial": 0.03929028403736767
                 },
                 "best": "BBH"
@@ -20518,29 +20518,29 @@ catdata({
                 "best": "High"
             },
             "meta": {
-                "retrieved": "2024-06-21T23:06:00.752",
+                "retrieved": "2024-06-22T15:05:16.734",
                 "src": "https://gracedb.ligo.org/api/",
                 "type": "Candidate",
                 "include": true,
                 "validXML": true,
-                "created_date": "2024-06-21T22:06:34.000",
-                "mapdatesrc": "2024-06-21T21:41:03.000000",
-                "mapurlsrc": "https://gracedb.ligo.org/api/superevents/S240621em/files/bayestar.multiorder.fits,2",
-                "mapurllocal": "data/fits/S240621em_bayestar.multiorder.fits,2",
-                "mapdatelocal": "2024-06-21T23:23:15.552"
+                "created_date": "2024-06-22T14:19:45.000",
+                "mapdatesrc": "2024-06-22T13:50:25.884949",
+                "mapurlsrc": "https://gracedb.ligo.org/api/superevents/S240621em/files/Bilby.offline0.multiorder.fits",
+                "mapurllocal": "data/fits/S240621em_Bilby.offline0.multiorder.fits",
+                "mapdatelocal": "2024-06-22T15:06:07.066"
             },
             "DL": {
-                "best": 8680.0,
+                "best": 7460.0,
                 "err": [
-                    -2510.0,
-                    2510.0
+                    -2670.0,
+                    2670.0
                 ]
             },
             "deltaOmega": {
-                "best": 3220.0
+                "best": 3069
             },
             "skyarea(50)": {
-                "best": 1034
+                "best": 947
             }
         },
         "S240622h": {
@@ -51441,12 +51441,12 @@ catdata({
                 "type": "open-data"
             },
             {
-                "url": "https://gracedb.ligo.org/api/superevents/S240621em/files/bayestar.multiorder.fits,2",
+                "url": "https://gracedb.ligo.org/api/superevents/S240621em/files/Bilby.offline0.multiorder.fits",
                 "text": "Sky Map",
                 "type": "skymap-fits"
             },
             {
-                "url": "https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/data/fits/S240621em_bayestar.multiorder.fits,2",
+                "url": "https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/data/fits/S240621em_Bilby.offline0.multiorder.fits",
                 "text": "Sky Map (local mirror)",
                 "type": "skymap-fits-local"
             },
@@ -51573,6 +51573,11 @@ catdata({
                         "file": "S240621em_4096_eq.png"
                     }
                 }
+            },
+            {
+                "url": "https://gracedb.ligo.org/api/superevents/S240621em/",
+                "text": "GraceDB data",
+                "type": "open-data"
             }
         ],
         "S240622h": [
