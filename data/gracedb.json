@@ -1,9 +1,366 @@
 {
   "meta": {
-    "retrieved": "2024-08-26T19:05:52.156",
+    "retrieved": "2024-08-30T23:05:42.642",
     "src": "https://gracedb.ligo.org/api/"
   },
   "data": {
+    "S240830gn": {
+      "superevent_id": "S240830gn",
+      "gw_id": null,
+      "category": "Production",
+      "created": "2024-08-30 21:11:35 UTC",
+      "submitter": "emfollow",
+      "em_type": null,
+      "t_start": 1409087497.361481,
+      "t_0": 1409087498.391602,
+      "t_end": 1409087499.391602,
+      "far": 6.335091684487701e-10,
+      "time_coinc_far": null,
+      "space_coinc_far": null,
+      "labels": [
+        "EM_READY",
+        "ADVOK",
+        "SKYMAP_READY",
+        "EMBRIGHT_READY",
+        "PASTRO_READY",
+        "DQOK",
+        "GCN_PRELIM_SENT",
+        "DQR_REQUEST",
+        "HIGH_PROFILE",
+        "SIGNIF_LOCKED",
+        "LOW_SIGNIF_LOCKED"
+      ],
+      "links": {
+        "labels": "https://gracedb.ligo.org/api/superevents/S240830gn/labels/",
+        "logs": "https://gracedb.ligo.org/api/superevents/S240830gn/logs/",
+        "files": "https://gracedb.ligo.org/api/superevents/S240830gn/files/",
+        "self": "https://gracedb.ligo.org/api/superevents/S240830gn/",
+        "voevents": "https://gracedb.ligo.org/api/superevents/S240830gn/voevents/",
+        "emobservations": "https://gracedb.ligo.org/api/superevents/S240830gn/emobservations/"
+      },
+      "preferred_event_data": {
+        "submitter": "pycbclive",
+        "created": "2024-08-30 21:13:28 UTC",
+        "group": "CBC",
+        "graceid": "G506812",
+        "pipeline": "pycbc",
+        "gpstime": 1409087498.391602,
+        "reporting_latency": 128.48358,
+        "instruments": "H1,L1,V1",
+        "nevents": 3,
+        "offline": false,
+        "search": "AllSky",
+        "far": 6.335091684487701e-10,
+        "far_is_upper_limit": false,
+        "likelihood": 0.0,
+        "labels": [
+          "SKYMAP_READY",
+          "EMBRIGHT_READY",
+          "PASTRO_READY",
+          "SNR_OPTIMIZED"
+        ],
+        "extra_attributes": {
+          "SingleInspiral": [
+            {
+              "ifo": "L1",
+              "end_time": 1409087498,
+              "end_time_ns": 365722656
+            },
+            {
+              "ifo": "H1",
+              "end_time": 1409087498,
+              "end_time_ns": 370605469
+            },
+            {
+              "ifo": "V1",
+              "end_time": 1409087498,
+              "end_time_ns": 391601562
+            }
+          ]
+        },
+        "superevent": "S240830gn",
+        "links": {
+          "neighbors": "https://gracedb.ligo.org/api/events/G506812/neighbors/",
+          "log": "https://gracedb.ligo.org/api/events/G506812/log/",
+          "emobservations": "https://gracedb.ligo.org/api/events/G506812/emobservation/",
+          "files": "https://gracedb.ligo.org/api/events/G506812/files/",
+          "labels": "https://gracedb.ligo.org/api/events/G506812/labels/",
+          "self": "https://gracedb.ligo.org/api/events/G506812",
+          "tags": "https://gracedb.ligo.org/api/events/G506812/tag/"
+        }
+      },
+      "pipeline_preferred_events": {
+        "pycbc": {
+          "graceid": "G506812",
+          "group": "CBC",
+          "pipeline": "pycbc",
+          "search": "AllSky",
+          "gpstime": 1409087498.391602,
+          "far": 6.335091684487701e-10
+        },
+        "MBTA": {
+          "graceid": "G506809",
+          "group": "CBC",
+          "pipeline": "MBTA",
+          "search": "AllSky",
+          "gpstime": 1409087498.36821,
+          "far": 3.182784e-10
+        },
+        "gstlal": {
+          "graceid": "G506807",
+          "group": "CBC",
+          "pipeline": "gstlal",
+          "search": "AllSky",
+          "gpstime": 1409087498.369968,
+          "far": 1.989149815081085e-12
+        }
+      },
+      "meta": {
+        "retrieved": "2024-08-30T23:05:15.669",
+        "src": "https://gracedb.ligo.org/api/",
+        "type": "Candidate",
+        "include": true,
+        "validXML": true,
+        "created_date": "2024-08-30T21:35:11.000"
+      },
+      "voevents": {
+        "start": 0,
+        "numRows": 3,
+        "voevents": [
+          {
+            "voevent_type": "PR",
+            "file_version": 0,
+            "ivorn": "ivo://gwnet/LVC#S240830gn-1-Preliminary",
+            "created": "2024-08-30 21:11:52 UTC",
+            "issuer": "emfollow",
+            "filename": "S240830gn-1-Preliminary.xml",
+            "N": 1,
+            "links": {
+              "self": "https://gracedb.ligo.org/api/superevents/S240830gn/voevents/1/",
+              "file": "https://gracedb.ligo.org/api/superevents/S240830gn/files/S240830gn-1-Preliminary.xml,0"
+            }
+          },
+          {
+            "voevent_type": "PR",
+            "file_version": 0,
+            "ivorn": "ivo://gwnet/LVC#S240830gn-2-Preliminary",
+            "created": "2024-08-30 21:16:34 UTC",
+            "issuer": "emfollow",
+            "filename": "S240830gn-2-Preliminary.xml",
+            "N": 2,
+            "links": {
+              "self": "https://gracedb.ligo.org/api/superevents/S240830gn/voevents/2/",
+              "file": "https://gracedb.ligo.org/api/superevents/S240830gn/files/S240830gn-2-Preliminary.xml,0"
+            }
+          },
+          {
+            "voevent_type": "IN",
+            "file_version": 0,
+            "ivorn": "ivo://gwnet/LVC#S240830gn-3-Initial",
+            "created": "2024-08-30 21:35:11 UTC",
+            "issuer": "emfollow",
+            "filename": "S240830gn-3-Initial.xml",
+            "N": 3,
+            "links": {
+              "self": "https://gracedb.ligo.org/api/superevents/S240830gn/voevents/3/",
+              "file": "https://gracedb.ligo.org/api/superevents/S240830gn/files/S240830gn-3-Initial.xml,0"
+            }
+          }
+        ],
+        "links": {
+          "self": "https://gracedb.ligo.org/api/superevents/S240830gn/voevents/",
+          "first": "https://gracedb.ligo.org/api/superevents/S240830gn/voevents/",
+          "last": "https://gracedb.ligo.org/api/superevents/S240830gn/voevents/"
+        }
+      },
+      "xmlfile": [
+        "S240830gn-3-Initial.xml,0",
+        "https://gracedb.ligo.org/api/superevents/S240830gn/files/S240830gn-3-Initial.xml,0"
+      ],
+      "validXML": true,
+      "mapfile": [
+        "bayestar.multiorder.fits,1",
+        "https://gracedb.ligo.org/api/superevents/S240830gn/files/bayestar.multiorder.fits,1"
+      ],
+      "xml": {
+        "Packet_Type": "151",
+        "internal": "0",
+        "Pkt_Ser_Num": "3",
+        "GraceID": "S240830gn",
+        "AlertType": "Initial",
+        "HardwareInj": "0",
+        "OpenAlert": "1",
+        "EventPage": "https://gracedb.ligo.org/superevents/S240830gn/view/",
+        "Instruments": "H1,L1,V1",
+        "FAR": "6.335091684487701e-10",
+        "Significant": "1",
+        "Group": "CBC",
+        "Pipeline": "pycbc",
+        "Search": "AllSky",
+        "GW_SKYMAP": {
+          "skymap_fits": "https://gracedb.ligo.org/api/superevents/S240830gn/files/bayestar.multiorder.fits,1"
+        },
+        "Classification": {
+          "BNS": "0.0",
+          "NSBH": "0.10555124594622292",
+          "BBH": "0.8913222818272336",
+          "Terrestrial": "0.0031264722265434974"
+        },
+        "Properties": {
+          "HasNS": "0.0",
+          "HasRemnant": "0.0",
+          "HasMassGap": "0.08444902374927281"
+        }
+      }
+    },
+    "S240828bp": {
+      "superevent_id": "S240828bp",
+      "gw_id": null,
+      "category": "Production",
+      "created": "2024-08-28 09:05:51 UTC",
+      "submitter": "emfollow",
+      "em_type": "E505814",
+      "t_start": 1408871048.101437,
+      "t_0": 1408871048.1043,
+      "t_end": 1408871048.107163,
+      "far": 4.85999e-07,
+      "time_coinc_far": 8.187744722407472e-08,
+      "space_coinc_far": 1.2160512674296012e-07,
+      "labels": [
+        "EM_READY",
+        "EM_COINC",
+        "SKYMAP_READY",
+        "DQOK",
+        "LOW_SIGNIF_PRELIM_SENT",
+        "LOW_SIGNIF_LOCKED"
+      ],
+      "links": {
+        "labels": "https://gracedb.ligo.org/api/superevents/S240828bp/labels/",
+        "logs": "https://gracedb.ligo.org/api/superevents/S240828bp/logs/",
+        "files": "https://gracedb.ligo.org/api/superevents/S240828bp/files/",
+        "self": "https://gracedb.ligo.org/api/superevents/S240828bp/",
+        "voevents": "https://gracedb.ligo.org/api/superevents/S240828bp/voevents/",
+        "emobservations": "https://gracedb.ligo.org/api/superevents/S240828bp/emobservations/"
+      },
+      "preferred_event_data": {
+        "submitter": "waveburst",
+        "created": "2024-08-28 09:05:50 UTC",
+        "group": "Burst",
+        "graceid": "G505615",
+        "pipeline": "CWB",
+        "gpstime": 1408871048.1043,
+        "reporting_latency": 120.678036,
+        "instruments": "H1,L1",
+        "nevents": null,
+        "offline": false,
+        "search": "AllSky",
+        "far": 4.85999e-07,
+        "far_is_upper_limit": false,
+        "likelihood": 82.69939,
+        "labels": [
+          "SKYMAP_READY",
+          "cWB_s"
+        ],
+        "extra_attributes": {},
+        "superevent": "S240828bp",
+        "links": {
+          "neighbors": "https://gracedb.ligo.org/api/events/G505615/neighbors/",
+          "log": "https://gracedb.ligo.org/api/events/G505615/log/",
+          "emobservations": "https://gracedb.ligo.org/api/events/G505615/emobservation/",
+          "files": "https://gracedb.ligo.org/api/events/G505615/files/",
+          "labels": "https://gracedb.ligo.org/api/events/G505615/labels/",
+          "self": "https://gracedb.ligo.org/api/events/G505615",
+          "tags": "https://gracedb.ligo.org/api/events/G505615/tag/"
+        }
+      },
+      "pipeline_preferred_events": {
+        "CWB": {
+          "graceid": "G505615",
+          "group": "Burst",
+          "pipeline": "CWB",
+          "search": "AllSky",
+          "gpstime": 1408871048.1043,
+          "far": 4.85999e-07
+        }
+      },
+      "meta": {
+        "retrieved": "2024-08-30T23:05:16.677",
+        "src": "https://gracedb.ligo.org/api/",
+        "type": "Candidate",
+        "include": false,
+        "validXML": true,
+        "created_date": "2024-08-28T09:10:34.000"
+      },
+      "voevents": {
+        "start": 0,
+        "numRows": 2,
+        "voevents": [
+          {
+            "voevent_type": "PR",
+            "file_version": 0,
+            "ivorn": "ivo://gwnet/LVC#S240828bp-1-Preliminary",
+            "created": "2024-08-28 09:05:58 UTC",
+            "issuer": "emfollow",
+            "filename": "S240828bp-1-Preliminary.xml",
+            "N": 1,
+            "links": {
+              "self": "https://gracedb.ligo.org/api/superevents/S240828bp/voevents/1/",
+              "file": "https://gracedb.ligo.org/api/superevents/S240828bp/files/S240828bp-1-Preliminary.xml,0"
+            }
+          },
+          {
+            "voevent_type": "PR",
+            "file_version": 0,
+            "ivorn": "ivo://gwnet/LVC#S240828bp-2-Preliminary",
+            "created": "2024-08-28 09:10:34 UTC",
+            "issuer": "emfollow",
+            "filename": "S240828bp-2-Preliminary.xml",
+            "N": 2,
+            "links": {
+              "self": "https://gracedb.ligo.org/api/superevents/S240828bp/voevents/2/",
+              "file": "https://gracedb.ligo.org/api/superevents/S240828bp/files/S240828bp-2-Preliminary.xml,0"
+            }
+          }
+        ],
+        "links": {
+          "self": "https://gracedb.ligo.org/api/superevents/S240828bp/voevents/",
+          "first": "https://gracedb.ligo.org/api/superevents/S240828bp/voevents/",
+          "last": "https://gracedb.ligo.org/api/superevents/S240828bp/voevents/"
+        }
+      },
+      "xmlfile": [
+        "S240828bp-2-Preliminary.xml,0",
+        "https://gracedb.ligo.org/api/superevents/S240828bp/files/S240828bp-2-Preliminary.xml,0"
+      ],
+      "validXML": true,
+      "mapfile": [
+        "cwb.multiorder.fits,1",
+        "https://gracedb.ligo.org/api/superevents/S240828bp/files/cwb.multiorder.fits,1"
+      ],
+      "xml": {
+        "Packet_Type": "150",
+        "internal": "0",
+        "Pkt_Ser_Num": "2",
+        "GraceID": "S240828bp",
+        "AlertType": "Preliminary",
+        "HardwareInj": "0",
+        "OpenAlert": "1",
+        "EventPage": "https://gracedb.ligo.org/superevents/S240828bp/view/",
+        "Instruments": "H1,L1",
+        "FAR": "4.85999e-07",
+        "Significant": "0",
+        "Group": "Burst",
+        "Pipeline": "CWB",
+        "Search": "AllSky",
+        "CentralFreq": "263.791382",
+        "Duration": "0.002863",
+        "GW_SKYMAP": {
+          "skymap_fits": "https://gracedb.ligo.org/api/superevents/S240828bp/files/cwb.multiorder.fits,1"
+        },
+        "Classification": {},
+        "Properties": {}
+      }
+    },
     "S240825ar": {
       "superevent_id": "S240825ar",
       "gw_id": null,
@@ -117,10 +474,9 @@
         }
       },
       "meta": {
-        "retrieved": "2024-08-26T19:05:21.544",
+        "retrieved": "2024-08-30T23:05:17.692",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
-        "include": true,
         "validXML": true,
         "created_date": "2024-08-26T18:03:35.000"
       },
@@ -190,42 +546,7 @@
       "xmlfile": [
         "S240825ar-4-Update.xml,0",
         "https://gracedb.ligo.org/api/superevents/S240825ar/files/S240825ar-4-Update.xml,0"
-      ],
-      "validXML": true,
-      "mapfile": [
-        "Bilby.multiorder.fits,0",
-        "https://gracedb.ligo.org/api/superevents/S240825ar/files/Bilby.multiorder.fits,0"
-      ],
-      "xml": {
-        "Packet_Type": "152",
-        "internal": "0",
-        "Pkt_Ser_Num": "4",
-        "GraceID": "S240825ar",
-        "AlertType": "Update",
-        "HardwareInj": "0",
-        "OpenAlert": "1",
-        "EventPage": "https://gracedb.ligo.org/superevents/S240825ar/view/",
-        "Instruments": "H1,L1,V1",
-        "FAR": "3.16754584224385e-09",
-        "Significant": "1",
-        "Group": "CBC",
-        "Pipeline": "pycbc",
-        "Search": "AllSky",
-        "GW_SKYMAP": {
-          "skymap_fits": "https://gracedb.ligo.org/api/superevents/S240825ar/files/Bilby.multiorder.fits,0"
-        },
-        "Classification": {
-          "BNS": "0.0",
-          "NSBH": "0.025584061078504198",
-          "BBH": "0.9652913494759712",
-          "Terrestrial": "0.009124589445524633"
-        },
-        "Properties": {
-          "HasNS": "0.0",
-          "HasRemnant": "0.0",
-          "HasMassGap": "0.07111310257182633"
-        }
-      }
+      ]
     },
     "S240813d": {
       "superevent_id": "S240813d",
@@ -319,7 +640,7 @@
         }
       },
       "meta": {
-        "retrieved": "2024-08-26T19:05:22.580",
+        "retrieved": "2024-08-30T23:05:17.913",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -484,7 +805,7 @@
         }
       },
       "meta": {
-        "retrieved": "2024-08-26T19:05:22.791",
+        "retrieved": "2024-08-30T23:05:18.115",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -649,7 +970,7 @@
         }
       },
       "meta": {
-        "retrieved": "2024-08-26T19:05:23.001",
+        "retrieved": "2024-08-30T23:05:18.316",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -810,7 +1131,7 @@
         }
       },
       "meta": {
-        "retrieved": "2024-08-26T19:05:23.207",
+        "retrieved": "2024-08-30T23:05:18.522",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -985,7 +1306,7 @@
         }
       },
       "meta": {
-        "retrieved": "2024-08-26T19:05:24.244",
+        "retrieved": "2024-08-30T23:05:19.552",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -1129,7 +1450,7 @@
         }
       },
       "meta": {
-        "retrieved": "2024-08-26T19:05:24.450",
+        "retrieved": "2024-08-30T23:05:19.758",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "include": false,
@@ -1326,7 +1647,7 @@
         }
       },
       "meta": {
-        "retrieved": "2024-08-26T19:05:25.479",
+        "retrieved": "2024-08-30T23:05:20.815",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -1491,7 +1812,7 @@
         }
       },
       "meta": {
-        "retrieved": "2024-08-26T19:05:25.697",
+        "retrieved": "2024-08-30T23:05:22.035",
         "src": "https://gracedb.ligo.org/api/",
         "type": "Candidate",
         "validXML": true,
@@ -1564,888 +1885,6 @@
         "S240703ad-4-Update.xml,0",
         "https://gracedb.ligo.org/api/superevents/S240703ad/files/S240703ad-4-Update.xml,0"
       ]
-    },
-    "S240701bn": {
-      "superevent_id": "S240701bn",
-      "gw_id": null,
-      "category": "Production",
-      "created": "2024-07-01 20:38:20 UTC",
-      "submitter": "emfollow",
-      "em_type": "E498556",
-      "t_start": 1403901504.212402,
-      "t_0": 1403901505.212402,
-      "t_end": 1403901506.221781,
-      "far": 4.354280974875973e-07,
-      "time_coinc_far": 1.3294955531128668e-07,
-      "space_coinc_far": 2.5828832679788903e-07,
-      "labels": [
-        "EM_READY",
-        "EM_COINC",
-        "SKYMAP_READY",
-        "EMBRIGHT_READY",
-        "PASTRO_READY",
-        "DQOK",
-        "LOW_SIGNIF_PRELIM_SENT",
-        "LOW_SIGNIF_LOCKED"
-      ],
-      "links": {
-        "labels": "https://gracedb.ligo.org/api/superevents/S240701bn/labels/",
-        "logs": "https://gracedb.ligo.org/api/superevents/S240701bn/logs/",
-        "files": "https://gracedb.ligo.org/api/superevents/S240701bn/files/",
-        "self": "https://gracedb.ligo.org/api/superevents/S240701bn/",
-        "voevents": "https://gracedb.ligo.org/api/superevents/S240701bn/voevents/",
-        "emobservations": "https://gracedb.ligo.org/api/superevents/S240701bn/emobservations/"
-      },
-      "preferred_event_data": {
-        "submitter": "gstlalcbc_icds",
-        "created": "2024-07-01 20:39:20 UTC",
-        "group": "CBC",
-        "graceid": "G498486",
-        "pipeline": "gstlal",
-        "gpstime": 1403901505.212402,
-        "reporting_latency": 73.476205,
-        "instruments": "H1,L1,V1",
-        "nevents": 3,
-        "offline": false,
-        "search": "AllSky",
-        "far": 4.354280974875973e-07,
-        "far_is_upper_limit": false,
-        "likelihood": 12.27088555185079,
-        "labels": [
-          "SKYMAP_READY",
-          "EMBRIGHT_READY",
-          "PASTRO_READY",
-          "SNR_OPTIMIZED"
-        ],
-        "extra_attributes": {
-          "SingleInspiral": [
-            {
-              "ifo": "H1",
-              "end_time": 1403901505,
-              "end_time_ns": 212402344
-            },
-            {
-              "ifo": "L1",
-              "end_time": 1403901505,
-              "end_time_ns": 211914062
-            },
-            {
-              "ifo": "V1",
-              "end_time": 1403901505,
-              "end_time_ns": 221435547
-            }
-          ]
-        },
-        "superevent": "S240701bn",
-        "links": {
-          "neighbors": "https://gracedb.ligo.org/api/events/G498486/neighbors/",
-          "log": "https://gracedb.ligo.org/api/events/G498486/log/",
-          "emobservations": "https://gracedb.ligo.org/api/events/G498486/emobservation/",
-          "files": "https://gracedb.ligo.org/api/events/G498486/files/",
-          "labels": "https://gracedb.ligo.org/api/events/G498486/labels/",
-          "self": "https://gracedb.ligo.org/api/events/G498486",
-          "tags": "https://gracedb.ligo.org/api/events/G498486/tag/"
-        }
-      },
-      "pipeline_preferred_events": {
-        "gstlal": {
-          "graceid": "G498486",
-          "group": "CBC",
-          "pipeline": "gstlal",
-          "search": "AllSky",
-          "gpstime": 1403901505.212402,
-          "far": 4.354280974875973e-07
-        }
-      },
-      "meta": {
-        "retrieved": "2024-08-26T19:05:25.904",
-        "src": "https://gracedb.ligo.org/api/",
-        "type": "Candidate",
-        "include": false,
-        "validXML": true,
-        "created_date": "2024-07-01T20:43:11.000"
-      },
-      "voevents": {
-        "start": 0,
-        "numRows": 2,
-        "voevents": [
-          {
-            "voevent_type": "PR",
-            "file_version": 0,
-            "ivorn": "ivo://gwnet/LVC#S240701bn-1-Preliminary",
-            "created": "2024-07-01 20:38:34 UTC",
-            "issuer": "emfollow",
-            "filename": "S240701bn-1-Preliminary.xml",
-            "N": 1,
-            "links": {
-              "self": "https://gracedb.ligo.org/api/superevents/S240701bn/voevents/1/",
-              "file": "https://gracedb.ligo.org/api/superevents/S240701bn/files/S240701bn-1-Preliminary.xml,0"
-            }
-          },
-          {
-            "voevent_type": "PR",
-            "file_version": 0,
-            "ivorn": "ivo://gwnet/LVC#S240701bn-2-Preliminary",
-            "created": "2024-07-01 20:43:11 UTC",
-            "issuer": "emfollow",
-            "filename": "S240701bn-2-Preliminary.xml",
-            "N": 2,
-            "links": {
-              "self": "https://gracedb.ligo.org/api/superevents/S240701bn/voevents/2/",
-              "file": "https://gracedb.ligo.org/api/superevents/S240701bn/files/S240701bn-2-Preliminary.xml,0"
-            }
-          }
-        ],
-        "links": {
-          "self": "https://gracedb.ligo.org/api/superevents/S240701bn/voevents/",
-          "first": "https://gracedb.ligo.org/api/superevents/S240701bn/voevents/",
-          "last": "https://gracedb.ligo.org/api/superevents/S240701bn/voevents/"
-        }
-      },
-      "xmlfile": [
-        "S240701bn-2-Preliminary.xml,0",
-        "https://gracedb.ligo.org/api/superevents/S240701bn/files/S240701bn-2-Preliminary.xml,0"
-      ],
-      "validXML": true,
-      "mapfile": [
-        "bayestar.multiorder.fits,1",
-        "https://gracedb.ligo.org/api/superevents/S240701bn/files/bayestar.multiorder.fits,1"
-      ],
-      "xml": {
-        "Packet_Type": "150",
-        "internal": "0",
-        "Pkt_Ser_Num": "2",
-        "GraceID": "S240701bn",
-        "AlertType": "Preliminary",
-        "HardwareInj": "0",
-        "OpenAlert": "1",
-        "EventPage": "https://gracedb.ligo.org/superevents/S240701bn/view/",
-        "Instruments": "H1,L1,V1",
-        "FAR": "4.354280974875973e-07",
-        "Significant": "0",
-        "Group": "CBC",
-        "Pipeline": "gstlal",
-        "Search": "AllSky",
-        "GW_SKYMAP": {
-          "skymap_fits": "https://gracedb.ligo.org/api/superevents/S240701bn/files/bayestar.multiorder.fits,1"
-        },
-        "Classification": {
-          "BNS": "6.453743186543216e-13",
-          "NSBH": "4.874963079818108e-11",
-          "BBH": "0.8235552781829453",
-          "Terrestrial": "0.17644472176765968"
-        },
-        "Properties": {
-          "HasNS": "0.0",
-          "HasRemnant": "0.0",
-          "HasMassGap": "0.026260429225946468"
-        }
-      }
-    },
-    "S240630t": {
-      "superevent_id": "S240630t",
-      "gw_id": null,
-      "category": "Production",
-      "created": "2024-06-30 10:17:15 UTC",
-      "submitter": "emfollow",
-      "em_type": null,
-      "t_start": 1403777840.360352,
-      "t_0": 1403777841.372437,
-      "t_end": 1403777842.373724,
-      "far": 1.893414505511951e-12,
-      "time_coinc_far": null,
-      "space_coinc_far": null,
-      "labels": [
-        "EM_READY",
-        "PE_READY",
-        "ADVOK",
-        "SKYMAP_READY",
-        "EMBRIGHT_READY",
-        "PASTRO_READY",
-        "DQOK",
-        "GCN_PRELIM_SENT",
-        "DQR_REQUEST",
-        "SIGNIF_LOCKED",
-        "LOW_SIGNIF_LOCKED"
-      ],
-      "links": {
-        "labels": "https://gracedb.ligo.org/api/superevents/S240630t/labels/",
-        "logs": "https://gracedb.ligo.org/api/superevents/S240630t/logs/",
-        "files": "https://gracedb.ligo.org/api/superevents/S240630t/files/",
-        "self": "https://gracedb.ligo.org/api/superevents/S240630t/",
-        "voevents": "https://gracedb.ligo.org/api/superevents/S240630t/voevents/",
-        "emobservations": "https://gracedb.ligo.org/api/superevents/S240630t/emobservations/"
-      },
-      "preferred_event_data": {
-        "submitter": "gstlalcbc_icds",
-        "created": "2024-06-30 10:18:45 UTC",
-        "group": "CBC",
-        "graceid": "G498009",
-        "pipeline": "gstlal",
-        "gpstime": 1403777841.372437,
-        "reporting_latency": 102.123404,
-        "instruments": "H1,L1,V1",
-        "nevents": 3,
-        "offline": false,
-        "search": "AllSky",
-        "far": 1.893414505511951e-12,
-        "far_is_upper_limit": false,
-        "likelihood": 23.35812171982955,
-        "labels": [
-          "SKYMAP_READY",
-          "EMBRIGHT_READY",
-          "PASTRO_READY",
-          "SNR_OPTIMIZED"
-        ],
-        "extra_attributes": {
-          "SingleInspiral": [
-            {
-              "ifo": "H1",
-              "end_time": 1403777841,
-              "end_time_ns": 372436523
-            },
-            {
-              "ifo": "L1",
-              "end_time": 1403777841,
-              "end_time_ns": 376586914
-            },
-            {
-              "ifo": "V1",
-              "end_time": 1403777841,
-              "end_time_ns": 370971680
-            }
-          ]
-        },
-        "superevent": "S240630t",
-        "links": {
-          "neighbors": "https://gracedb.ligo.org/api/events/G498009/neighbors/",
-          "log": "https://gracedb.ligo.org/api/events/G498009/log/",
-          "emobservations": "https://gracedb.ligo.org/api/events/G498009/emobservation/",
-          "files": "https://gracedb.ligo.org/api/events/G498009/files/",
-          "labels": "https://gracedb.ligo.org/api/events/G498009/labels/",
-          "self": "https://gracedb.ligo.org/api/events/G498009",
-          "tags": "https://gracedb.ligo.org/api/events/G498009/tag/"
-        }
-      },
-      "pipeline_preferred_events": {
-        "gstlal": {
-          "graceid": "G498009",
-          "group": "CBC",
-          "pipeline": "gstlal",
-          "search": "AllSky",
-          "gpstime": 1403777841.372437,
-          "far": 1.893414505511951e-12
-        },
-        "CWB": {
-          "graceid": "G498005",
-          "group": "Burst",
-          "pipeline": "CWB",
-          "search": "BBH",
-          "gpstime": 1403777841.3867,
-          "far": 3.35685e-10
-        },
-        "pycbc": {
-          "graceid": "G498003",
-          "group": "CBC",
-          "pipeline": "pycbc",
-          "search": "AllSky",
-          "gpstime": 1403777841.360352,
-          "far": 2.217282089570696e-09
-        }
-      },
-      "meta": {
-        "retrieved": "2024-08-26T19:05:27.629",
-        "src": "https://gracedb.ligo.org/api/",
-        "type": "Candidate",
-        "validXML": true,
-        "created_date": "2024-06-30T17:02:52.000"
-      },
-      "voevents": {
-        "start": 0,
-        "numRows": 4,
-        "voevents": [
-          {
-            "voevent_type": "PR",
-            "file_version": 0,
-            "ivorn": "ivo://gwnet/LVC#S240630t-1-Preliminary",
-            "created": "2024-06-30 10:17:27 UTC",
-            "issuer": "emfollow",
-            "filename": "S240630t-1-Preliminary.xml",
-            "N": 1,
-            "links": {
-              "self": "https://gracedb.ligo.org/api/superevents/S240630t/voevents/1/",
-              "file": "https://gracedb.ligo.org/api/superevents/S240630t/files/S240630t-1-Preliminary.xml,0"
-            }
-          },
-          {
-            "voevent_type": "PR",
-            "file_version": 0,
-            "ivorn": "ivo://gwnet/LVC#S240630t-2-Preliminary",
-            "created": "2024-06-30 10:22:07 UTC",
-            "issuer": "emfollow",
-            "filename": "S240630t-2-Preliminary.xml",
-            "N": 2,
-            "links": {
-              "self": "https://gracedb.ligo.org/api/superevents/S240630t/voevents/2/",
-              "file": "https://gracedb.ligo.org/api/superevents/S240630t/files/S240630t-2-Preliminary.xml,0"
-            }
-          },
-          {
-            "voevent_type": "IN",
-            "file_version": 0,
-            "ivorn": "ivo://gwnet/LVC#S240630t-3-Initial",
-            "created": "2024-06-30 11:00:20 UTC",
-            "issuer": "emfollow",
-            "filename": "S240630t-3-Initial.xml",
-            "N": 3,
-            "links": {
-              "self": "https://gracedb.ligo.org/api/superevents/S240630t/voevents/3/",
-              "file": "https://gracedb.ligo.org/api/superevents/S240630t/files/S240630t-3-Initial.xml,0"
-            }
-          },
-          {
-            "voevent_type": "UP",
-            "file_version": 0,
-            "ivorn": "ivo://gwnet/LVC#S240630t-4-Update",
-            "created": "2024-06-30 17:02:52 UTC",
-            "issuer": "emfollow",
-            "filename": "S240630t-4-Update.xml",
-            "N": 4,
-            "links": {
-              "self": "https://gracedb.ligo.org/api/superevents/S240630t/voevents/4/",
-              "file": "https://gracedb.ligo.org/api/superevents/S240630t/files/S240630t-4-Update.xml,0"
-            }
-          }
-        ],
-        "links": {
-          "self": "https://gracedb.ligo.org/api/superevents/S240630t/voevents/",
-          "first": "https://gracedb.ligo.org/api/superevents/S240630t/voevents/",
-          "last": "https://gracedb.ligo.org/api/superevents/S240630t/voevents/"
-        }
-      },
-      "xmlfile": [
-        "S240630t-4-Update.xml,0",
-        "https://gracedb.ligo.org/api/superevents/S240630t/files/S240630t-4-Update.xml,0"
-      ]
-    },
-    "S240629by": {
-      "superevent_id": "S240629by",
-      "gw_id": null,
-      "category": "Production",
-      "created": "2024-06-29 14:53:09 UTC",
-      "submitter": "emfollow",
-      "em_type": null,
-      "t_start": 1403707993.836116,
-      "t_0": 1403707994.859375,
-      "t_end": 1403707995.859863,
-      "far": 3.167545842243851e-10,
-      "time_coinc_far": null,
-      "space_coinc_far": null,
-      "labels": [
-        "EM_READY",
-        "PE_READY",
-        "ADVOK",
-        "SKYMAP_READY",
-        "EMBRIGHT_READY",
-        "PASTRO_READY",
-        "DQOK",
-        "GCN_PRELIM_SENT",
-        "DQR_REQUEST",
-        "SIGNIF_LOCKED",
-        "LOW_SIGNIF_LOCKED"
-      ],
-      "links": {
-        "labels": "https://gracedb.ligo.org/api/superevents/S240629by/labels/",
-        "logs": "https://gracedb.ligo.org/api/superevents/S240629by/logs/",
-        "files": "https://gracedb.ligo.org/api/superevents/S240629by/files/",
-        "self": "https://gracedb.ligo.org/api/superevents/S240629by/",
-        "voevents": "https://gracedb.ligo.org/api/superevents/S240629by/voevents/",
-        "emobservations": "https://gracedb.ligo.org/api/superevents/S240629by/emobservations/"
-      },
-      "preferred_event_data": {
-        "submitter": "pycbclive",
-        "created": "2024-06-29 14:54:43 UTC",
-        "group": "CBC",
-        "graceid": "G497755",
-        "pipeline": "pycbc",
-        "gpstime": 1403707994.859375,
-        "reporting_latency": 106.200731,
-        "instruments": "H1,L1,V1",
-        "nevents": 3,
-        "offline": false,
-        "search": "AllSky",
-        "far": 3.167545842243851e-10,
-        "far_is_upper_limit": false,
-        "likelihood": 0.0,
-        "labels": [
-          "SKYMAP_READY",
-          "EMBRIGHT_READY",
-          "PASTRO_READY",
-          "SNR_OPTIMIZED"
-        ],
-        "extra_attributes": {
-          "SingleInspiral": [
-            {
-              "ifo": "H1",
-              "end_time": 1403707994,
-              "end_time_ns": 837402344
-            },
-            {
-              "ifo": "L1",
-              "end_time": 1403707994,
-              "end_time_ns": 836425781
-            },
-            {
-              "ifo": "V1",
-              "end_time": 1403707994,
-              "end_time_ns": 859375000
-            }
-          ]
-        },
-        "superevent": "S240629by",
-        "links": {
-          "neighbors": "https://gracedb.ligo.org/api/events/G497755/neighbors/",
-          "log": "https://gracedb.ligo.org/api/events/G497755/log/",
-          "emobservations": "https://gracedb.ligo.org/api/events/G497755/emobservation/",
-          "files": "https://gracedb.ligo.org/api/events/G497755/files/",
-          "labels": "https://gracedb.ligo.org/api/events/G497755/labels/",
-          "self": "https://gracedb.ligo.org/api/events/G497755",
-          "tags": "https://gracedb.ligo.org/api/events/G497755/tag/"
-        }
-      },
-      "pipeline_preferred_events": {
-        "pycbc": {
-          "graceid": "G497755",
-          "group": "CBC",
-          "pipeline": "pycbc",
-          "search": "AllSky",
-          "gpstime": 1403707994.859375,
-          "far": 3.167545842243851e-10
-        },
-        "MBTA": {
-          "graceid": "G497751",
-          "group": "CBC",
-          "pipeline": "MBTA",
-          "search": "AllSky",
-          "gpstime": 1403707994.83829,
-          "far": 2.741603e-19
-        },
-        "gstlal": {
-          "graceid": "G497750",
-          "group": "CBC",
-          "pipeline": "gstlal",
-          "search": "AllSky",
-          "gpstime": 1403707994.837204,
-          "far": 4.671510380238647e-24
-        }
-      },
-      "meta": {
-        "retrieved": "2024-08-26T19:05:27.839",
-        "src": "https://gracedb.ligo.org/api/",
-        "type": "Candidate",
-        "validXML": true,
-        "created_date": "2024-06-30T16:53:40.000"
-      },
-      "voevents": {
-        "start": 0,
-        "numRows": 4,
-        "voevents": [
-          {
-            "voevent_type": "PR",
-            "file_version": 0,
-            "ivorn": "ivo://gwnet/LVC#S240629by-1-Preliminary",
-            "created": "2024-06-29 14:53:25 UTC",
-            "issuer": "emfollow",
-            "filename": "S240629by-1-Preliminary.xml",
-            "N": 1,
-            "links": {
-              "self": "https://gracedb.ligo.org/api/superevents/S240629by/voevents/1/",
-              "file": "https://gracedb.ligo.org/api/superevents/S240629by/files/S240629by-1-Preliminary.xml,0"
-            }
-          },
-          {
-            "voevent_type": "PR",
-            "file_version": 0,
-            "ivorn": "ivo://gwnet/LVC#S240629by-2-Preliminary",
-            "created": "2024-06-29 14:58:07 UTC",
-            "issuer": "emfollow",
-            "filename": "S240629by-2-Preliminary.xml",
-            "N": 2,
-            "links": {
-              "self": "https://gracedb.ligo.org/api/superevents/S240629by/voevents/2/",
-              "file": "https://gracedb.ligo.org/api/superevents/S240629by/files/S240629by-2-Preliminary.xml,0"
-            }
-          },
-          {
-            "voevent_type": "IN",
-            "file_version": 0,
-            "ivorn": "ivo://gwnet/LVC#S240629by-3-Initial",
-            "created": "2024-06-29 15:40:14 UTC",
-            "issuer": "emfollow",
-            "filename": "S240629by-3-Initial.xml",
-            "N": 3,
-            "links": {
-              "self": "https://gracedb.ligo.org/api/superevents/S240629by/voevents/3/",
-              "file": "https://gracedb.ligo.org/api/superevents/S240629by/files/S240629by-3-Initial.xml,0"
-            }
-          },
-          {
-            "voevent_type": "UP",
-            "file_version": 0,
-            "ivorn": "ivo://gwnet/LVC#S240629by-4-Update",
-            "created": "2024-06-30 16:53:40 UTC",
-            "issuer": "emfollow",
-            "filename": "S240629by-4-Update.xml",
-            "N": 4,
-            "links": {
-              "self": "https://gracedb.ligo.org/api/superevents/S240629by/voevents/4/",
-              "file": "https://gracedb.ligo.org/api/superevents/S240629by/files/S240629by-4-Update.xml,0"
-            }
-          }
-        ],
-        "links": {
-          "self": "https://gracedb.ligo.org/api/superevents/S240629by/voevents/",
-          "first": "https://gracedb.ligo.org/api/superevents/S240629by/voevents/",
-          "last": "https://gracedb.ligo.org/api/superevents/S240629by/voevents/"
-        }
-      },
-      "xmlfile": [
-        "S240629by-4-Update.xml,0",
-        "https://gracedb.ligo.org/api/superevents/S240629by/files/S240629by-4-Update.xml,0"
-      ]
-    },
-    "S240628cl": {
-      "superevent_id": "S240628cl",
-      "gw_id": null,
-      "category": "Production",
-      "created": "2024-06-28 21:37:39 UTC",
-      "submitter": "emfollow",
-      "em_type": null,
-      "t_start": 1403645770.673397,
-      "t_0": 1403645770.707,
-      "t_end": 1403645770.740603,
-      "far": 5.83147e-07,
-      "time_coinc_far": null,
-      "space_coinc_far": null,
-      "labels": [
-        "EM_READY",
-        "SKYMAP_READY",
-        "EMBRIGHT_READY",
-        "PASTRO_READY",
-        "DQOK",
-        "LOW_SIGNIF_PRELIM_SENT",
-        "LOW_SIGNIF_LOCKED"
-      ],
-      "links": {
-        "labels": "https://gracedb.ligo.org/api/superevents/S240628cl/labels/",
-        "logs": "https://gracedb.ligo.org/api/superevents/S240628cl/logs/",
-        "files": "https://gracedb.ligo.org/api/superevents/S240628cl/files/",
-        "self": "https://gracedb.ligo.org/api/superevents/S240628cl/",
-        "voevents": "https://gracedb.ligo.org/api/superevents/S240628cl/voevents/",
-        "emobservations": "https://gracedb.ligo.org/api/superevents/S240628cl/emobservations/"
-      },
-      "preferred_event_data": {
-        "submitter": "waveburst",
-        "created": "2024-06-28 21:37:39 UTC",
-        "group": "Burst",
-        "graceid": "G497484",
-        "pipeline": "CWB",
-        "gpstime": 1403645770.707,
-        "reporting_latency": 106.348734,
-        "instruments": "H1,L1",
-        "nevents": null,
-        "offline": false,
-        "search": "BBH",
-        "far": 5.83147e-07,
-        "far_is_upper_limit": false,
-        "likelihood": 293.7937,
-        "labels": [
-          "SKYMAP_READY",
-          "EMBRIGHT_READY",
-          "PASTRO_READY"
-        ],
-        "extra_attributes": {},
-        "superevent": "S240628cl",
-        "links": {
-          "neighbors": "https://gracedb.ligo.org/api/events/G497484/neighbors/",
-          "log": "https://gracedb.ligo.org/api/events/G497484/log/",
-          "emobservations": "https://gracedb.ligo.org/api/events/G497484/emobservation/",
-          "files": "https://gracedb.ligo.org/api/events/G497484/files/",
-          "labels": "https://gracedb.ligo.org/api/events/G497484/labels/",
-          "self": "https://gracedb.ligo.org/api/events/G497484",
-          "tags": "https://gracedb.ligo.org/api/events/G497484/tag/"
-        }
-      },
-      "pipeline_preferred_events": {
-        "CWB": {
-          "graceid": "G497484",
-          "group": "Burst",
-          "pipeline": "CWB",
-          "search": "BBH",
-          "gpstime": 1403645770.707,
-          "far": 5.83147e-07
-        }
-      },
-      "meta": {
-        "retrieved": "2024-08-26T19:05:28.057",
-        "src": "https://gracedb.ligo.org/api/",
-        "type": "Candidate",
-        "include": false,
-        "validXML": true,
-        "created_date": "2024-06-28T21:42:20.000"
-      },
-      "voevents": {
-        "start": 0,
-        "numRows": 2,
-        "voevents": [
-          {
-            "voevent_type": "PR",
-            "file_version": 0,
-            "ivorn": "ivo://gwnet/LVC#S240628cl-1-Preliminary",
-            "created": "2024-06-28 21:37:46 UTC",
-            "issuer": "emfollow",
-            "filename": "S240628cl-1-Preliminary.xml",
-            "N": 1,
-            "links": {
-              "self": "https://gracedb.ligo.org/api/superevents/S240628cl/voevents/1/",
-              "file": "https://gracedb.ligo.org/api/superevents/S240628cl/files/S240628cl-1-Preliminary.xml,0"
-            }
-          },
-          {
-            "voevent_type": "PR",
-            "file_version": 0,
-            "ivorn": "ivo://gwnet/LVC#S240628cl-2-Preliminary",
-            "created": "2024-06-28 21:42:20 UTC",
-            "issuer": "emfollow",
-            "filename": "S240628cl-2-Preliminary.xml",
-            "N": 2,
-            "links": {
-              "self": "https://gracedb.ligo.org/api/superevents/S240628cl/voevents/2/",
-              "file": "https://gracedb.ligo.org/api/superevents/S240628cl/files/S240628cl-2-Preliminary.xml,0"
-            }
-          }
-        ],
-        "links": {
-          "self": "https://gracedb.ligo.org/api/superevents/S240628cl/voevents/",
-          "first": "https://gracedb.ligo.org/api/superevents/S240628cl/voevents/",
-          "last": "https://gracedb.ligo.org/api/superevents/S240628cl/voevents/"
-        }
-      },
-      "xmlfile": [
-        "S240628cl-2-Preliminary.xml,0",
-        "https://gracedb.ligo.org/api/superevents/S240628cl/files/S240628cl-2-Preliminary.xml,0"
-      ],
-      "validXML": true,
-      "mapfile": [
-        "cwb.multiorder.fits,1",
-        "https://gracedb.ligo.org/api/superevents/S240628cl/files/cwb.multiorder.fits,1"
-      ],
-      "xml": {
-        "Packet_Type": "150",
-        "internal": "0",
-        "Pkt_Ser_Num": "2",
-        "GraceID": "S240628cl",
-        "AlertType": "Preliminary",
-        "HardwareInj": "0",
-        "OpenAlert": "1",
-        "EventPage": "https://gracedb.ligo.org/superevents/S240628cl/view/",
-        "Instruments": "H1,L1",
-        "FAR": "5.83147e-07",
-        "Significant": "0",
-        "Group": "CBC",
-        "Pipeline": "CWB",
-        "Search": "BBH",
-        "GW_SKYMAP": {
-          "skymap_fits": "https://gracedb.ligo.org/api/superevents/S240628cl/files/cwb.multiorder.fits,1"
-        },
-        "Classification": {
-          "BNS": "0.0",
-          "NSBH": "0.0",
-          "BBH": "0.03610624299540244",
-          "Terrestrial": "0.9638937570045976"
-        },
-        "Properties": {
-          "HasNS": "0.0",
-          "HasRemnant": "0.0",
-          "HasMassGap": "0.0"
-        }
-      }
-    },
-    "S240627co": {
-      "superevent_id": "S240627co",
-      "gw_id": null,
-      "category": "Production",
-      "created": "2024-06-27 21:05:34 UTC",
-      "submitter": "emfollow",
-      "em_type": null,
-      "t_start": 1403557538.505684,
-      "t_0": 1403557539.507446,
-      "t_end": 1403557540.536843,
-      "far": 7.268481390228657e-07,
-      "time_coinc_far": null,
-      "space_coinc_far": null,
-      "labels": [
-        "EM_READY",
-        "SKYMAP_READY",
-        "EMBRIGHT_READY",
-        "PASTRO_READY",
-        "DQOK",
-        "LOW_SIGNIF_PRELIM_SENT",
-        "LOW_SIGNIF_LOCKED"
-      ],
-      "links": {
-        "labels": "https://gracedb.ligo.org/api/superevents/S240627co/labels/",
-        "logs": "https://gracedb.ligo.org/api/superevents/S240627co/logs/",
-        "files": "https://gracedb.ligo.org/api/superevents/S240627co/files/",
-        "self": "https://gracedb.ligo.org/api/superevents/S240627co/",
-        "voevents": "https://gracedb.ligo.org/api/superevents/S240627co/voevents/",
-        "emobservations": "https://gracedb.ligo.org/api/superevents/S240627co/emobservations/"
-      },
-      "preferred_event_data": {
-        "submitter": "gstlalcbc",
-        "created": "2024-06-27 21:06:00 UTC",
-        "group": "CBC",
-        "graceid": "G497226",
-        "pipeline": "gstlal",
-        "gpstime": 1403557539.507446,
-        "reporting_latency": 39.164533,
-        "instruments": "H1,L1,V1",
-        "nevents": 3,
-        "offline": false,
-        "search": "AllSky",
-        "far": 7.268481390228657e-07,
-        "far_is_upper_limit": false,
-        "likelihood": 11.65065356380742,
-        "labels": [
-          "SKYMAP_READY",
-          "EMBRIGHT_READY",
-          "PASTRO_READY",
-          "SNR_OPTIMIZED"
-        ],
-        "extra_attributes": {
-          "SingleInspiral": [
-            {
-              "ifo": "H1",
-              "end_time": 1403557539,
-              "end_time_ns": 507446289
-            },
-            {
-              "ifo": "L1",
-              "end_time": 1403557539,
-              "end_time_ns": 509155273
-            },
-            {
-              "ifo": "V1",
-              "end_time": 1403557539,
-              "end_time_ns": 523925781
-            }
-          ]
-        },
-        "superevent": "S240627co",
-        "links": {
-          "neighbors": "https://gracedb.ligo.org/api/events/G497226/neighbors/",
-          "log": "https://gracedb.ligo.org/api/events/G497226/log/",
-          "emobservations": "https://gracedb.ligo.org/api/events/G497226/emobservation/",
-          "files": "https://gracedb.ligo.org/api/events/G497226/files/",
-          "labels": "https://gracedb.ligo.org/api/events/G497226/labels/",
-          "self": "https://gracedb.ligo.org/api/events/G497226",
-          "tags": "https://gracedb.ligo.org/api/events/G497226/tag/"
-        }
-      },
-      "pipeline_preferred_events": {
-        "gstlal": {
-          "graceid": "G497226",
-          "group": "CBC",
-          "pipeline": "gstlal",
-          "search": "AllSky",
-          "gpstime": 1403557539.507446,
-          "far": 7.268481390228657e-07
-        }
-      },
-      "meta": {
-        "retrieved": "2024-08-26T19:05:29.142",
-        "src": "https://gracedb.ligo.org/api/",
-        "type": "Candidate",
-        "include": false,
-        "validXML": true,
-        "created_date": "2024-06-27T21:10:27.000"
-      },
-      "voevents": {
-        "start": 0,
-        "numRows": 2,
-        "voevents": [
-          {
-            "voevent_type": "PR",
-            "file_version": 0,
-            "ivorn": "ivo://gwnet/LVC#S240627co-1-Preliminary",
-            "created": "2024-06-27 21:05:50 UTC",
-            "issuer": "emfollow",
-            "filename": "S240627co-1-Preliminary.xml",
-            "N": 1,
-            "links": {
-              "self": "https://gracedb.ligo.org/api/superevents/S240627co/voevents/1/",
-              "file": "https://gracedb.ligo.org/api/superevents/S240627co/files/S240627co-1-Preliminary.xml,0"
-            }
-          },
-          {
-            "voevent_type": "PR",
-            "file_version": 0,
-            "ivorn": "ivo://gwnet/LVC#S240627co-2-Preliminary",
-            "created": "2024-06-27 21:10:27 UTC",
-            "issuer": "emfollow",
-            "filename": "S240627co-2-Preliminary.xml",
-            "N": 2,
-            "links": {
-              "self": "https://gracedb.ligo.org/api/superevents/S240627co/voevents/2/",
-              "file": "https://gracedb.ligo.org/api/superevents/S240627co/files/S240627co-2-Preliminary.xml,0"
-            }
-          }
-        ],
-        "links": {
-          "self": "https://gracedb.ligo.org/api/superevents/S240627co/voevents/",
-          "first": "https://gracedb.ligo.org/api/superevents/S240627co/voevents/",
-          "last": "https://gracedb.ligo.org/api/superevents/S240627co/voevents/"
-        }
-      },
-      "xmlfile": [
-        "S240627co-2-Preliminary.xml,0",
-        "https://gracedb.ligo.org/api/superevents/S240627co/files/S240627co-2-Preliminary.xml,0"
-      ],
-      "validXML": true,
-      "mapfile": [
-        "bayestar.multiorder.fits,1",
-        "https://gracedb.ligo.org/api/superevents/S240627co/files/bayestar.multiorder.fits,1"
-      ],
-      "xml": {
-        "Packet_Type": "150",
-        "internal": "0",
-        "Pkt_Ser_Num": "2",
-        "GraceID": "S240627co",
-        "AlertType": "Preliminary",
-        "HardwareInj": "0",
-        "OpenAlert": "1",
-        "EventPage": "https://gracedb.ligo.org/superevents/S240627co/view/",
-        "Instruments": "H1,L1,V1",
-        "FAR": "7.268481390228657e-07",
-        "Significant": "0",
-        "Group": "CBC",
-        "Pipeline": "gstlal",
-        "Search": "AllSky",
-        "GW_SKYMAP": {
-          "skymap_fits": "https://gracedb.ligo.org/api/superevents/S240627co/files/bayestar.multiorder.fits,1"
-        },
-        "Classification": {
-          "BNS": "5.231571972967765e-13",
-          "NSBH": "3.936405107496128e-11",
-          "BBH": "0.7127648080971063",
-          "Terrestrial": "0.2872351918630065"
-        },
-        "Properties": {
-          "HasNS": "0.0",
-          "HasRemnant": "0.0",
-          "HasMassGap": "0.04264138160689884"
-        }
-      }
     }
   }
 }
