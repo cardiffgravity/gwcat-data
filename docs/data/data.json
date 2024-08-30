@@ -1,6 +1,6 @@
 {
     "meta": {
-        "created": "2024-08-26T19:05:19.989",
+        "created": "2024-08-30T23:05:14.170",
         "GWTC": {
             "retrieved": "2024-04-05T23:58:20.560",
             "src": "https://www.gw-openscience.org/eventapi/json/GWTC",
@@ -19,7 +19,7 @@
             "src": "https://www.gw-openscience.org/eventapi/json/GWTC-1-marginal"
         },
         "graceDB": {
-            "retrieved": "2024-08-26T19:05:52.156",
+            "retrieved": "2024-08-30T23:05:42.642",
             "src": "https://gracedb.ligo.org/api/"
         },
         "contents": {
@@ -21058,10 +21058,73 @@
                 ]
             },
             "deltaOmega": {
-                "best": 1203
+                "best": 1200.0
             },
             "skyarea(50)": {
                 "best": 126
+            }
+        },
+        "S240830gn": {
+            "name": "S240830gn",
+            "detType": {
+                "best": "Candidate"
+            },
+            "conf": {
+                "best": "Candidate"
+            },
+            "catalog": "gracedb",
+            "GPS": {
+                "best": 1409087498.392
+            },
+            "UTC": {
+                "best": "2024-08-30T21:11:57.392"
+            },
+            "obsrun": {
+                "best": "O4"
+            },
+            "FAR": {
+                "best": 0.02,
+                "fartype": "pycbc"
+            },
+            "net": {
+                "best": "HLV"
+            },
+            "objType": {
+                "prob": {
+                    "BNS": 0.0,
+                    "NSBH": 0.10555124594622292,
+                    "BBH": 0.8913222818272336,
+                    "Terrestrial": 0.0031264722265434974
+                },
+                "best": "BBH"
+            },
+            "Significance": {
+                "best": "High"
+            },
+            "meta": {
+                "retrieved": "2024-08-30T23:05:15.669",
+                "src": "https://gracedb.ligo.org/api/",
+                "type": "Candidate",
+                "include": true,
+                "validXML": true,
+                "created_date": "2024-08-30T21:35:11.000",
+                "mapdatesrc": "2024-08-30T21:13:30.000000",
+                "mapurlsrc": "https://gracedb.ligo.org/api/superevents/S240830gn/files/bayestar.multiorder.fits,1",
+                "mapurllocal": "data/fits/S240830gn_bayestar.multiorder.fits,1",
+                "mapdatelocal": "2024-08-30T23:05:53.666"
+            },
+            "DL": {
+                "best": 1240.0,
+                "err": [
+                    -340.0,
+                    340.0
+                ]
+            },
+            "deltaOmega": {
+                "best": 825
+            },
+            "skyarea(50)": {
+                "best": 197
             }
         }
     }
