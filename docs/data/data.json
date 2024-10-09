@@ -1,6 +1,6 @@
 {
     "meta": {
-        "created": "2024-10-09T11:05:37.838",
+        "created": "2024-10-09T23:05:35.784",
         "GWTC": {
             "retrieved": "2024-04-05T23:58:20.560",
             "src": "https://www.gw-openscience.org/eventapi/json/GWTC",
@@ -19,7 +19,7 @@
             "src": "https://www.gw-openscience.org/eventapi/json/GWTC-1-marginal"
         },
         "graceDB": {
-            "retrieved": "2024-10-09T11:06:28.908",
+            "retrieved": "2024-10-09T23:06:22.731",
             "src": "https://gracedb.ligo.org/api/"
         },
         "contents": {
@@ -22540,9 +22540,9 @@
             },
             "objType": {
                 "prob": {
-                    "BNS": 1.1727396946811357e-16,
-                    "NSBH": 8.36581861001029e-15,
-                    "BBH": 0.9752039115943417,
+                    "BNS": 0.0,
+                    "NSBH": 1.4203307981992398e-09,
+                    "BBH": 0.9752039101740193,
                     "Terrestrial": 0.02479608840564984
                 },
                 "best": "BBH"
@@ -22551,29 +22551,29 @@
                 "best": "High"
             },
             "meta": {
-                "retrieved": "2024-10-09T03:05:16.858",
+                "retrieved": "2024-10-09T23:05:39.556",
                 "src": "https://gracedb.ligo.org/api/",
                 "type": "Candidate",
                 "include": true,
                 "validXML": true,
-                "created_date": "2024-10-09T02:59:25.000",
-                "mapdatesrc": "2024-10-09T02:30:57.000000",
-                "mapurlsrc": "https://gracedb.ligo.org/api/superevents/S241009l/files/bayestar.multiorder.fits,2",
-                "mapurllocal": "data/fits/S241009l_bayestar.multiorder.fits,2",
-                "mapdatelocal": "2024-10-09T03:06:12.419"
+                "created_date": "2024-10-09T23:01:00.000",
+                "mapdatesrc": "2024-10-09T10:37:48.167363",
+                "mapurlsrc": "https://gracedb.ligo.org/api/superevents/S241009l/files/Bilby.multiorder.fits,0",
+                "mapurllocal": "data/fits/S241009l_Bilby.multiorder.fits,0",
+                "mapdatelocal": "2024-10-09T23:06:37.369"
             },
             "DL": {
-                "best": 6640.0,
+                "best": 5540.0,
                 "err": [
-                    -2030.0,
-                    2030.0
+                    -1950.0,
+                    1950.0
                 ]
             },
             "deltaOmega": {
-                "best": 2540.0
+                "best": 1595
             },
             "skyarea(50)": {
-                "best": 556
+                "best": 337
             }
         },
         "S241009an": {
@@ -22633,10 +22633,73 @@
                 ]
             },
             "deltaOmega": {
-                "best": 542
+                "best": 542.0
             },
             "skyarea(50)": {
                 "best": 139
+            }
+        },
+        "S241009em": {
+            "name": "S241009em",
+            "detType": {
+                "best": "Candidate"
+            },
+            "conf": {
+                "best": "Candidate"
+            },
+            "catalog": "gracedb",
+            "GPS": {
+                "best": 1412546713.521
+            },
+            "UTC": {
+                "best": "2024-10-09T22:05:32.521"
+            },
+            "obsrun": {
+                "best": "O4"
+            },
+            "FAR": {
+                "best": 0.0889,
+                "fartype": "gstlal"
+            },
+            "net": {
+                "best": "HLV"
+            },
+            "objType": {
+                "prob": {
+                    "BNS": 6.700289072424766e-22,
+                    "NSBH": 5.096695238194661e-20,
+                    "BBH": 0.9975498958849841,
+                    "Terrestrial": 0.002450104115015894
+                },
+                "best": "BBH"
+            },
+            "Significance": {
+                "best": "High"
+            },
+            "meta": {
+                "retrieved": "2024-10-09T23:05:37.358",
+                "src": "https://gracedb.ligo.org/api/",
+                "type": "Candidate",
+                "include": true,
+                "validXML": true,
+                "created_date": "2024-10-09T22:51:25.000",
+                "mapdatesrc": "2024-10-09T22:07:31.000000",
+                "mapurlsrc": "https://gracedb.ligo.org/api/superevents/S241009em/files/bayestar.multiorder.fits,1",
+                "mapurllocal": "data/fits/S241009em_bayestar.multiorder.fits,1",
+                "mapdatelocal": "2024-10-09T23:06:41.279"
+            },
+            "DL": {
+                "best": 3830.0,
+                "err": [
+                    -1630.0,
+                    1630.0
+                ]
+            },
+            "deltaOmega": {
+                "best": 813
+            },
+            "skyarea(50)": {
+                "best": 38
             }
         }
     }
