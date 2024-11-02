@@ -1,6 +1,6 @@
 catdata({
     "meta": {
-        "created": "2024-11-02T14:05:15.095",
+        "created": "2024-11-02T16:05:14.535",
         "GWTC": {
             "retrieved": "2024-04-05T23:58:20.560",
             "src": "https://www.gw-openscience.org/eventapi/json/GWTC",
@@ -19,7 +19,7 @@ catdata({
             "src": "https://www.gw-openscience.org/eventapi/json/GWTC-1-marginal"
         },
         "graceDB": {
-            "retrieved": "2024-11-02T14:06:00.708",
+            "retrieved": "2024-11-02T16:06:08.395",
             "src": "https://gracedb.ligo.org/api/"
         },
         "contents": {
@@ -23057,10 +23057,73 @@ catdata({
                 ]
             },
             "deltaOmega": {
-                "best": 45
+                "best": 45.0
             },
             "skyarea(50)": {
                 "best": 11
+            }
+        },
+        "S241102cy": {
+            "name": "S241102cy",
+            "detType": {
+                "best": "Candidate"
+            },
+            "conf": {
+                "best": "Candidate"
+            },
+            "catalog": "gracedb",
+            "GPS": {
+                "best": 1414594067.728
+            },
+            "UTC": {
+                "best": "2024-11-02T14:48:06.728"
+            },
+            "obsrun": {
+                "best": "O4"
+            },
+            "FAR": {
+                "best": 0.48,
+                "fartype": "pycbc"
+            },
+            "net": {
+                "best": "HLV"
+            },
+            "objType": {
+                "prob": {
+                    "BNS": 0.0,
+                    "NSBH": 0.0,
+                    "BBH": 0.9989328188084302,
+                    "Terrestrial": 0.0010671811915697882
+                },
+                "best": "BBH"
+            },
+            "Significance": {
+                "best": "High"
+            },
+            "meta": {
+                "retrieved": "2024-11-02T16:05:16.096",
+                "src": "https://gracedb.ligo.org/api/",
+                "type": "Candidate",
+                "include": true,
+                "validXML": true,
+                "created_date": "2024-11-02T15:45:16.000",
+                "mapdatesrc": "2024-11-02T14:48:27.000000",
+                "mapurlsrc": "https://gracedb.ligo.org/api/superevents/S241102cy/files/bayestar.multiorder.fits,1",
+                "mapurllocal": "data/fits/S241102cy_bayestar.multiorder.fits,1",
+                "mapdatelocal": "2024-11-02T16:06:18.824"
+            },
+            "DL": {
+                "best": 2820.0,
+                "err": [
+                    -700.0,
+                    700.0
+                ]
+            },
+            "deltaOmega": {
+                "best": 1069
+            },
+            "skyarea(50)": {
+                "best": 216
             }
         }
     },
@@ -59721,6 +59784,23 @@ catdata({
             },
             {
                 "url": "https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/data/fits/S241102br_bayestar.multiorder.fits,1",
+                "text": "Sky Map (local mirror)",
+                "type": "skymap-fits-local"
+            }
+        ],
+        "S241102cy": [
+            {
+                "url": "https://gracedb.ligo.org/api/superevents/S241102cy/",
+                "text": "GraceDB data",
+                "type": "open-data"
+            },
+            {
+                "url": "https://gracedb.ligo.org/api/superevents/S241102cy/files/bayestar.multiorder.fits,1",
+                "text": "Sky Map",
+                "type": "skymap-fits"
+            },
+            {
+                "url": "https://ligo.gravity.cf.ac.uk/~chris.north/gwcat-data/data/fits/S241102cy_bayestar.multiorder.fits,1",
                 "text": "Sky Map (local mirror)",
                 "type": "skymap-fits-local"
             }
