@@ -22,6 +22,7 @@ parser.add_argument('-m','--forcemap', dest='forcemap', action='store_true', def
 parser.add_argument('-5','--forceh5', dest='forceh5', action='store_true', default=False, help='Force (re)extraction of HDF files')
 parser.add_argument('-g','--gravoscope', dest='gravoscope', action='store_true', default=False, help='Update Gravoscope tiles')
 parser.add_argument('-w','--waveforms', dest='waveforms', action='store_true', default=False, help='Update Waveforms')
+parser.add_argument('-e','--event',dest='event',action="store",default="",help="single event to process")
 parser.add_argument('--manual', dest='manual', action='store_true', default=False, help='Read in manual data')
 parser.add_argument('-d','--datadir', dest='datadir', type=str, default='data/', help='directory in which data is stored')
 parser.add_argument('-p','--pubdatadir', dest='pubdatadir', type=str, default='docs/data/', help='directory in which data is published')
@@ -61,6 +62,7 @@ devMode=args.devMode
 blank=args.blank
 highonly=args.highonly
 lowsigmaps=args.lowsigmaps
+event=args.event
 
 if devMode:
     mode='dev'
@@ -148,7 +150,7 @@ else:
 logfileMaps=logfile+'_maps'
 if skymaps:
     print('\n\n*****\nPlotting maps\n*****\n\n')
-    gc.plotMapPngs(verbose=verbose,overwrite=overwrite,logFile=logfileMaps,lowSigMaps=lowsigmaps)
+    gc.plotMapPngs(verbose=verbose,overwrite=overwrite,logFile=logfileMaps,lowSigMaps=lowsigmaps,event=event)
 else:
     if os.path.exists(logfileMaps):
         os.remove(logfileMaps)
@@ -158,11 +160,11 @@ else:
 
 if gravoscope:
     print('\n\n*****\nUpdating gravoscope\n*****\n\n')
-    gc.makeGravoscopeTiles(verbose=verbose,maxres=6,tilesurl=tilesurl)
+    gc.makeGravoscopeTiles(verbose=verbose,maxres=6,tilesurl=tilesurl,event=event)
 
 if waveforms:
     print('\n\n*****\nUpdating waveforms\n*****\n\n')
-    gc.makeWaveforms(verbose=verbose,overwrite=overwrite)
+    gc.makeWaveforms(verbose=verbose,overwrite=overwrite,event=event)
 
 # export library
 gc.exportJson(os.path.join(dataDir,'gwosc_gracedb.json'))
