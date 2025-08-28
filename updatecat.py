@@ -35,6 +35,7 @@ parser.add_argument('--skipgwosc',dest='skipgwosc',action='store_true', default=
 parser.add_argument('--skipmarginal',dest='skipmarginal',action='store_true', default=False, help='Set to skip marginal catalogue load')
 parser.add_argument('--devMode',dest='devMode',action='store_true', default=False, help='Set to use dev mode (requires LVK login)')
 parser.add_argument('--skiph5',dest='skiph5',action='store_true', default=False, help='Set to skip using H5 files')
+parser.add_argument('--skipmaps',dest='skipmaps',action='store_true', default=False, help='Set to skip plotting maps')
 parser.add_argument('--blank',dest='blank',action='store_true', default=False, help='Set to start from blank file')
 parser.add_argument('--highonly',dest='highonly',action='store_true', default=False, help='Set to exclude low significance events')
 parser.add_argument('--lowsigmaps',dest='lowsigmaps',action='store_true', default=False, help='Set to plot maps for low significance events')
@@ -57,6 +58,7 @@ ImportGracedb=args.gracedb
 skipGwosc=args.skipgwosc
 skipMarginal=args.skipmarginal
 skiph5=args.skiph5
+skipmaps=args.skipmaps
 skymaps=args.skymaps
 devMode=args.devMode
 blank=args.blank
@@ -138,9 +140,11 @@ if update==True:
     print('\n\n*****\nsetting precision...\n*****\n\n')
     gc.setPrecision(extraprec=1,verbose=verbose)
 
-    print('\n\n*****\nUpdating maps\n*****\n\n')
-    gc.updateMaps(verbose=verbose,forceUpdate=forcemap,event=event)
-
+    if skipmaps:
+        print('\n\n*****\nSkipping updating maps\n*****\n\n')
+    else:
+        print('\n\n*****\nUpdating maps\n*****\n\n')
+        gc.updateMaps(verbose=verbose,forceUpdate=forcemap,event=event)
 
 else:
     print('importing from local file')
