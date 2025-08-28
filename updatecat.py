@@ -133,13 +133,13 @@ if update==True:
         print('\n\n*****\Skipping getting data from H5\n*****\n\n')
     else:
         print('\n\n*****\nUpdating data from H5\n*****\n\n')
-        gc.updateH5(verbose=verbose,forceUpdate=forceupdate,forceUpdateData=forceh5)
+        gc.updateH5(verbose=verbose,forceUpdate=forceupdate,forceUpdateData=forceh5,event=event)
 
     print('\n\n*****\nsetting precision...\n*****\n\n')
     gc.setPrecision(extraprec=1,verbose=verbose)
 
     print('\n\n*****\nUpdating maps\n*****\n\n')
-    gc.updateMaps(verbose=verbose,forceUpdate=forcemap)
+    gc.updateMaps(verbose=verbose,forceUpdate=forcemap,event=event)
 
 
 else:
