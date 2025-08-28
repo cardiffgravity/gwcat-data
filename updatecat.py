@@ -11,6 +11,9 @@ import gwcatpy
 import json
 import argparse
 import ciecplib
+import warnings
+warnings.filterwarnings("ignore", "Wswiglal-redir-stdio")
+import lal
 
 parser=argparse.ArgumentParser(prog="updatecat.py", description="Updates the gwcat-data database")
 parser.add_argument('-u','--update', dest='update', action='store_true', default=False, help='Update from GWOSC and GraceDB source')
