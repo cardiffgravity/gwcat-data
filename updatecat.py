@@ -115,6 +115,11 @@ if update==True:
 
         json.dump(gwtcdata,open(os.path.join(dataDir,'gwtc.min.json'),'w'))
     
+    # print('\n\n*****\nReading O4 Discovery Papers...\n*****\n\n')
+    # gwtcdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode,catalog='O4_Discovery_Papers',sess=sess)
+    # print('\n\n*****\nImporting O4 Discovery Papers...\n*****\n\n')
+    # gc.importGWTC(gwtcdata,verbose=verbose, devMode=devMode,catalog='O4_Discovery_Papers',forceOverwrite=True,newOnly=True)
+
     knownEvents=gc.getTimestamps()
 
     if ImportGracedb:
