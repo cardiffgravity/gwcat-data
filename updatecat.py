@@ -32,6 +32,7 @@ parser.add_argument('-p','--pubdatadir', dest='pubdatadir', type=str, default='d
 parser.add_argument('-l','--datelim', dest='datelim', type=float, default=999, help='number of days to go back in time')
 parser.add_argument('-b','--baseurl', dest='baseurl', type=str, default='https://gwcat-data.s3.eu-north-1.amazonaws.com/', help='Base URL to prepend to relative links [Default=https://gwcat-data.s3.eu-north-1.amazonaws.com//]')
 parser.add_argument('-t','--tilesurl', dest='tilesurl', type=str, default='https://gwcat-data.s3.eu-north-1.amazonaws.com/', help='Base URL to prepend to relative links for tiles [Default=https://gwcat-data.s3.eu-north-1.amazonaws.com/]')
+parser.add_argument('-a','--aws', dest='aws', action='store_true', default=True, help='Set to upload files to AWS.')
 parser.add_argument('--log',dest='logfile',type=str, default='logs/gdb_updates.log', help='File to output GraceDB logs to. [Default=logs/gdb_updates.log]')
 parser.add_argument('--gracedb',dest='gracedb',action='store_true', default=False, help='Set to include GraceDB load')
 parser.add_argument('--skipgwosc',dest='skipgwosc',action='store_true', default=False, help='Set to skip GWOSC load')
@@ -68,6 +69,7 @@ blank=args.blank
 highonly=args.highonly
 lowsigmaps=args.lowsigmaps
 event=args.event
+aws=args.aws
 
 if devMode:
     mode='dev'
@@ -159,10 +161,17 @@ else:
     gc=gwcatpy.GWCat(fileIn=fileIn,dataDir=dataDir,mode=mode)
 
 
+if aws:
+    logFileAwsMaps=logfile+'_maps_aws'
+    logFileAwsWf=logfile+'_waveform_aws'
+else:
+    logFileAwsMaps=None
+    logFileAwsWf=None
+
 logfileMaps=logfile+'_maps'
 if skymaps:
     print('\n\n*****\nPlotting maps\n*****\n\n')
-    gc.plotMapPngs(verbose=verbose,overwrite=overwrite,logFile=logfileMaps,lowSigMaps=lowsigmaps,event=event)
+    gc.plotMapPngs(verbose=verbose,overwrite=overwrite,logFile=logfileMaps,lowSigMaps=lowsigmaps,event=event,awsLog=logFileAwsMaps)
 else:
     if os.path.exists(logfileMaps):
         os.remove(logfileMaps)
@@ -176,7 +185,7 @@ if gravoscope:
 
 if waveforms:
     print('\n\n*****\nUpdating waveforms\n*****\n\n')
-    gc.makeWaveforms(verbose=verbose,overwrite=overwrite,event=event)
+    gc.makeWaveforms(verbose=verbose,overwrite=overwrite,event=event,awsLog=logFileAwsWf)
 
 # export library
 gc.exportJson(os.path.join(dataDir,'gwosc_gracedb.json'))
