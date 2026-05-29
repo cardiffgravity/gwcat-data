@@ -84,15 +84,15 @@ else:
     fileIn=os.path.join(dataDir,'gwosc_gracedb.json')
 
 print('\n\n*****\nImporting from local file\n*****\n\n')
-gc=gwcatpy.GWCat(fileIn=fileIn,dataDir=dataDir,mode=mode,baseurl=baseurl,dataurl=tilesurl)
+gc=gwcatpy.GWCat(fileIn=fileIn,dataDir=dataDir,mode=mode,baseurl=baseurl,dataurl=tilesurl,max_memory_percent=75,skip_on_memory_error=True)
 
 if update==True:
 
     if not skipGwosc:
         print('\n\n*****\nReading GWTC...\n*****\n\n')
-        gwtcdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode,catalog='GWTC',sess=sess)
+        gwtcdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode,catalog='GWTC-2.1-confident',sess=sess)
         print('\n\n*****\nImporting GWTC...\n*****\n\n')
-        gc.importGWTC(gwtcdata,verbose=verbose, devMode=devMode,catalog='GWTC',forceOverwrite=forceupdate)
+        gc.importGWTC(gwtcdata,verbose=verbose, devMode=devMode,catalog='GWTC-2.1-confident',forceOverwrite=forceupdate)
 
         # print('\n\n*****\nReading O4a Discovery Papers...\n*****\n\n')
         # gwtcdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode,catalog='O4_Discovery_Papers',sess=sess)
