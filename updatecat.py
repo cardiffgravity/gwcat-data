@@ -12,6 +12,7 @@ import json
 import argparse
 import ciecplib
 import warnings
+from datetime import datetime
 warnings.filterwarnings("ignore", "Wswiglal-redir-stdio")
 import lal
 
@@ -26,6 +27,7 @@ parser.add_argument('-5','--forceh5', dest='forceh5', action='store_true', defau
 parser.add_argument('-g','--gravoscope', dest='gravoscope', action='store_true', default=False, help='Update Gravoscope tiles')
 parser.add_argument('-w','--waveforms', dest='waveforms', action='store_true', default=False, help='Update Waveforms')
 parser.add_argument('-e','--event',dest='event',action="store",default="",help="single event to process")
+parser.add_argument('-c','--catalog',dest='catalog',action="store",default="",help="single catalog to process")
 parser.add_argument('--manual', dest='manual', action='store_true', default=False, help='Read in manual data')
 parser.add_argument('-d','--datadir', dest='datadir', type=str, default='data/', help='directory in which data is stored')
 parser.add_argument('-p','--pubdatadir', dest='pubdatadir', type=str, default='docs/data/', help='directory in which data is published')
@@ -36,7 +38,7 @@ parser.add_argument('-a','--aws', dest='aws', action='store_true', default=True,
 parser.add_argument('--log',dest='logfile',type=str, default='logs/gdb_updates.log', help='File to output GraceDB logs to. [Default=logs/gdb_updates.log]')
 parser.add_argument('--gracedb',dest='gracedb',action='store_true', default=False, help='Set to include GraceDB load')
 parser.add_argument('--skipgwosc',dest='skipgwosc',action='store_true', default=False, help='Set to skip GWOSC load')
-parser.add_argument('--skipmarginal',dest='skipmarginal',action='store_true', default=False, help='Set to skip marginal catalogue load')
+parser.add_argument('--incmarginal',dest='incmarginal',action='store_true', default=False, help='Set to include marginal catalogue load')
 parser.add_argument('--devMode',dest='devMode',action='store_true', default=False, help='Set to use dev mode (requires LVK login)')
 parser.add_argument('--skiph5',dest='skiph5',action='store_true', default=False, help='Set to skip using H5 files')
 parser.add_argument('--skipmaps',dest='skipmaps',action='store_true', default=False, help='Set to skip plotting maps')
@@ -60,7 +62,7 @@ datelim=args.datelim
 logfile=args.logfile
 ImportGracedb=args.gracedb
 skipGwosc=args.skipgwosc
-skipMarginal=args.skipmarginal
+incMarginal=args.incmarginal
 skiph5=args.skiph5
 skipmaps=args.skipmaps
 skymaps=args.skymaps
@@ -69,6 +71,7 @@ blank=args.blank
 highonly=args.highonly
 lowsigmaps=args.lowsigmaps
 event=args.event
+catalog=args.catalog
 aws=args.aws
 
 if devMode:
@@ -86,127 +89,148 @@ else:
 print('\n\n*****\nImporting from local file\n*****\n\n')
 gc=gwcatpy.GWCat(fileIn=fileIn,dataDir=dataDir,mode=mode,baseurl=baseurl,dataurl=tilesurl,max_memory_percent=75,skip_on_memory_error=True)
 
-if update==True:
+try:
 
-    if not skipGwosc:
-        print('\n\n*****\nReading GWTC...\n*****\n\n')
-        gwtcdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode,catalog='GWTC-2.1-confident',sess=sess)
-        print('\n\n*****\nImporting GWTC...\n*****\n\n')
-        gc.importGWTC(gwtcdata,verbose=verbose, devMode=devMode,catalog='GWTC-2.1-confident',forceOverwrite=forceupdate)
+    if update==True:
 
-        # print('\n\n*****\nReading O4a Discovery Papers...\n*****\n\n')
+        if not skipGwosc:
+            print('\n\n*****\nReading GWTC...\n*****\n\n')
+            gwtcdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode,catalog='GWTC',sess=sess)
+            print('\n\n*****\nImporting GWTC...\n*****\n\n')
+            gc.importGWTC(gwtcdata,verbose=verbose, devMode=devMode,catalog='GWTC',forceOverwrite=forceupdate)
+
+            # print('\n\n*****\nReading O4a Discovery Papers...\n*****\n\n')
+            # gwtcdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode,catalog='O4_Discovery_Papers',sess=sess)
+            # print('\n\n*****\nImporting O4a Discovery Papers...\n*****\n\n')
+            # gc.importGWTC(gwtcdata,verbose=verbose, devMode=devMode,catalog='O4_Discovery_Papers',forceOverwrite=True)
+
+            if incMarginal:
+                print('\n\n*****\nReading GWTC-3-marginal...\n*****\n\n')
+                gwtc3margdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode,catalog='GWTC-3-marginal',sess=sess)
+                print('\n\n*****\nImporting GWTC-3-marginal...\n*****\n\n')
+                gc.importGWTC(gwtc3margdata,verbose=verbose, devMode=devMode,catalog='GWTC-3-marginal',forceOverwrite=True)
+
+                print('\n\n*****\nReading GWTC-2.1-marginal...\n*****\n\n')
+                gwtc21margdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode,catalog='GWTC-2.1-marginal',sess=sess)
+                print('\n\n*****\nImporting GWTC-2.1-marginal...\n*****\n\n')
+                gc.importGWTC(gwtc21margdata,verbose=verbose, devMode=devMode,catalog='GWTC-2.1-marginal',forceOverwrite=True)
+
+                print('\n\n*****\nReading GWTC-1-marginal...\n*****\n\n')
+                gwtc1margdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode,catalog='GWTC-1-marginal',sess=sess)
+                print('\n\n*****\nImporting GWTC-1-marginal...\n*****\n\n')
+                gc.importGWTC(gwtc1margdata,verbose=verbose, devMode=devMode,catalog='GWTC-1-marginal',forceOverwrite=True)
+
+            json.dump(gwtcdata,open(os.path.join(dataDir,'gwtc.min.json'),'w'))
+        
+        # print('\n\n*****\nReading O4 Discovery Papers...\n*****\n\n')
         # gwtcdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode,catalog='O4_Discovery_Papers',sess=sess)
-        # print('\n\n*****\nImporting O4a Discovery Papers...\n*****\n\n')
-        # gc.importGWTC(gwtcdata,verbose=verbose, devMode=devMode,catalog='O4_Discovery_Papers',forceOverwrite=True)
+        # print('\n\n*****\nImporting O4 Discovery Papers...\n*****\n\n')
+        # gc.importGWTC(gwtcdata,verbose=verbose, devMode=devMode,catalog='O4_Discovery_Papers',forceOverwrite=True,newOnly=True)
 
-        if not skipMarginal:
-            print('\n\n*****\nReading GWTC-3-marginal...\n*****\n\n')
-            gwtc3margdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode,catalog='GWTC-3-marginal',sess=sess)
-            print('\n\n*****\nImporting GWTC-3-marginal...\n*****\n\n')
-            gc.importGWTC(gwtc3margdata,verbose=verbose, devMode=devMode,catalog='GWTC-3-marginal',forceOverwrite=True)
+        knownEvents=gc.getTimestamps()
 
-            print('\n\n*****\nReading GWTC-2.1-marginal...\n*****\n\n')
-            gwtc21margdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode,catalog='GWTC-2.1-marginal',sess=sess)
-            print('\n\n*****\nImporting GWTC-2.1-marginal...\n*****\n\n')
-            gc.importGWTC(gwtc21margdata,verbose=verbose, devMode=devMode,catalog='GWTC-2.1-marginal',forceOverwrite=True)
+        if ImportGracedb:
+            print('\n\n*****\nReading GraceDB...\n*****\n\n')
+            gdb=gwcatpy.gracedb.getSuperevents(export=True,dirOut=dataDir,verbose=verbose,
+            knownEvents=knownEvents,forceUpdate=forceupdate,datelim=datelim,logFile=logfile,highSigOnly=highonly)
+            json.dump(gdb,open(os.path.join(dataDir,'gracedb.min.json'),'w'))
 
-            print('\n\n*****\nReading GWTC-1-marginal...\n*****\n\n')
-            gwtc1margdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode,catalog='GWTC-1-marginal',sess=sess)
-            print('\n\n*****\nImporting GWTC-1-marginal...\n*****\n\n')
-            gc.importGWTC(gwtc1margdata,verbose=verbose, devMode=devMode,catalog='GWTC-1-marginal',forceOverwrite=True)
+            print('\n\n*****\nimporting GraceDB...\n*****\n\n')
+            gc.importGraceDB(gdb,verbose=verbose,forceUpdate=forceupdate,highSigOnly=highonly)
 
-        json.dump(gwtcdata,open(os.path.join(dataDir,'gwtc.min.json'),'w'))
+        print('\n\n*****\nmatching GraceDB entries...\n*****\n\n')
+        gc.matchGraceDB(verbose=verbose)
+        print('\n\n*****\nremoving unnecessary GraceDB candidates\n*****\n\n')
+        gc.removeCandidates(verbose=verbose)
+
+        print('\n\n*****\nAdding manual references...\n*****\n\n')
+        gc.addRefs(verbose=verbose)
+
+        if skiph5:
+            print('\n\n*****\Skipping getting data from H5\n*****\n\n')
+        else:
+            print('\n\n*****\nUpdating data from H5\n*****\n\n')
+            gc.updateH5(verbose=verbose,forceUpdate=forceupdate,forceUpdateData=forceh5,event=event,catalog=catalog)
+
+        print('\n\n*****\nsetting precision...\n*****\n\n')
+        gc.setPrecision(extraprec=1,verbose=verbose)
+
+        if skipmaps:
+            print('\n\n*****\nSkipping updating maps\n*****\n\n')
+        else:
+            print('\n\n*****\nUpdating maps\n*****\n\n')
+            gc.updateMaps(verbose=verbose,forceUpdate=forcemap,event=event,catalog=catalog)
+
+    else:
+        print('importing from local file')
+        gc=gwcatpy.GWCat(fileIn=fileIn,dataDir=dataDir,mode=mode)
+
+
+    if aws:
+        logFileAwsMaps=logfile+'_maps_aws'
+        logFileAwsWf=logfile+'_waveform_aws'
+    else:
+        logFileAwsMaps=None
+        logFileAwsWf=None
+
+    logfileMaps=logfile+'_maps'
+    if skymaps:
+        print('\n\n*****\nPlotting maps\n*****\n\n')
+        gc.plotMapPngs(verbose=verbose,overwrite=overwrite,logFile=logfileMaps,lowSigMaps=lowsigmaps,event=event,catalog=catalog,awsLog=logFileAwsMaps)
+    else:
+        if os.path.exists(logfileMaps):
+            os.remove(logfileMaps)
+            print('Removing log file: {}'.format(logfileMaps))
+            fM=open(logfileMaps,'w')
+            fM.close()
+
+    if gravoscope:
+        print('\n\n*****\nUpdating gravoscope\n*****\n\n')
+        gc.makeGravoscopeTiles(verbose=verbose,maxres=6,tilesurl=tilesurl,event=event,catalog=catalog)
+
+    if waveforms:
+        print('\n\n*****\nUpdating waveforms\n*****\n\n')
+        gc.makeWaveforms(verbose=verbose,overwrite=overwrite,event=event,catalog=catalog,awsLog=logFileAwsWf)
+
+    # export library
+    gc.exportJson(os.path.join(dataDir,'gwosc_gracedb.json'))
+
+    #export library to published files
+    gc.exportJson(os.path.join(pubDataDir,'gwosc_gracedb.json'))
+    gc.exportJson(os.path.join(pubDataDir,'data.json'),contents='data')
+    gc.exportJson(os.path.join(pubDataDir,'links.json'),contents='links')
+    gc.exportJson(os.path.join(pubDataDir,'parameters.json'),contents='datadict')
+
+    # create minified version of json file (not needed for unpublished files)
+    gcdat=json.load(open(os.path.join(pubDataDir,'gwosc_gracedb.json')))
+    json.dump(gcdat,open(os.path.join(pubDataDir,'gwosc_gracedb.min.json'),'w'))
+
+    # create jsonp files (needed for backward compatibility)
+    gwcatpy.json2jsonp(os.path.join(pubDataDir,'gwosc_gracedb.json'),os.path.join(pubDataDir,'gwosc_gracedb.jsonp'))
+    gwcatpy.json2jsonp(os.path.join(pubDataDir,'gwosc_gracedb.min.json'),os.path.join(pubDataDir,'gwosc_gracedb.min.jsonp'))
+
+    #export data to published CSV files
+    gc.exportCSV(os.path.join(pubDataDir,'gwosc_gracedb.csv'),verbose=True,dictfileout=os.path.join(pubDataDir,'parameters.csv'),linksfileout=os.path.join(pubDataDir,'links.csv'))
+
+    statF=open(statusFile,'w')
+    statF.write('success\n')
+    statF.close()
+
+except Exception as e:
+    # Create timestamped backup on error
+    timestamp = datetime.now().isoformat(timespec='seconds')
+    error_file = os.path.join(dataDir, f'gwosc_gracedb_{timestamp}.json')
+    print(f'\n\n*****\nERROR OCCURRED: {e}\n*****\n')
+    print(f'Dumping current state to: {error_file}\n')
+    try:
+        gc.exportJson(error_file)
+        print(f'Emergency dump saved successfully to {error_file}')
+    except Exception as dump_error:
+        print(f'Failed to save emergency dump: {dump_error}')
     
-    # print('\n\n*****\nReading O4 Discovery Papers...\n*****\n\n')
-    # gwtcdata=gwcatpy.gwosc.getGWTC(export=True,dirOut=dataDir,verbose=verbose,devMode=devMode,catalog='O4_Discovery_Papers',sess=sess)
-    # print('\n\n*****\nImporting O4 Discovery Papers...\n*****\n\n')
-    # gc.importGWTC(gwtcdata,verbose=verbose, devMode=devMode,catalog='O4_Discovery_Papers',forceOverwrite=True,newOnly=True)
-
-    knownEvents=gc.getTimestamps()
-
-    if ImportGracedb:
-        print('\n\n*****\nReading GraceDB...\n*****\n\n')
-        gdb=gwcatpy.gracedb.getSuperevents(export=True,dirOut=dataDir,verbose=verbose,
-        knownEvents=knownEvents,forceUpdate=forceupdate,datelim=datelim,logFile=logfile,highSigOnly=highonly)
-        json.dump(gdb,open(os.path.join(dataDir,'gracedb.min.json'),'w'))
-
-        print('\n\n*****\nimporting GraceDB...\n*****\n\n')
-        gc.importGraceDB(gdb,verbose=verbose,forceUpdate=forceupdate,highSigOnly=highonly)
-
-    print('\n\n*****\nmatching GraceDB entries...\n*****\n\n')
-    gc.matchGraceDB(verbose=verbose)
-    print('\n\n*****\nremoving unnecessary GraceDB candidates\n*****\n\n')
-    gc.removeCandidates(verbose=verbose)
-
-    print('\n\n*****\nAdding manual references...\n*****\n\n')
-    gc.addRefs(verbose=verbose)
-
-    if skiph5:
-        print('\n\n*****\Skipping getting data from H5\n*****\n\n')
-    else:
-        print('\n\n*****\nUpdating data from H5\n*****\n\n')
-        gc.updateH5(verbose=verbose,forceUpdate=forceupdate,forceUpdateData=forceh5,event=event)
-
-    print('\n\n*****\nsetting precision...\n*****\n\n')
-    gc.setPrecision(extraprec=1,verbose=verbose)
-
-    if skipmaps:
-        print('\n\n*****\nSkipping updating maps\n*****\n\n')
-    else:
-        print('\n\n*****\nUpdating maps\n*****\n\n')
-        gc.updateMaps(verbose=verbose,forceUpdate=forcemap,event=event)
-
-else:
-    print('importing from local file')
-    gc=gwcatpy.GWCat(fileIn=fileIn,dataDir=dataDir,mode=mode)
-
-
-if aws:
-    logFileAwsMaps=logfile+'_maps_aws'
-    logFileAwsWf=logfile+'_waveform_aws'
-else:
-    logFileAwsMaps=None
-    logFileAwsWf=None
-
-logfileMaps=logfile+'_maps'
-if skymaps:
-    print('\n\n*****\nPlotting maps\n*****\n\n')
-    gc.plotMapPngs(verbose=verbose,overwrite=overwrite,logFile=logfileMaps,lowSigMaps=lowsigmaps,event=event,awsLog=logFileAwsMaps)
-else:
-    if os.path.exists(logfileMaps):
-        os.remove(logfileMaps)
-        print('Removing log file: {}'.format(logfileMaps))
-        fM=open(logfileMaps,'w')
-        fM.close()
-
-if gravoscope:
-    print('\n\n*****\nUpdating gravoscope\n*****\n\n')
-    gc.makeGravoscopeTiles(verbose=verbose,maxres=6,tilesurl=tilesurl,event=event)
-
-if waveforms:
-    print('\n\n*****\nUpdating waveforms\n*****\n\n')
-    gc.makeWaveforms(verbose=verbose,overwrite=overwrite,event=event,awsLog=logFileAwsWf)
-
-# export library
-gc.exportJson(os.path.join(dataDir,'gwosc_gracedb.json'))
-
-#export library to published files
-gc.exportJson(os.path.join(pubDataDir,'gwosc_gracedb.json'))
-gc.exportJson(os.path.join(pubDataDir,'data.json'),contents='data')
-gc.exportJson(os.path.join(pubDataDir,'links.json'),contents='links')
-gc.exportJson(os.path.join(pubDataDir,'parameters.json'),contents='datadict')
-
-# create minified version of json file (not needed for unpublished files)
-gcdat=json.load(open(os.path.join(pubDataDir,'gwosc_gracedb.json')))
-json.dump(gcdat,open(os.path.join(pubDataDir,'gwosc_gracedb.min.json'),'w'))
-
-# create jsonp files (needed for backward compatibility)
-gwcatpy.json2jsonp(os.path.join(pubDataDir,'gwosc_gracedb.json'),os.path.join(pubDataDir,'gwosc_gracedb.jsonp'))
-gwcatpy.json2jsonp(os.path.join(pubDataDir,'gwosc_gracedb.min.json'),os.path.join(pubDataDir,'gwosc_gracedb.min.jsonp'))
-
-#export data to published CSV files
-gc.exportCSV(os.path.join(pubDataDir,'gwosc_gracedb.csv'),verbose=True,dictfileout=os.path.join(pubDataDir,'parameters.csv'),linksfileout=os.path.join(pubDataDir,'links.csv'))
-
-statF=open(statusFile,'w')
-statF.write('success\n')
-statF.close()
+    statF=open(statusFile,'w')
+    statF.write('error\n')
+    statF.close()
+    
+    # Re-raise the original exception
+    raise
