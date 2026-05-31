@@ -12,6 +12,7 @@ import json
 import argparse
 import ciecplib
 import warnings
+import subprocess
 from datetime import datetime
 warnings.filterwarnings("ignore", "Wswiglal-redir-stdio")
 import lal
@@ -167,7 +168,7 @@ try:
 
 
     if aws:
-        logFileAwsMaps=logfile+'_maps_aws'
+        logFileAwsMaps='logs/aws_updates.log'
         logFileAwsWf=logfile+'_waveform_aws'
     else:
         logFileAwsMaps=None
@@ -211,6 +212,24 @@ try:
 
     #export data to published CSV files
     gc.exportCSV(os.path.join(pubDataDir,'gwosc_gracedb.csv'),verbose=True,dictfileout=os.path.join(pubDataDir,'parameters.csv'),linksfileout=os.path.join(pubDataDir,'links.csv'))
+
+    # Upload files to AWS if enabled
+    if aws:
+        print('\n=== Uploading files to AWS ===')
+        aws_cmd = ['python3', 'aws_upload.py', '-l', logFileAwsMaps]
+        if verbose:
+            aws_cmd.append('-v')
+        try:
+            result = subprocess.run(aws_cmd, check=True, capture_output=True, text=True)
+            print(result.stdout)
+            if result.stderr:
+                print('AWS upload warnings:', result.stderr)
+        except subprocess.CalledProcessError as e:
+            print(f'AWS upload failed: {e}')
+            print(e.stdout)
+            print(e.stderr)
+        except Exception as e:
+            print(f'Error running AWS upload: {e}')
 
     statF=open(statusFile,'w')
     statF.write('success\n')

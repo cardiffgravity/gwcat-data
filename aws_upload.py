@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 AWS S3 Upload Script
-Reads file list from logs/gdb_updates.log_maps_aws and uploads files to S3.
+Reads file list from logs/aws_updates.log and uploads files to S3.
 Credentials are loaded from aws_credentials.json (not in version control).
 """
 
@@ -155,6 +155,41 @@ def update_log_file(log_file, all_lines, uploaded_indices):
     print(f"Updated {updated_count} line(s) in log file with 'uploaded' status")
 
 
+def reset_log_file(log_file):
+    """Remove lines with 'uploaded' status from the log file."""
+    if not os.path.exists(log_file):
+        print(f"Error: Log file '{log_file}' not found.")
+        sys.exit(1)
+    
+    lines_kept = []
+    lines_removed = 0
+    
+    with open(log_file, 'r') as f:
+        for line in f:
+            line_stripped = line.strip()
+            if not line_stripped:
+                lines_kept.append(line_stripped)
+                continue
+            
+            parts = line_stripped.split(',')
+            if len(parts) >= 5:
+                status = parts[-1].strip().lower()
+                if status == 'uploaded':
+                    lines_removed += 1
+                    continue
+            
+            lines_kept.append(line_stripped)
+    
+    # Write back the filtered lines
+    with open(log_file, 'w') as f:
+        for line in lines_kept:
+            if line:  # Skip empty lines
+                f.write(line + '\n')
+    
+    print(f"Reset complete: removed {lines_removed} line(s) with 'uploaded' status")
+    print(f"Kept {len([l for l in lines_kept if l])} line(s)")
+
+
 def main():
     parser = argparse.ArgumentParser(
         description='Upload files to AWS S3 based on log file'
@@ -163,8 +198,8 @@ def main():
         '-l', '--logfile',
         dest='logfile',
         type=str,
-        default='logs/gdb_updates.log_maps_aws',
-        help='Log file containing list of files to upload [Default: logs/gdb_updates.log_maps_aws]'
+        default='logs/aws_updates.log',
+        help='Log file containing list of files to upload [Default: logs/aws_updates.log]'
     )
     parser.add_argument(
         '-c', '--credentials',
@@ -194,8 +229,21 @@ def main():
         default=False,
         help='Force upload of files that were already uploaded (status="uploaded")'
     )
+    parser.add_argument(
+        '-r', '--reset',
+        dest='reset',
+        action='store_true',
+        default=False,
+        help='Reset log file by removing lines with "uploaded" status'
+    )
     
     args = parser.parse_args()
+    
+    # Handle reset mode
+    if args.reset:
+        print(f"Resetting log file {args.logfile}...")
+        reset_log_file(args.logfile)
+        return
     
     # Load credentials
     print(f"Loading credentials from {args.credentials}...")
